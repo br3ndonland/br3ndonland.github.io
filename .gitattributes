@@ -1,5 +1,5 @@
 ## GITATTRIBUTES FOR WEB PROJECTS
-#
+# https://github.com/gitattributes/gitattributes
 # These settings are for any web project.
 #
 # Details per file setting:
@@ -8,7 +8,7 @@
 #
 # Note that binary is a macro for -text -diff.
 ######################################################################
-
+[attr]lfs         filter=lfs diff=lfs merge=lfs -text
 # Auto detect
 ##   Handle line endings automatically for files detected as
 ##   text and leave all files detected as binary untouched.
@@ -129,83 +129,83 @@ tsconfig.json     linguist-language=JSON-with-Comments
 Procfile          text
 
 # Graphics
-*.ai              binary
-*.bmp             binary
-*.eps             binary
-*.gif             binary
-*.gifv            binary
-*.ico             binary
-*.jng             binary
-*.jp2             binary
-*.jpg             binary
-*.jpeg            binary
-*.jpx             binary
-*.jxr             binary
-*.pdf             binary
-*.png             binary
-*.psb             binary
-*.psd             binary
+*.ai              lfs
+*.bmp             lfs
+*.eps             lfs
+*.gif             lfs
+*.gifv            lfs
+*.ico             lfs
+*.jng             lfs
+*.jp2             lfs
+*.jpg             lfs
+*.jpeg            lfs
+*.jpx             lfs
+*.jxr             lfs
+*.pdf             lfs
+*.png             lfs
+*.psb             lfs
+*.psd             lfs
 # SVG treated as an asset (binary) by default.
 *.svg             text
 # If you want to treat it as binary,
 # use the following line instead.
 # *.svg           binary
 *.svgz            binary
-*.tif             binary
-*.tiff            binary
-*.wbmp            binary
-*.webp            binary
+*.tif             lfs
+*.tiff            lfs
+*.wbmp            lfs
+*.webp            lfs
 
 # Audio
-*.kar             binary
-*.m4a             binary
-*.mid             binary
-*.midi            binary
-*.mp3             binary
-*.ogg             binary
-*.ra              binary
+*.kar             lfs
+*.m4a             lfs
+*.mid             lfs
+*.midi            lfs
+*.mp3             lfs
+*.ogg             lfs
+*.ra              lfs
 
 # Video
-*.3gpp            binary
-*.3gp             binary
-*.as              binary
-*.asf             binary
-*.asx             binary
-*.avi             binary
-*.fla             binary
-*.flv             binary
-*.m4v             binary
-*.mng             binary
-*.mov             binary
-*.mp4             binary
-*.mpeg            binary
-*.mpg             binary
-*.ogv             binary
-*.swc             binary
-*.swf             binary
-*.webm            binary
+*.3gpp            lfs
+*.3gp             lfs
+*.as              lfs
+*.asf             lfs
+*.asx             lfs
+*.avi             lfs
+*.fla             lfs
+*.flv             lfs
+*.m4v             lfs
+*.mng             lfs
+*.mov             lfs
+*.mp4             lfs
+*.mpeg            lfs
+*.mpg             lfs
+*.ogv             lfs
+*.swc             lfs
+*.swf             lfs
+*.webm            lfs
 
 # Archives
-*.7z              binary
-*.gz              binary
-*.jar             binary
-*.rar             binary
-*.tar             binary
-*.zip             binary
+*.7z              lfs
+*.gz              lfs
+*.jar             lfs
+*.rar             lfs
+*.tar             lfs
+*.zip             lfs
 
 # Fonts
-*.ttf             binary
-*.eot             binary
-*.otf             binary
-*.woff            binary
-*.woff2           binary
+*.ttf             lfs
+*.eot             lfs
+*.otf             lfs
+*.woff            lfs
+*.woff2           lfs
 
 # Executables
-*.exe             binary
-*.pyc             binary
+*.exe             lfs
+*.pyc             lfs
 # Prevents massive diffs caused by vendored, minified files
-**/.yarn/releases/**   binary
-**/.yarn/plugins/**    binary
+**/.yarn/releases/**   lfs
+**/.yarn/plugins/**    lfs
 
 # RC files (like .babelrc or .eslintrc)
 *.*rc             text
@@ -214,4 +214,4 @@ Procfile          text
 *.*ignore         text
 
 # Prevents massive diffs from built files
-dist/*            binary
+dist/*            lfs
