@@ -1,0 +1,38 @@
+{
+  "name": "bws",
+  "type": "module",
+  "version": "0.0.0",
+  "scripts": {
+    "check": "prettier . --check",
+    "fmt": "prettier . --write",
+    "build": "astro check && astro build",
+    "dev": "astro dev",
+    "start": "astro dev",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "prettier": {
+    "semi": false,
+    "plugins": [
+      "prettier-plugin-astro"
+    ],
+    "overrides": [
+      {
+        "files": "*.astro",
+        "options": {
+          "parser": "astro"
+        }
+      }
+    ]
+  },
+  "private": true,
+  "dependencies": {
+    "@astrojs/check": "^0.5.10",
+    "astro": "^4.7.1",
+    "typescript": "^5.4.5"
+  },
+  "devDependencies": {
+    "prettier": "^3.2.5",
+    "prettier-plugin-astro": "^0.14.0"
+  }
+}
