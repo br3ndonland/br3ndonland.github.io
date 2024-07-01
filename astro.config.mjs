@@ -9,4 +9,5 @@ export default defineConfig({
       theme: "dracula",
     },
   },
+  site: "https://www.bws.bio",
 })
