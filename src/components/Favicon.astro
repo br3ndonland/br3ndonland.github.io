@@ -1,0 +1,27 @@
+---
+/* Toggle favicon based on document visibility
+
+There are two versions of the SVG favicon. When the document is "hidden"
+(user switches tabs, switches apps, etc.), the component will switch from
+`favicon.svg` to `favicon-hidden.svg`.
+
+An alternate `favicon.ico` is included for browsers like Safari that cannot
+display SVG favicons.
+
+https://developer.mozilla.org/en-US/docs/Web/API/Document/hidden
+*/
+---
+
+<link href="/images/favicon.svg" rel="icon" type="image/svg+xml" />
+<link href="/images/favicon.ico" rel="alternate icon" sizes="32x32" />
+
+<script>
+  const favicon = document.querySelector('link[rel="icon"]')!
+  document.addEventListener("visibilitychange", () => {
+    const isHidden = document.hidden
+    favicon.setAttribute(
+      "href",
+      `/images/favicon${isHidden ? "-hidden" : ""}.svg`,
+    )
+  })
+</script>

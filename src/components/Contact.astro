@@ -1,0 +1,125 @@
+---
+import Icon from "./Icon.astro"
+import { AUTHOR } from "@consts"
+---
+
+<aside>
+  <h2>Want to get in touch?</h2>
+  <contact-link data-email={AUTHOR.EMAIL}>
+    <a href="" rel="nofollow">
+      Send me a message
+      <Icon icon="paper-plane-tilt" size="1.2em" />
+    </a>
+  </contact-link>
+  <noscript><em>(requires JavaScript)</em></noscript>
+</aside>
+
+<script>
+  class ContactLink extends HTMLElement {
+    constructor() {
+      super()
+      const a = this.querySelector("a")
+      const email = this.dataset.email
+      if (a && email) {
+        const events = ["focus", "mouseover", "touchstart"]
+        const setEmailHref = (
+          a: HTMLAnchorElement,
+          encodedEmail: string = email,
+        ) => {
+          /* TODO: TypeScript says `atob()` is deprecated:
+            "This function is only provided for compatibility with legacy web
+            platform APIs and should never be used in new code, because they
+            use strings to represent binary data and predate the introduction
+            of typed arrays in JavaScript. For code running using Node.js APIs,
+            converting between base64-encoded strings and binary data should be
+            performed using `Buffer.from(str, 'base64')` and
+            `buf.toString('base64')`."
+
+            The change would be:
+            const encodedEmailBuffer = Buffer.from(encodedEmail, "base64")
+            const decodedEmail = encodedEmailBuffer.toString()
+
+            The problem with this recommendation is that web browsers don't
+            have the `Buffer` prototype. They do have `Window.atob()` though.
+            https://developer.mozilla.org/en-US/docs/Glossary/Base64
+          */
+          // @ts-ignore
+          const decodedEmail = atob(encodedEmail)
+          a.setAttribute("href", `mailto:${decodedEmail}`)
+        }
+        events.forEach((e) => a.addEventListener(e, () => setEmailHref(a)))
+      }
+    }
+  }
+  customElements.define("contact-link", ContactLink)
+</script>
+
+<style>
+  a {
+    background: var(--gradient-accent-orange);
+    border-radius: 999rem;
+    box-shadow: var(--shadow-md);
+    color: var(--accent-text-over);
+    display: flex;
+    gap: 1rem;
+    line-height: 1.1;
+    max-width: fit-content;
+    overflow: hidden;
+    padding: 0.5rem 1rem;
+    place-content: center;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  aside {
+    align-items: center;
+    background-color: var(--gray-999_40);
+    border-bottom: 1px solid var(--gray-800);
+    border-top: 1px solid var(--gray-800);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 2rem 0.5rem;
+  }
+
+  h2 {
+    font-size: var(--text-lg);
+    text-align: center;
+  }
+
+  @media (min-width: 50em) {
+    a {
+      font-size: var(--text-lg);
+      padding: 1rem 2rem;
+    }
+
+    aside {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      padding: 5rem;
+    }
+
+    h2 {
+      font-size: var(--text-2xl);
+      text-align: left;
+    }
+  }
+
+  a::after {
+    content: "";
+    inset: 0;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    position: absolute;
+    transition: background-color var(--theme-transition);
+  }
+
+  a:focus::after,
+  a:hover::after {
+    background-color: hsla(var(--gray-999-basis), 0.3);
+  }
+</style>

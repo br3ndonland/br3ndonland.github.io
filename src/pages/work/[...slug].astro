@@ -1,0 +1,141 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content"
+import { Picture } from "astro:assets"
+import BaseLayout from "@layouts/BaseLayout.astro"
+import Contact from "@components/Contact.astro"
+import DateRange from "@components/DateRange.astro"
+import Hero from "@components/Hero.astro"
+import Icon from "@components/Icon.astro"
+import Pill from "@components/Pill.astro"
+import { PICTURE_FORMATS, SITE, WORK } from "@consts"
+
+interface Props {
+  entry: CollectionEntry<"work">
+}
+
+export async function getStaticPaths() {
+  const work = await getCollection("work")
+  return work.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }))
+}
+
+const { entry } = Astro.props
+const { Content } = await entry.render()
+---
+
+<BaseLayout
+  title=`${SITE.TITLE}: ${WORK.TITLE} - ${entry.data.title}`
+  description=`Summary of ${SITE.TITLE}'s work at ${entry.data.title}.`
+>
+  <div class="stack gap-10">
+    <div class="stack gap-4">
+      <header>
+        <div class="wrapper stack gap-2">
+          <a class="back-link" href={WORK.HREF}
+            ><Icon icon="arrow-left" />{WORK.TITLE}</a
+          >
+          <Hero title={entry.data.title} align="start">
+            <DateRange
+              dateStart={entry.data.dateStart}
+              dateEnd={entry.data.dateEnd}
+            />
+            <div>
+              {
+                entry.data.roles.map((role) => (
+                  <div>
+                    <em>{role}</em>
+                  </div>
+                ))
+              }
+            </div>
+            <Picture
+              src={entry.data.image.src}
+              alt={entry.data.image.alt}
+              class:list={["img-hero"]}
+              formats={PICTURE_FORMATS}
+              decoding="async"
+              loading="eager"
+            />
+          </Hero>
+        </div>
+      </header>
+      <main class="wrapper">
+        <div class="stack content">
+          <div class="content">
+            <Content />
+          </div>
+          {
+            entry.data.tags.length > 0 && (
+              <>
+                <h2 class="tags">Skills used:</h2>
+                <div class="tags">
+                  {entry.data.tags.map((tag) => (
+                    <Pill>{tag}</Pill>
+                  ))}
+                </div>
+              </>
+            )
+          }
+        </div>
+      </main>
+    </div>
+    <Contact />
+  </div>
+</BaseLayout>
+
+<style>
+  header {
+    border-bottom: 1px solid var(--gray-800);
+    padding-bottom: 2.5rem;
+  }
+
+  .content {
+    max-width: 80ch;
+    margin-inline: auto;
+    padding-bottom: 1.25rem;
+  }
+
+  .content > :global(* + *) {
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+  }
+
+  .content :global(h1),
+  .content :global(h2),
+  .content :global(h3),
+  .content :global(h4),
+  .content :global(h5) {
+    margin: 1.5rem 1rem 0 0;
+  }
+
+  .back-link,
+  .content :global(a) {
+    text-decoration: 1px solid underline transparent;
+    text-underline-offset: 0.25em;
+    transition: text-decoration-color var(--theme-transition);
+  }
+
+  .back-link:hover,
+  .back-link:focus,
+  .content :global(a:hover),
+  .content :global(a:focus) {
+    text-decoration-color: currentColor;
+  }
+
+  .tags {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    max-width: fit-content;
+  }
+
+  @media (min-width: 50em) {
+    .back-link {
+      align-self: flex-start;
+      display: block;
+    }
+  }
+</style>

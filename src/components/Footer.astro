@@ -1,0 +1,66 @@
+---
+import type { Social } from "@types"
+import { SITE, SOCIALS } from "@consts"
+import Icon from "./Icon.astro"
+---
+
+<footer>
+  <p class="socials">
+    {SOCIALS.map((social: Social) => <a href={social.HREF}>{social.TITLE}</a>)}
+  </p>
+  <div class="group"></div>
+  <p>
+    &copy; {SITE.TITLE}. Content authored by {SITE.TITLE} is licensed under <a
+      href="https://creativecommons.org/licenses/by-sa/4.0/"
+      rel="external license"
+      target="_blank">CC BY-SA 4.0</a
+    >.
+  </p>
+  <p>
+    Built with <a href="https://astro.build/">Astro</a>
+    <Icon icon="rocket-launch" size="1.2em" />
+  </p>
+</footer>
+
+<style>
+  footer {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 1rem 1rem;
+    text-align: center;
+    color: var(--gray-400);
+    font-size: var(--text-sm);
+  }
+
+  footer a {
+    color: var(--gray-400);
+    text-decoration: 1px solid underline transparent;
+    text-underline-offset: 0.25em;
+    transition: text-decoration-color var(--theme-transition);
+  }
+
+  footer a:hover,
+  footer a:focus {
+    text-decoration-color: currentColor;
+  }
+
+  .group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .socials {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  @media (min-width: 50em) {
+    footer {
+      font-size: var(--text-lg);
+      padding: 2.5rem 5rem;
+    }
+  }
+</style>

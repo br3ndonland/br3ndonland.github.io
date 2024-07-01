@@ -1,0 +1,35 @@
+---
+import { getCollection } from "astro:content"
+import BaseLayout from "@layouts/BaseLayout.astro"
+import Contact from "@components/Contact.astro"
+import Hero from "@components/Hero.astro"
+import Grid from "@components/Grid.astro"
+import PreviewCard from "@components/PreviewCard.astro"
+import { SITE, WORK } from "@consts"
+
+const works = (await getCollection("work"))
+  .filter((project) => !project.data.draft)
+  .sort((a, b) => b.data.dateStart.valueOf() - a.data.dateStart.valueOf())
+---
+
+<BaseLayout title=`${SITE.TITLE}: ${WORK.TITLE}` description={WORK.DESCRIPTION}>
+  <div class="stack gap-20">
+    <main class="wrapper stack gap-8">
+      <Hero
+        title={WORK.TITLE}
+        tagline="Here are some places I've worked."
+        align="start"
+      />
+      <Grid>
+        {
+          works.map((work) => (
+            <li>
+              <PreviewCard entry={work} />
+            </li>
+          ))
+        }
+      </Grid>
+    </main>
+    <Contact />
+  </div>
+</BaseLayout>

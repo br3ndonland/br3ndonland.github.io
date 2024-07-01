@@ -1,0 +1,47 @@
+---
+interface Props {
+  title: string
+  tagline?: string
+  align?: "start" | "center"
+  classList?: string[]
+}
+
+const { align = "center", classList = [], tagline, title } = Astro.props
+---
+
+<div class:list={["hero stack gap-4", align]}>
+  <div class="stack gap-2">
+    <h1 class:list={classList.concat(["title"])}>{title}</h1>
+    {tagline && <p class="tagline">{tagline}</p>}
+  </div>
+  <slot />
+</div>
+
+<style>
+  .hero {
+    font-size: var(--text-lg);
+    text-align: center;
+    white-space-collapse: preserve-breaks;
+  }
+
+  .title,
+  .tagline {
+    max-width: 40ch;
+    margin-inline: auto;
+  }
+
+  .title {
+    font-size: var(--text-3xl);
+    color: var(--gray-0);
+  }
+
+  @media (min-width: 50em) {
+    .hero {
+      font-size: var(--text-xl);
+    }
+
+    .title {
+      font-size: var(--text-5xl);
+    }
+  }
+</style>

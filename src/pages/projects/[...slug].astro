@@ -1,0 +1,166 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content"
+import { Picture } from "astro:assets"
+import BaseLayout from "@layouts/BaseLayout.astro"
+import Contact from "@components/Contact.astro"
+import Hero from "@components/Hero.astro"
+import Icon from "@components/Icon.astro"
+import UdacityLogo from "@content/projects/udacity/UdacityLogo.astro"
+import { SITE, PICTURE_FORMATS, PROJECTS } from "@consts"
+
+interface Props {
+  entry: CollectionEntry<"projects">
+}
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects")
+  return projects.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }))
+}
+
+const { entry } = Astro.props
+const { Content } = await entry.render()
+
+const isSVG = entry.data.image.src.src.endsWith("svg")
+const isUdacious = entry.data.title.toLowerCase().includes("udacity")
+---
+
+<BaseLayout
+  title=`${SITE.TITLE}: ${PROJECTS.TITLE} - ${entry.data.title}`
+  description=`Summary of ${SITE.TITLE}'s projects.`
+>
+  <div class="stack gap-10">
+    <div class="stack gap-4">
+      <header>
+        <div class="wrapper stack gap-2">
+          <a class="back-link" href={PROJECTS.HREF}
+            ><Icon icon="arrow-left" />{PROJECTS.TITLE}</a
+          >
+          <Hero
+            title={entry.data.title}
+            classList={isUdacious ? ["d-none"] : []}
+            align="start"
+          >
+            {
+              isUdacious ? (
+                <UdacityLogo />
+              ) : (
+                <Picture
+                  src={entry.data.image.src}
+                  alt={entry.data.image.alt}
+                  formats={PICTURE_FORMATS}
+                  class:list={isSVG ? [] : ["img-hero"]}
+                  decoding="async"
+                  loading="eager"
+                />
+              )
+            }
+            <p>{entry.data.description}</p>
+            <div class="socials">
+              {
+                entry.data.URLrepo && (
+                  <a
+                    href={entry.data.URLrepo}
+                    class="social"
+                    rel="external"
+                    target="_blank"
+                  >
+                    <Icon icon="github-logo" size="2em" />
+                  </a>
+                )
+              }
+              {
+                entry.data.URLdocs && (
+                  <a
+                    href={entry.data.URLdocs}
+                    class="social"
+                    rel="external"
+                    target="_blank"
+                  >
+                    <Icon icon="file-doc" size="2em" />
+                  </a>
+                )
+              }
+              {
+                entry.data.URLdemo && (
+                  <a
+                    href={entry.data.URLdemo}
+                    class="social"
+                    rel="external"
+                    target="_blank"
+                  >
+                    <Icon icon="rocket-launch" size="2em" />
+                  </a>
+                )
+              }
+            </div>
+          </Hero>
+        </div>
+      </header>
+      <main class="wrapper">
+        <div class="content">
+          <Content />
+        </div>
+      </main>
+    </div>
+  </div>
+  <Contact />
+</BaseLayout>
+
+<style>
+  header {
+    border-bottom: 1px solid var(--gray-800);
+    padding-bottom: 2.5rem;
+  }
+
+  .content {
+    max-width: 80ch;
+    margin-inline: auto;
+    padding-bottom: 1.25rem;
+  }
+
+  .content > :global(* + *) {
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+  }
+
+  .content :global(h1),
+  .content :global(h2),
+  .content :global(h3),
+  .content :global(h4),
+  .content :global(h5) {
+    margin: 1.5rem 1rem 0 0;
+  }
+
+  .back-link,
+  .content :global(a) {
+    text-decoration: 1px solid underline transparent;
+    text-underline-offset: 0.25em;
+    transition: text-decoration-color var(--theme-transition);
+  }
+
+  .back-link:hover,
+  .back-link:focus,
+  .content :global(a:hover),
+  .content :global(a:focus) {
+    text-decoration-color: currentColor;
+  }
+
+  .socials {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+
+  @media (min-width: 50em) {
+    .back-link {
+      align-self: flex-start;
+      display: block;
+    }
+  }
+</style>

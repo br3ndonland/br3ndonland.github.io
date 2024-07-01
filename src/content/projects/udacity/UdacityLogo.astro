@@ -1,0 +1,79 @@
+---
+/* Toggle Udacity logo based on site theme
+
+The Udacity logo contains text that may be difficult to see depending on the
+active color theme. One way to toggle the colors could be with a media query
+within the SVG.
+
+```svg
+<svg>
+  <style type="text/css">
+    #udacity-logo-text { fill: #090B11; }
+    @media (prefers-color-scheme: dark) {
+      #udacity-logo-text { fill: #FFFFFF; }
+    }
+  </style>
+  <g>paths would go here</g>
+</svg
+```
+
+One problem with a media query is that the theme toggle doesn't change
+`prefers-color-scheme`. `prefers-color-scheme` might still be dark even if
+the light theme is toggled.
+
+Another problem is that it's difficult to select paths within an SVG, even if
+the SVG contents are made available by loading the SVG in an `<object>` element
+instead of an `<img>` element. This means it may not be reliable to attempt to
+change the fill of the text path within the logo SVG.
+
+The simplest solution is to load two versions of the logo, and toggle a CSS
+class that sets `display: none;` on one of the logos based on the site theme.
+The default image matches the default theme in case JavaScript is disabled.
+*/
+---
+
+<udacity-logo>
+  <object
+    data="/images/udacity-logo-dark-mode.svg"
+    type="image/svg+xml"
+    id="svg-dark-mode"
+    class="d-none"></object>
+  <object
+    data="/images/udacity-logo-light-mode.svg"
+    type="image/svg+xml"
+    id="svg-light-mode"></object>
+</udacity-logo>
+
+<script>
+  class UdacityLogo extends HTMLElement {
+    constructor() {
+      super()
+      const darkModeLogo = this.querySelector("#svg-dark-mode")
+      const lightModeLogo = this.querySelector("#svg-light-mode")
+      const toggleLogo = (
+        darkModeLogo: Element | null,
+        lightModeLogo: Element | null,
+        className: string = "d-none",
+        isDark: boolean = this.isDark(),
+      ) => {
+        lightModeLogo?.classList[isDark ? "add" : "remove"](className)
+        darkModeLogo?.classList[isDark ? "remove" : "add"](className)
+      }
+      toggleLogo(darkModeLogo, lightModeLogo)
+      if (typeof localStorage !== "undefined") {
+        const observer = new MutationObserver(() => {
+          toggleLogo(darkModeLogo, lightModeLogo)
+        })
+        observer.observe(document.documentElement, {
+          attributes: true,
+          attributeFilter: ["class"],
+        })
+      }
+    }
+
+    isDark(className: string = "theme-dark") {
+      return document.documentElement.classList.contains(className)
+    }
+  }
+  customElements.define("udacity-logo", UdacityLogo)
+</script>

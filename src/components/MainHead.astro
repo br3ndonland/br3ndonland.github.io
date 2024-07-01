@@ -1,0 +1,68 @@
+---
+import "@styles/global.css"
+import Favicon from "./Favicon.astro"
+import { SITE } from "@consts"
+
+interface Props {
+  title?: string | undefined
+  description?: string | undefined
+  image?: string | undefined
+}
+
+const {
+  title = SITE.TITLE,
+  description = SITE.DESCRIPTION,
+  image = "/images/og.jpg",
+} = Astro.props
+
+const canonicalURL = Astro.site
+const imageURL = image && new URL(image, Astro.url)
+---
+
+<meta charset="utf-8" />
+<meta name="description" property="og:description" content={description} />
+<meta name="viewport" content="width=device-width" />
+<meta name="generator" content={Astro.generator} />
+<link
+  rel="preload"
+  href="/fonts/DankMono-Italic.woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin
+/>
+{canonicalURL && <link rel="canonical" href={canonicalURL} />}
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+{imageURL && <meta property="og:image" content={imageURL} />}
+<meta property="og:url" content={Astro.url} />
+<meta property="og:type" content="website" />
+
+<Favicon />
+
+<script is:inline>
+  // This script is inlined in the head to make dark mode instant and blocking.
+  const getThemePreference = () => {
+    if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
+      return localStorage.getItem("theme")
+    }
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light"
+  }
+  const isDark = getThemePreference() === "dark"
+  document.documentElement.classList[isDark ? "add" : "remove"]("theme-dark")
+
+  if (typeof localStorage !== "undefined") {
+    const observer = new MutationObserver(() => {
+      const isDark = document.documentElement.classList.contains("theme-dark")
+      localStorage.setItem("theme", isDark ? "dark" : "light")
+    })
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    })
+  }
+</script>

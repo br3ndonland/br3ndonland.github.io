@@ -1,0 +1,35 @@
+---
+interface Props {
+  dateStart: Date
+  dateEnd: Date | string
+  locale?: Intl.LocalesArgument
+  options?: Intl.DateTimeFormatOptions
+}
+
+const { dateStart, dateEnd, locale, options } = Astro.props
+
+const defaultLocale: Intl.LocalesArgument = "en-us"
+const defaultOptions: Intl.DateTimeFormatOptions = {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+  timeZone: "UTC",
+}
+const selectedLocale = locale || defaultLocale
+const selectedOptions = options || defaultOptions
+
+const formatDate = (
+  date: Date,
+  locale: Intl.LocalesArgument = selectedLocale,
+  options: Intl.DateTimeFormatOptions = selectedOptions,
+) => {
+  const formattedDate = new Intl.DateTimeFormat(locale, options)
+  return formattedDate.format(date)
+}
+
+const formattedStartDate = formatDate(dateStart)
+const formattedEndDate = dateEnd instanceof Date ? formatDate(dateEnd) : dateEnd
+const formattedDateRange = `${formattedStartDate} - ${formattedEndDate}`
+---
+
+<div>{formattedDateRange}</div>

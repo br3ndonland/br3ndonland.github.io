@@ -1,0 +1,186 @@
+---
+import Picture from "astro/components/Picture.astro"
+import { getCollection } from "astro:content"
+import BaseLayout from "@layouts/BaseLayout.astro"
+import CallToAction from "@components/CallToAction.astro"
+import Contact from "@components/Contact.astro"
+import Grid from "@components/Grid.astro"
+import Hero from "@components/Hero.astro"
+import Icon from "@components/Icon.astro"
+import PreviewCard from "@components/PreviewCard.astro"
+import Skills from "@components/Skills.astro"
+import portrait from "@images/brendon-smith-portrait.jpg"
+import { PICTURE_FORMATS, PROJECTS, SITE, WORK } from "@consts"
+
+const projects = (await getCollection("projects"))
+  .filter((project) => !project.data.draft)
+  .sort((a, b) => b.data.dateStart.valueOf() - a.data.dateStart.valueOf())
+  .slice(0, SITE.NUM_PROJECTS_ON_HOMEPAGE)
+
+const works = (await getCollection("work"))
+  .filter((work) => !work.data.draft)
+  .sort((a, b) => b.data.dateStart.valueOf() - a.data.dateStart.valueOf())
+  .slice(0, SITE.NUM_WORKS_ON_HOMEPAGE)
+---
+
+<BaseLayout title={SITE.TITLE} description={SITE.DESCRIPTION}>
+  <div class="stack gap-10 lg:gap-20">
+    <div class="wrapper stack gap-8 lg:gap-20">
+      <header class="hero">
+        <Hero
+          title="Hi, I'm Brendon."
+          tagline=`I build software for science.
+                   I'm based in Cambridge, MA.`
+          align="start"
+        />
+        <Picture
+          src={portrait}
+          alt="Portrait of Brendon Smith smiling in a black t-shirt"
+          formats={PICTURE_FORMATS}
+          decoding="async"
+          loading="eager"
+        />
+      </header>
+      <Skills />
+    </div>
+
+    <main class="wrapper stack gap-20 lg:gap-48">
+      <section class="section with-cta">
+        <header class="section-header stack gap-2 lg:gap-4">
+          <h3>{PROJECTS.TITLE}</h3>
+        </header>
+        <div class="gallery">
+          <Grid>
+            {
+              projects.map((project) => (
+                <li>
+                  <PreviewCard entry={project} />
+                </li>
+              ))
+            }
+          </Grid>
+        </div>
+        <div class="cta">
+          <CallToAction href={PROJECTS.HREF}>
+            View All
+            <Icon icon="arrow-right" size="1.2em" />
+          </CallToAction>
+        </div>
+      </section>
+      <section class="section with-cta">
+        <header class="section-header stack gap-2 lg:gap-4">
+          <h3>{WORK.TITLE}</h3>
+        </header>
+        <div class="gallery">
+          <Grid>
+            {
+              works.map((work) => (
+                <li>
+                  <PreviewCard entry={work} />
+                </li>
+              ))
+            }
+          </Grid>
+        </div>
+        <div class="cta">
+          <CallToAction href={WORK.HREF}>
+            View All
+            <Icon icon="arrow-right" size="1.2em" />
+          </CallToAction>
+        </div>
+      </section>
+    </main>
+
+    <Contact />
+  </div>
+</BaseLayout>
+
+<style>
+  /* TODO: hero styles could be encapsulated in the Hero.astro component   */
+  /* ===================================================================== */
+  .hero {
+    display: grid;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .hero img {
+    aspect-ratio: 5 / 4;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 1.5rem;
+    box-shadow: var(--shadow-md);
+  }
+
+  @media (min-width: 50em) {
+    .hero {
+      display: grid;
+      grid-template-columns: 6fr 4fr;
+      padding-inline: 2.5rem;
+      gap: 3.75rem;
+    }
+
+    .hero img {
+      aspect-ratio: 3 / 4;
+      border-radius: 4.5rem;
+      object-fit: cover;
+    }
+  }
+  /* ===================================================================== */
+
+  .section {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .section-header {
+    justify-self: center;
+    text-align: center;
+    max-width: 50ch;
+    font-size: var(--text-md);
+    color: var(--gray-300);
+  }
+
+  .section-header h3 {
+    font-size: var(--text-2xl);
+  }
+
+  .cta {
+    justify-self: center;
+  }
+
+  @media (min-width: 50em) {
+    .section {
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-areas: "header header header header" "gallery gallery gallery gallery";
+      gap: 5rem;
+    }
+
+    .section.with-cta {
+      grid-template-areas: "header header header cta" "gallery gallery gallery gallery";
+    }
+
+    .section-header {
+      grid-area: header;
+      font-size: var(--text-lg);
+    }
+
+    .section-header h3 {
+      font-size: var(--text-4xl);
+    }
+
+    .section-header .with-cta {
+      justify-self: flex-start;
+      text-align: left;
+    }
+
+    .gallery {
+      grid-area: gallery;
+    }
+
+    .cta {
+      grid-area: cta;
+    }
+  }
+</style>

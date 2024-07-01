@@ -1,0 +1,716 @@
+---
+import { Picture } from "astro:assets"
+import BaseLayout from "@layouts/BaseLayout.astro"
+import Contact from "@components/Contact.astro"
+import Hero from "@components/Hero.astro"
+import Icon from "@components/Icon.astro"
+import atWork from "@images/brendon-smith-at-work.jpg"
+import bladeRunnerEye from "@images/blade-runner-1982-eye.png"
+import coffeeGeorgeHowellMap from "@images/coffee-george-howell-map.jpg"
+import coffeeGeorgeHowellModbar from "@images/coffee-george-howell-modbar.jpg"
+import coffeeNYCCounterCulture from "@images/brendon-smith-coffee-2017-10-14-nyc-counter-culture.jpg"
+import coffeeNYCStumptown from "@images/brendon-smith-coffee-2017-10-14-nyc-stumptown.jpg"
+import collegeLibrary from "@images/brendon-smith-college-library.jpg"
+import fitnessBicepsCurls from "@images/brendon-smith-fitness-biceps-curls-2019-03-09.jpg"
+import fitnessPullUps from "@images/brendon-smith-fitness-pull-ups-2019-03-09.jpg"
+import fitnessTrackMeet from "@images/brendon-smith-fitness-track-2002.jpg"
+import jurassicParkNedry from "@images/jurassic-park-1993-04352-nedry-thanks-dad.png"
+import jurassicParkNEDRYLAND from "@images/jurassic-park-1993-05414-nedryland.png"
+import gradSchoolLab from "@images/brendon-smith-grad-school-lab.jpg"
+import gradSchoolRegalia from "@images/brendon-smith-grad-school-doctoral-regalia.jpg"
+import massiveAttack20101015 from "@images/massive-attack-2010-10-15-chicago-riviera.jpg"
+import postdocLabBench from "@images/brendon-smith-postdoc-lab-bench.jpg"
+import postdocLabHands from "@images/brendon-smith-postdoc-lab-hands.jpg"
+import rush20150612 from "@images/rush-2015-06-12-r40-chicago-united-center.jpg"
+import udacityMeetup from "@images/udacity-google-meetup-2018-03-24-mit.jpg"
+import { ABOUT, PICTURE_FORMATS, PROJECTS, SITE, WORK } from "@consts"
+---
+
+<!-- TODO: convert this page to Markdown or MDX -->
+<BaseLayout
+  title=`${SITE.TITLE}: ${ABOUT.TITLE}`
+  description={ABOUT.DESCRIPTION}
+>
+  <div class="stack gap-10 lg:gap-20">
+    <main class="wrapper about">
+      <header>
+        <Hero
+          title={ABOUT.TITLE}
+          tagline="Thanks for stopping by. Here's more about me and my background."
+        >
+          <Picture
+            src={atWork}
+            alt="Brendon Smith at desk at work"
+            formats={PICTURE_FORMATS}
+            class:list={["img-hero"]}
+            decoding="async"
+            loading="eager"
+          />
+        </Hero>
+      </header>
+      <section>
+        <div class="section-title">
+          <h2>Science</h2>
+          <p>
+            Science is my jam. Before I got into tech, I spent about ten years
+            doing science research.
+          </p>
+        </div>
+        <div class="content">
+          <h3>College</h3>
+          <Picture
+            src={collegeLibrary}
+            alt="Brendon Smith in Wheaton College Buswell Library, from Registrar webpage"
+            formats={PICTURE_FORMATS}
+            class:list={["img-thumbnail"]}
+            decoding="async"
+            loading="lazy"
+          />
+          <p>
+            I got into science during college. I was in a dual-degree program
+            with majors in Spanish and Applied Health Science. Applied Health
+            Science was a great fit and I became a thriving member of the
+            department. Mentors helped me figure out who I was as a person and
+            how to leverage my strengths to create a career.
+          </p>
+          <p>
+            My favorite subject in my Applied Health Science major was
+            Nutrition. I was blessed with a great teacher who provided a
+            rigorous foundation in nutritional biochemistry and taught the
+            course materials with passion. I found it fascinating that all of
+            the biochemical and molecular details of our cells and physiology
+            could relate back to the foods we eat every day. My nutrition
+            teacher gave me extensive opportunities in research, teaching, and
+            administration that made me a competitive applicant for graduate
+            school.
+          </p>
+          <p>
+            I graduated from Wheaton with a B.S. in Applied Health Science, a
+            B.A. in Spanish, an understanding of my identity and values, and a
+            direction for my career.
+          </p>
+          <h3>Grad School</h3>
+          <Picture
+            src={gradSchoolLab}
+            alt=`Brendon Smith in the Bioacoustics Research Lab
+            at the University of Illinois at Urbana-Champaign`
+            formats={PICTURE_FORMATS}
+            class:list={["img-thumbnail"]}
+            decoding="async"
+            loading="lazy"
+          />
+          <Picture
+            src={gradSchoolRegalia}
+            alt="Brendon Smith in doctoral regalia after defending dissertation"
+            formats={PICTURE_FORMATS}
+            class:list={["img-thumbnail"]}
+            decoding="async"
+            loading="lazy"
+          />
+          <p>
+            <Icon icon="arrow-bend-left-up" size="1.2em" verticalAlign="top" />
+            <em
+              >Me in the lab during my first year of grad school, and me after
+              defending my dissertation. The more science I did, the longer my
+              hair got. Correlation or causation?</em
+            >
+          </p>
+          <p>
+            I went directly from college into the Nutritional Sciences PhD
+            program at the University of Illinois at Urbana-Champaign. My
+            tuition and living expenses were fully funded by research grants and
+            fellowships.
+          </p>
+          <p>
+            My coursework opened my mind to the wonderful world of cells,
+            molecules, and biochemical reactions, and to the effects of food
+            from cell to community. I got rigorous research training, working in
+            both nutritional biochemistry and engineering labs, and leading
+            projects on a large interdisciplinary team.
+          </p>
+          <p>
+            I began to see the computing challenges involved in scientific
+            research. I wrote VBA macros to automate experimental data analysis
+            and learned the SAS and R computing languages for statistical
+            programming. I also designed some illustrations for my work, like
+            <a
+              href="https://drive.proton.me/urls/W3B20EX8CC#34y2FJanuNif"
+              rel="external"
+              target="_blank">this illustration</a
+            >
+            of an
+            <a
+              href="https://doi.org/10.4137/bmi.s6051"
+              rel="external"
+              target="_blank">assay method</a
+            >
+            I developed, and
+            <a
+              href="https://drive.proton.me/urls/M45TT5D2JG#dBziP3WayCis"
+              rel="external"
+              target="_blank">this illustration</a
+            >
+            describing a process called endothelial dysfunction I made for a fellowship
+            proposal.
+          </p>
+          <p>
+            You can download my dissertation for free
+            <a
+              href="https://www.ideals.illinois.edu/handle/2142/72961"
+              rel="external"
+              target="_blank">here</a
+            >, and you can look up my publications on my
+            <a
+              href="https://orcid.org/0000-0001-6615-8677"
+              rel="external"
+              target="_blank">ORCID profile</a
+            >.
+          </p>
+          <h3>Postdoc</h3>
+          <Picture
+            src={postdocLabBench}
+            alt="Brendon Smith at postdoc lab bench at Harvard"
+            formats={PICTURE_FORMATS}
+            class:list={["img-thumbnail"]}
+            decoding="async"
+            loading="lazy"
+          />
+          <Picture
+            src={postdocLabHands}
+            alt="Brendon Smith's hands at postdoc lab bench at Harvard"
+            formats={PICTURE_FORMATS}
+            class:list={["img-thumbnail"]}
+            decoding="async"
+            loading="lazy"
+          />
+          <p>
+            Next, I moved to Boston for postdoctoral research at Harvard. I
+            dived deeper into molecular nutrition during this time. Even a cup
+            of coffee can contain a thousand molecular compounds with potential
+            effects on physiology and health, but few have been studied. I did
+            some work to help illuminate the links between food molecules and
+            physiology. I won a year of grant funding and collaborated with
+            researchers at MIT and in pharma. You can see one of my conference
+            posters
+            <a
+              href="https://drive.proton.me/urls/DAFEJ040XC#ACAK8EalHS1y"
+              rel="external"
+              target="_blank">here</a
+            >.
+          </p>
+          <p>
+            During this time, I learned the importance of <strong
+              >reproducibility</strong
+            >. In science, reproducibility occurs when different scientists do
+            the same experiment and get results that agree. The science career
+            system does not incentivize reproducibility. As a result, the
+            scientific community is experiencing what has been called a
+            "reproducibility crisis" or "<a
+              href="https://en.wikipedia.org/wiki/Replication_crisis"
+              rel="external"
+              target="_blank">replication crisis</a
+            >," in which published research can't be reproduced by multiple
+            labs, or oftentimes even repeated within the same lab by the same
+            person. The book "<a
+              href="https://www.amazon.com/dp/154164414X"
+              rel="external"
+              target="_blank">Rigor Mortis</a
+            >" by Richard Harris provides a useful summary of the crisis.
+          </p>
+          <p>
+            I started thinking about how software, lab automation, and other
+            technology tools could help with reproducibility. For example,
+            documentation certainly seems important for reproducibility.
+            Molecular biologists perform complicated experimental protocols with
+            many steps, and each step can affect the outcome. It's difficult to
+            document experiments in enough detail so that other scientists can
+            learn from, and reproduce, our work. I could see the importance of
+            documentation in other fields as well. For example, the surgeon Atul
+            Gawande wrote a book called "<a
+              href="https://www.amazon.com/dp/0312430000"
+              rel="external"
+              target="_blank">The Checklist Manifesto</a
+            >" describing their
+            <a
+              href="https://doi.org/10.1056/NEJMsa0810119"
+              rel="external"
+              target="_blank">research</a
+            >
+            about surgical checklists, a form of protocol or documentation. Distributing
+            a checklist to surgical team members reduced patient deaths by half.
+            Couldn't software help us document and reproduce our work?
+          </p>
+          <p>
+            Around this time, I started using an electronic lab notebook (ELN)
+            to replace the antiquated paper lab notebooks my lab at Harvard was
+            still using. It wasn't a smooth transition. On a Saturday afternoon
+            on which our ELN was experiencing an extended cloud outage, I had an
+            <strong>epiphany</strong>. I realized software skills would empower
+            me to alleviate problems like this and improve productivity for
+            other scientists in the future. I decided to learn software
+            engineering and <strong>start a career in tech</strong>.
+          </p>
+          <p>
+            During this transition period into tech, I offered to coordinate the
+            operational logistics of the lab as lab manager. I worked with the
+            other lab members to achieve numerous improvements to lab
+            infrastructure and culture. I also encountered a new set of lab
+            management pain points that could be addressed with better tech.
+          </p>
+        </div>
+      </section>
+      <section>
+        <div class="section-title">
+          <h2>Tech</h2>
+          <p>
+            My experiences as a science researcher motivated me to get into the
+            tech industry. I'm all about making scientists productive.
+          </p>
+        </div>
+        <div class="content">
+          <h3>Udacity</h3>
+          <Picture
+            src={udacityMeetup}
+            alt="Brendon Smith with some fellow coders at a Udacity meetup"
+            formats={PICTURE_FORMATS}
+            class:list={["img-thumbnail"]}
+            decoding="async"
+            loading="lazy"
+          />
+          <p>
+            After deciding to learn software engineering, I had to figure out <em
+              >how</em
+            >
+            to learn. I looked into code bootcamps and computer science grad school.
+            Some friends introduced me to the online learning platform Udacity, and
+            I decided to learn there. I chose web development because of its broad
+            applicability and large open source software community. Check out the
+            <a href={`${PROJECTS.HREF}/udacity`}>Udacity page</a> for more.
+          </p>
+          <h3>Projects</h3>
+          <p>
+            I've built my own open source software projects and helped with many
+            other projects too. Check out the <a href={PROJECTS.HREF}
+              >projects page</a
+            > for more.
+          </p>
+          <h3>Work</h3>
+          <p>
+            I've worked as a Software Engineer and DevOps Engineer at a few
+            different companies. Check out the <a href={WORK.HREF}>work page</a>
+            for more.
+          </p>
+        </div>
+      </section>
+      <section>
+        <div class="section-title">
+          <h2>Life</h2>
+          <p>Here are some things I like to do when I'm not working.</p>
+        </div>
+        <div class="content">
+          <h3>Coffee</h3>
+          <Picture
+            src={coffeeGeorgeHowellModbar}
+            alt="George Howell Coffee Godfrey Hotel Modbar pour-over system"
+            formats={PICTURE_FORMATS}
+            class:list={["img-thumbnail"]}
+            decoding="async"
+            loading="lazy"
+          />
+          <Picture
+            src={coffeeGeorgeHowellMap}
+            alt="George Howell Coffee Godfrey Hotel map with coffee sources"
+            formats={PICTURE_FORMATS}
+            class:list={["img-thumbnail"]}
+            decoding="async"
+            loading="lazy"
+          />
+          <Picture
+            src={coffeeNYCCounterCulture}
+            alt=`Brendon Smith and Kent Langston at the 2017 New York Coffee Festival
+              Counter Culture booth`
+            formats={PICTURE_FORMATS}
+            class:list={["img-thumbnail"]}
+            decoding="async"
+            loading="lazy"
+          />
+          <Picture
+            src={coffeeNYCStumptown}
+            alt="Brendon Smith at the 2017 New York Coffee Festival Stumptown booth"
+            formats={PICTURE_FORMATS}
+            class:list={["img-thumbnail"]}
+          />
+          <p>
+            I like to start my days with <a
+              href="https://en.wikipedia.org/wiki/Specialty_coffee"
+              rel="external"
+              target="_blank">specialty coffee</a
+            >. I frequently hang out at coffee shops around Boston and
+            Cambridge. Let me know if you'd like to join me.
+          </p>
+          <h3>Fitness</h3>
+          <Picture
+            src={fitnessTrackMeet}
+            alt="Brendon Smith competing in a track meet in 2002"
+            formats={PICTURE_FORMATS}
+            class:list={["img-thumbnail"]}
+            decoding="async"
+            loading="lazy"
+          />
+          <br />
+          <Picture
+            src={fitnessBicepsCurls}
+            alt="Brendon Smith doing biceps curls"
+            formats={PICTURE_FORMATS}
+            class:list={["img-thumbnail"]}
+            decoding="async"
+            loading="lazy"
+          />
+          <Picture
+            src={fitnessPullUps}
+            alt="Brendon Smith doing pull-ups"
+            formats={PICTURE_FORMATS}
+            class:list={["img-thumbnail"]}
+            decoding="async"
+            loading="lazy"
+          />
+          <p>
+            I got into fitness at the beginning of high school. I ran track, and
+            got into swimming and strength training. My fitness pursuits taught
+            me the value of consistency and focus, and helped me develop an
+            active lifestyle that I continue today.
+          </p>
+          <h3>Movies</h3>
+          <Picture
+            src={bladeRunnerEye}
+            alt="Close-up from Blade Runner (1982) of an eye with the 'Hades Landscape' reflected in the iris"
+            formats={PICTURE_FORMATS}
+            class:list={["img-thumbnail"]}
+            decoding="async"
+            loading="lazy"
+          />
+          <p>I like collecting and watching movies.</p>
+          <p>Here are some of my favorite genres:</p>
+          <ul>
+            <li>
+              Film Noir (<a
+                href="https://www.themoviedb.org/keyword/9807-film-noir/movie"
+                rel="external"
+                target="_blank">TheMovieDB</a
+              >, <a
+                href="https://en.wikipedia.org/wiki/Film_noir"
+                rel="external"
+                target="_blank">Wikipedia</a
+              >)
+            </li>
+            <li>
+              Horror (<a
+                href="https://www.themoviedb.org/genre/27-horror/movie"
+                rel="external"
+                target="_blank">TheMovieDB</a
+              >, <a
+                href="https://en.wikipedia.org/wiki/Horror_film"
+                rel="external"
+                target="_blank">Wikipedia</a
+              >)
+            </li>
+            <li>
+              Sci-Fi (<a
+                href="https://www.themoviedb.org/genre/878-science-fiction/movie"
+                rel="external"
+                target="_blank">TheMovieDB</a
+              >, <a
+                href="https://en.wikipedia.org/wiki/Science_fiction_film"
+                rel="external"
+                target="_blank">Wikipedia</a
+              >)
+            </li>
+          </ul>
+          <p>Here are some of my favorite directors:</p>
+          <ul>
+            <li>
+              John Carpenter (<a
+                href="https://www.themoviedb.org/person/11770-john-carpenter"
+                rel="external"
+                target="_blank">TheMovieDB</a
+              >, <a
+                href="https://en.wikipedia.org/wiki/John_Carpenter"
+                rel="external"
+                target="_blank">Wikipedia</a
+              >)
+            </li>
+            <li>
+              Jules Dassin (<a
+                href="https://www.themoviedb.org/person/14227-jules-dassin"
+                rel="external"
+                target="_blank">TheMovieDB</a
+              >, <a
+                href="https://en.wikipedia.org/wiki/Jules_Dassin"
+                rel="external"
+                target="_blank">Wikipedia</a
+              >)
+            </li>
+            <li>
+              Alfred Hitchcock (<a
+                href="https://www.themoviedb.org/person/2636-alfred-hitchcock"
+                rel="external"
+                target="_blank">TheMovieDB</a
+              >, <a
+                href="https://en.wikipedia.org/wiki/Alfred_Hitchcock"
+                rel="external"
+                target="_blank">Wikipedia</a
+              >)
+            </li>
+            <li>
+              Krzysztof Kieślowski (<a
+                href="https://www.themoviedb.org/person/1126-krzysztof-kieslowski"
+                rel="external"
+                target="_blank">TheMovieDB</a
+              >, <a
+                href="https://en.wikipedia.org/wiki/Krzysztof_Kie%C5%9Blowski"
+                rel="external"
+                target="_blank">Wikipedia</a
+              >)
+            </li>
+            <li>
+              Stanley Kubrick (<a
+                href="https://www.themoviedb.org/person/240-stanley-kubrick"
+                rel="external"
+                target="_blank">TheMovieDB</a
+              >, <a
+                href="https://en.wikipedia.org/wiki/Stanley_Kubrick"
+                rel="external"
+                target="_blank">Wikipedia</a
+              >)
+            </li>
+            <li>
+              Akira Kurosawa (<a
+                href="https://www.themoviedb.org/person/5026"
+                rel="external"
+                target="_blank">TheMovieDB</a
+              >, <a
+                href="https://en.wikipedia.org/wiki/Akira_Kurosawa"
+                rel="external"
+                target="_blank">Wikipedia</a
+              >)
+            </li>
+            <li>
+              Jean-Pierre Melville (<a
+                href="https://www.themoviedb.org/person/3831-jean-pierre-melville"
+                rel="external"
+                target="_blank">TheMovieDB</a
+              >, <a
+                href="https://en.wikipedia.org/wiki/Jean-Pierre_Melville"
+                rel="external"
+                target="_blank">Wikipedia</a
+              >)
+            </li>
+            <li>
+              Hayao Miyazaki (<a
+                href="https://www.themoviedb.org/person/608"
+                rel="external"
+                target="_blank">TheMovieDB</a
+              >, <a
+                href="https://en.wikipedia.org/wiki/Hayao_Miyazaki"
+                rel="external"
+                target="_blank">Wikipedia</a
+              >)
+            </li>
+            <li>
+              Ridley Scott (<a
+                href="https://www.themoviedb.org/person/578-ridley-scott"
+                rel="external"
+                target="_blank">TheMovieDB</a
+              >, <a
+                href="https://en.wikipedia.org/wiki/Ridley%20Scott"
+                rel="external"
+                target="_blank">Wikipedia</a
+              >)
+            </li>
+            <li>
+              Steven Spielberg (<a
+                href="https://www.themoviedb.org/person/488-steven-spielberg"
+                rel="external"
+                target="_blank">TheMovieDB</a
+              >, <a
+                href="https://en.wikipedia.org/wiki/Steven_Spielberg"
+                rel="external"
+                target="_blank">Wikipedia</a
+              >)
+            </li>
+          </ul>
+          <p>
+            I usually prefer to watch movies at home, but sometimes hang out at
+            art theaters like the <a
+              href="https://coolidge.org/"
+              rel="external"
+              target="_blank">Coolidge Corner Theatre</a
+            >.
+          </p>
+          <p>
+            Fun fact - the username "br3ndonland" I have on platforms like
+            GitHub and LinkedIn is a reference to one of my favorite movies,
+            Jurassic Park (1993) (<a
+              href="https://www.themoviedb.org/movie/329-jurassic-park"
+              rel="external"
+              target="_blank">TheMovieDB</a
+            >, <a
+              href="https://en.wikipedia.org/wiki/Jurassic_Park_%28film%29"
+              rel="external"
+              target="_blank">Wikipedia</a
+            >). The computer programmer character, Dennis Nedry (Wayne Knight),
+            has an <a
+              href="https://en.wikipedia.org/wiki/Macintosh_Quadra_700"
+              rel="external"
+              target="_blank">Apple Macintosh Quadra 700 computer</a
+            > at his desk. Apple's convention (still in use today) was to put an
+            icon at the top right of the desktop representing the computer's hard
+            drive. A close look at Nedry's desktop reveals that his hard drive is
+            named <code>NEDRYLAND</code>. When I got my first Mac, I named my
+            hard drive <code>BRENDONLAND</code>. On socials, I had to use
+            "br3ndonland" because "brendonland" was taken (there are actually
+            people named Brendon Land).
+          </p>
+          <Picture
+            src={jurassicParkNedry}
+            alt="Image from Jurassic Park (1993) of Dennis Nedry (Wayne Knight) squeezing a stress ball and saying, 'Thanks, Dad.'"
+            formats={PICTURE_FORMATS}
+            class:list={["img-thumbnail"]}
+            decoding="async"
+            loading="lazy"
+          />
+          <Picture
+            src={jurassicParkNEDRYLAND}
+            alt="Image from Jurassic Park (1993) of Dennis Nedry's desktop showing that his hard drive is named NEDRYLAND"
+            formats={PICTURE_FORMATS}
+            class:list={["img-thumbnail"]}
+            decoding="async"
+            loading="lazy"
+          />
+          <h3>Music</h3>
+          <Picture
+            src={massiveAttack20101015}
+            alt="Massive Attack at the Riviera Theatre, Chicago, 2010-10-15"
+            formats={PICTURE_FORMATS}
+            class:list={["img-thumbnail"]}
+            decoding="async"
+            loading="lazy"
+          />
+          <Picture
+            src={rush20150612}
+            alt="Rush at the United Center, Chicago, 2015-06-12"
+            formats={PICTURE_FORMATS}
+            class:list={["img-thumbnail"]}
+            decoding="async"
+            loading="lazy"
+          />
+          <p>
+            I like listening to music and going to concerts. I also played
+            classical guitar for several years in high school and college.
+          </p>
+          <p>Here are some of my favorite genres:</p>
+          <ul>
+            <li>
+              <a
+                href="https://en.wikipedia.org/wiki/Baroque_music"
+                rel="external"
+                target="_blank">Baroque</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://en.wikipedia.org/wiki/Classical_guitar"
+                rel="external"
+                target="_blank">Classical guitar</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://en.wikipedia.org/wiki/Jazz_fusion"
+                rel="external"
+                target="_blank">Jazz fusion</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://en.wikipedia.org/wiki/Progressive_rock"
+                rel="external"
+                target="_blank">Progressive rock</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://en.wikipedia.org/wiki/Heavy_metal_music"
+                rel="external"
+                target="_blank">Metal</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://en.wikipedia.org/wiki/Trip_hop"
+                rel="external"
+                target="_blank">Trip hop</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://en.wikipedia.org/wiki/Deep_house"
+                rel="external"
+                target="_blank">Deep house</a
+              > (while I'm coding)
+            </li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <Contact />
+  </div>
+</BaseLayout>
+
+<style>
+  aside,
+  p {
+    margin-top: 1rem;
+  }
+
+  .about {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+  }
+
+  section {
+    display: contents;
+  }
+
+  .section-title {
+    grid-column-start: 1;
+  }
+
+  .content {
+    grid-column: 2 / 4;
+  }
+
+  .content :global(a) {
+    text-decoration: 1px solid underline transparent;
+    text-underline-offset: 0.25em;
+    transition: text-decoration-color var(--theme-transition);
+  }
+
+  .content :global(a:hover),
+  .content :global(a:focus) {
+    text-decoration-color: currentColor;
+  }
+
+  @media (min-width: 50em) {
+    .about {
+      display: grid;
+      grid-template-columns: 1fr 60% 1fr;
+    }
+
+    .about > :global(:first-child) {
+      grid-column-start: 2;
+    }
+  }
+</style>

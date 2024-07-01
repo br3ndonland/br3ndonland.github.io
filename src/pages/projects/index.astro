@@ -1,0 +1,38 @@
+---
+import { getCollection } from "astro:content"
+import BaseLayout from "@layouts/BaseLayout.astro"
+import Contact from "@components/Contact.astro"
+import Hero from "@components/Hero.astro"
+import Grid from "@components/Grid.astro"
+import PreviewCard from "@components/PreviewCard.astro"
+import { SITE, PROJECTS } from "@consts"
+
+const projects = (await getCollection("projects"))
+  .filter((project) => !project.data.draft)
+  .sort((a, b) => b.data.dateStart.valueOf() - a.data.dateStart.valueOf())
+---
+
+<BaseLayout
+  title=`${SITE.TITLE}: ${PROJECTS.TITLE}`
+  description={PROJECTS.DESCRIPTION}
+>
+  <div class="stack gap-20">
+    <main class="wrapper stack gap-8">
+      <Hero
+        title={PROJECTS.TITLE}
+        tagline="Here are some of my open source software projects."
+        align="start"
+      />
+      <Grid>
+        {
+          projects.map((project) => (
+            <li>
+              <PreviewCard entry={project} />
+            </li>
+          ))
+        }
+      </Grid>
+    </main>
+    <Contact />
+  </div>
+</BaseLayout>

@@ -1,0 +1,331 @@
+---
+title: Udacity
+dateStart: 2017-08-14
+dateEnd: 2018-09-25
+image:
+  src: "@images/udacity-full-stack-web-developer-nanodegree-certificate-crop.png"
+  alt: Udacity Grow with Google meetup at MIT, 2018-03-24
+description: >-
+  I learned to code with an online learning platform called Udacity.
+  Here's a summary of my accomplishments.
+---
+
+import { Picture } from "astro:assets"
+import Icon from "@components/Icon.astro"
+import udacityBostonsBestBeans from "@images/udacity-full-stack-web-developer-nanodegree-bostons-best-beans.png"
+import udacityBrendonsBodybuildingBazaar from "@images/udacity-full-stack-web-developer-nanodegree-brendons-bodybuilding-bazaar.png"
+import udacityCertFullStack from "@images/udacity-full-stack-web-developer-nanodegree-certificate-crop.png"
+import udacityCertMobile from "@images/udacity-mobile-web-specialist-nanodegree-certificate-crop.png"
+import udacityGoogleMBTAccess from "@images/udacity-google-mbtaccess-2019-09-02-iphone-x.png"
+import udacityGoogleMeetup20180224BPL from "@images/udacity-google-meetup-2018-02-24-bpl.jpg"
+import udacityGoogleMeetup20180324MIT from "@images/udacity-google-meetup-2018-03-24-mit.jpg"
+import udacityGoogleMeetup20180324Watertown from "@images/udacity-google-meetup-2018-03-24-watertown.jpg"
+import udacityGoogleMeetup20180329MIT from "@images/udacity-google-meetup-2018-03-29-mit.jpg"
+import udacityGoogleMeetup20180407MIT from "@images/udacity-google-meetup-2018-04-07-mit.jpg"
+import udacityGoogleScholarshipAward from "@images/udacity-google-scholarship-award.png"
+import udacityMobileScholarshipAward from "@images/udacity-mobile-web-specialist-scholarship-award.png"
+import udacityPortfolio from "@images/udacity-full-stack-web-developer-nanodegree-portfolio.png"
+import udacityRestaurantReviews from "@images/udacity-mobile-web-specialist-restaurant-reviews.png"
+import { PICTURE_FORMATS } from "@consts"
+
+## Full Stack Web Developer
+
+<a
+  href="https://www.udacity.com/certificate/LXMPARWP"
+  rel="external"
+  target="_blank"
+>
+  <Picture
+    src={udacityCertFullStack}
+    alt="Udacity Full Stack Web Developer Nanodegree certificate screenshot"
+    formats={PICTURE_FORMATS}
+    class:list={["img-thumbnail"]}
+    decoding="async"
+    loading="eager"
+  />
+</a>
+
+### Description
+
+The Full Stack Web Developer Nanodegree program was the first training program I did. I put in about ten months of work and <a href="https://www.udacity.com/certificate/LXMPARWP" rel="external" target="_blank">completed the Nanodegree program on June 17, 2018</a>. Full stack web developers work on all aspects of websites and apps, from front end (features that users see) to back end (servers and databases). In this program, I built skills including:
+
+- Developing webpages based on mockup images from designers
+- Querying and manipulating large databases with SQL
+- Creating functional multi-page web apps with databases and sign-ins
+- Fetching data from Application Programming Interfaces (APIs)
+- Deploying apps to Linux servers
+
+Here are some highlights from my work in the program.
+
+### Break timer
+
+**This was my first milestone as a computer programmer.**
+
+When I began learning Python syntax, progress was slow, and it was difficult to express myself. It felt very much like the mental exhaustion of practicing a spoken language. I kept at it and didn't let myself get discouraged.
+
+I got to an exercise in which I had to create a break timer. The timer opens a YouTube video every two hours to encourage people to take a break while working on the computer. I wrote the code independently, then checked the instructor's solution. When adding a loop to the break counter, the instructor used a `while` loop, which requires more code than a `for` loop and introduces the possibility of an "<a href="https://en.wikipedia.org/wiki/Infinite_loop" rel="external" target="_blank">infinite loop</a>" (a loop that continues forever because it doesn't have an ending condition). I used a `for` loop instead, reducing the required amount of code from eight lines to five, and reducing the chances of an infinite loop. **My code demonstrated that I had learned to think independently and write code in the most efficient and "<a href="https://www.python.org/dev/peps/pep-0020/" rel="external" target="_blank">Pythonic</a>" way.**
+
+Instructor's Python code:
+
+```python
+# Instructor's break timer
+import time
+import webbrowser
+
+total_breaks = 4
+break_count = 0
+
+while break_count < total_breaks:
+    time.sleep(2 * 60 * 60)
+    webbrowser.open_new_tab("https://www.youtube.com/watch?v=IuGO6WHcruU")
+    break_count = break_count + 1
+
+```
+
+{/* prettier-ignore */}
+<a
+  href="https://github.com/br3ndonland/udacity-fsnd/blob/1107ce1efd6c53be07dfcfd261739f49943d4d3b/1-foundations/python/break_timer.py"
+  rel="external" target="_blank"
+>My Python code</a>:
+
+```python
+# My break timer
+import time
+import webbrowser
+
+for i in range(4):
+    time.sleep(2 * 60 * 60)
+    webbrowser.open_new_tab("https://www.youtube.com/watch?v=IuGO6WHcruU")
+
+```
+
+**I realized the significance of this exercise because I had learned about computing history**. I thought about how Bill Gates and Paul Allen's major accomplishment while at Harvard was writing a BASIC interpreter for the Altair in 3.2 kilobytes of text, leaving memory free to write other programs and launching the personal computing software industry. Computer memory is less limiting today, but we still have to write code efficiently, especially when it is accessed over the web. Walter Isaacson's article _<a href="https://news.harvard.edu/gazette/story/2013/09/dawn-of-a-revolution/" rel="external" target="_blank">Dawn of a Revolution</a>_ and corresponding book _<a href="https://en.wikipedia.org/wiki/The%5FInnovators%5F%28book%29" rel="external" target="_blank">The Innovators</a>_ were formative reads for me.
+
+### Portfolio website
+
+<a
+  href="https://github.com/br3ndonland/udacity-portfolio"
+  rel="external"
+  target="_blank"
+>
+  <Picture
+    src={udacityPortfolio}
+    alt="Udacity portfolio website screenshot"
+    formats={PICTURE_FORMATS}
+    class:list={["img-thumbnail"]}
+    decoding="async"
+    loading="lazy"
+  />
+</a>
+
+**The website you're at now began as a Udacity project**. We were provided with a design mockup (screenshot) of a developer portfolio webpage, and had to replicate the design with HTML and CSS. I based the webpage styling on Bootstrap 4. After replicating the design, I added some customizations, including a toggle button that used JavaScript to change the page color scheme. I then built the single webpage into a full website with <a href="https://jekyllrb.com/" rel="external" target="_blank">Jekyll</a> and hosted it on <a href="https://pages.github.com/" rel="external" target="_blank">GitHub Pages</a>. I later adapted the Udacity website to create <a href="https://github.com/br3ndonland/br3ndonland.github.io-jekyll" rel="external" target="_blank">my first personal website</a>, which I used for years until I created a new site with <a href="https://astro.build" rel="external" target="_blank">Astro</a>.
+
+### Brendon's bodybuilding bazaar
+
+<a
+  href="https://github.com/br3ndonland/udacity-fsnd-flask-catalog"
+  rel="external"
+  target="_blank"
+>
+  <Picture
+    src={udacityBrendonsBodybuildingBazaar}
+    alt="Udacity Brendon's bodybuilding bazaar full-stack app screenshot"
+    formats={PICTURE_FORMATS}
+    class:list={["img-thumbnail"]}
+    decoding="async"
+    loading="lazy"
+  />
+</a>
+
+I was able to bring together my work on Python, databases, and websites to create a full-stack web application. The app was a mock e-commerce site called "Brendon's Bodybuilding Bazaar" with a sample catalog of bodybuilding items, along with a classic picture of Arnold Schwarzenegger and Franco Columbu. I used <a href="https://palletsprojects.com/p/flask/" rel="external" target="_blank">Flask</a> to control the app and generate a JSON API, and a SQLite database to store data. Users could sign in with Google. After signing in, users could add items and categories to the catalog. The creator of each item or category could also edit or delete it. I passed Udacity code review with no required corrections, and the reviewer commended me for my work on the project.
+
+### Boston's best beans
+
+<a
+  href="https://github.com/br3ndonland/udacity-fsnd-p5-map"
+  rel="external"
+  target="_blank"
+>
+  <Picture
+    src={udacityBostonsBestBeans}
+    alt="Udacity Boston's Best Beans map app screenshot"
+    formats={PICTURE_FORMATS}
+    class:list={["img-thumbnail"]}
+    decoding="async"
+    loading="lazy"
+  />
+</a>
+
+This project required me to create a map-based web app that combines data from multiple APIs. I decided to theme the app after another one of my favorite things, specialty coffee. I used the Foursquare API to retrieve places and their data, and the Knockout framework to bind the JavaScript code with the webpage (so click events would trigger changes on the map). I went beyond the project's requirements to implement ES6+ JavaScript features, like Fetch, Async/Await, and array methods. Again, I passed Udacity code review with complements from the reviewer and no required corrections.
+
+The Boston's best beans list is also available on <a href="https://foursquare.com/user/480979057/list/bostons-best-beans" rel="external" target="_blank">Foursquare</a>.
+
+---
+
+## Grow with Google
+
+<Picture
+  src={udacityGoogleScholarshipAward}
+  alt="Udacity Grow with Google scholarship award"
+  formats={PICTURE_FORMATS}
+  class:list={["img-thumbnail"]}
+  decoding="async"
+  loading="lazy"
+/>
+
+### Description
+
+I won a <a href="https://www.udacity.com/scholarships" rel="external" target="_blank">scholarship</a> from Udacity and Google. <a href="https://grow.google/" rel="external" target="_blank">Grow with Google</a> is an initiative to help people make career changes into coding. I was accepted to the intermediate web developer track to learn techniques for building progressive web apps. There was a three month challenge round, after which the top participants move on to a more advanced Mobile Web Specialist program.
+
+Here's how it went down:
+
+{/* prettier-ignore */}
+- Found out about the Grow with Google scholarship via Udacity's <a href="https://www.facebook.com/Udacity/posts/1250067568431912" rel="external" target="_blank">Facebook</a> and <a href="https://medium.com/udacity/grow-with-google-50-000-new-scholarships-available-now-1aa0513430b6" rel="external" target="_blank">Medium</a> posts while on a bus to NYC for the New York Coffee Festival on October 14, 2017.
+- <a
+    href="https://github.com/br3ndonland/udacity-google/blob/HEAD/udacity-google-00-apply.md"
+    rel="external" target="_blank"
+  >Applied</a> in December 2017.
+- Won the scholarship in January 2018.
+- Started the challenge course materials on February 21, 2018.
+- Completed the challenge course materials on March 7, 2018. The course taught us how to build progressive web apps and use the new features in JavaScript ES6. I tracked my work and made it available on <a href="https://github.com/br3ndonland/udacity-google" rel="external" target="_blank">GitHub</a>.
+- Attended five local meetups.
+- Built a collaborative open source transportation app, "<a href="https://github.com/growwithgooglema/mbtaccess" rel="external" target="_blank">MBTAccess</a>," in April 2018.
+- Ranked in the top 10% of 10,000 students in the intermediate web developer track. Ranking was based on completing all course materials, as well as participation in the Slack workspace, discussion forum, and meetups.
+- Won a full scholarship to the Udacity Mobile Web Specialist Nanodegree program on April 17, 2018.
+
+### Meetups
+
+<Picture
+  src={udacityGoogleMeetup20180224BPL}
+  alt="Udacity Grow with Google meetup at Boston Public Library, February 24, 2018"
+  formats={PICTURE_FORMATS}
+  class:list={["img-thumbnail"]}
+  decoding="async"
+  loading="lazy"
+/>
+
+<Icon icon="arrow-bend-left-up" size="1.2em" verticalAlign="top" /> _Boston Public
+Library, February 24, 2018_
+
+<Picture
+  src={udacityGoogleMeetup20180324Watertown}
+  alt="Udacity Grow with Google meetup at Watertown Public Library, 2018-03-24"
+  formats={PICTURE_FORMATS}
+  class:list={["img-thumbnail"]}
+  decoding="async"
+  loading="lazy"
+/>
+
+<Icon icon="arrow-bend-left-up" size="1.2em" verticalAlign="top" /> _Watertown, March
+24, 2018_
+
+<Picture
+  src={udacityGoogleMeetup20180324MIT}
+  alt="Udacity Grow with Google meetup at MIT, 2018-03-24"
+  formats={PICTURE_FORMATS}
+  class:list={["img-thumbnail"]}
+  decoding="async"
+  loading="lazy"
+/>
+
+<Icon icon="arrow-bend-left-up" size="1.2em" verticalAlign="top" /> _MIT, March 24,
+2018_
+
+<Picture
+  src={udacityGoogleMeetup20180329MIT}
+  alt="Udacity Grow with Google meetup at MIT, 2018-03-29"
+  formats={PICTURE_FORMATS}
+  class:list={["img-thumbnail"]}
+  decoding="async"
+  loading="lazy"
+/>
+
+<Icon icon="arrow-bend-left-up" size="1.2em" verticalAlign="top" /> _MIT, March 29,
+2018_
+
+<Picture
+  src={udacityGoogleMeetup20180407MIT}
+  alt="Udacity Grow with Google meetup at MIT, 2018-04-07"
+  formats={PICTURE_FORMATS}
+  class:list={["img-thumbnail"]}
+  decoding="async"
+  loading="lazy"
+/>
+
+<Icon icon="arrow-bend-left-up" size="1.2em" verticalAlign="top" /> _MIT, April 7,
+2018_
+
+### MBTAccess
+
+<a
+  href="https://github.com/growwithgooglema/mbtaccess"
+  rel="external"
+  target="_blank"
+>
+  <Picture
+    src={udacityGoogleMBTAccess}
+    alt="MBTAccess app screenshot simulating iPhone X"
+    formats={PICTURE_FORMATS}
+    class:list={["img-thumbnail"]}
+    decoding="async"
+    loading="lazy"
+  />
+</a>
+
+The Grow with Google meetups led us to develop an app together.
+
+We found some common interest in transportation apps. MBTA had recently released their <a href="https://api-v3.mbta.com/" rel="external" target="_blank">MBTA V3 API</a> that provided public transportation data in JSON API format. One of the under-utilized datasets in their API was the wheelchair accessibility of the stops. Google Maps had <a href="https://fortune.com/2018/03/15/google-maps-wheelchair-accessible-routes/" rel="external" target="_blank">recently started</a> providing wheelchair accessibility info, but their implementation was not particularly extensive.
+
+We created a web app that quickly and conveniently identified wheelchair accessible MBTA stops near the user. We successfully built and deployed the app, and got some great experience working as a team on GitHub.
+
+---
+
+## Mobile Web Specialist
+
+<Picture
+  src={udacityMobileScholarshipAward}
+  alt="Udacity Google Mobile Web Specialist scholarship email"
+  formats={PICTURE_FORMATS}
+  class:list={["img-thumbnail"]}
+  decoding="async"
+  loading="lazy"
+/>
+<a
+  href="https://www.udacity.com/certificate/PH3HTUG3"
+  rel="external"
+  target="_blank"
+>
+  <Picture
+    src={udacityCertMobile}
+    alt="Udacity Mobile Web Specialist Nanodegree certificate screenshot"
+    formats={PICTURE_FORMATS}
+    class:list={["img-thumbnail"]}
+    decoding="async"
+    loading="lazy"
+  />
+</a>
+
+### Description
+
+After completing the Grow with Google challenge course and ranking in the top 10% of 10,000 students, I won a full scholarship to the Udacity Mobile Web Specialist Nanodegree program. They announced scholarship winners on April 17, 2018. <a href="https://www.udacity.com/certificate/PH3HTUG3" rel="external" target="_blank">I completed the Nanodegree program on September 25, 2018</a>.
+
+Mobile Web Specialists are trained in building "Progressive Web Apps" (PWAs, see <a href="https://developers.google.com/web/progressive-web-apps/" rel="external" target="_blank">Google</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps" rel="external" target="_blank">MDN</a>, and <a href="https://medium.com/javascript-scene/native-apps-are-doomed-ac397148a2c0" rel="external" target="_blank">Medium</a>). PWAs are like a combination of web apps and native apps, improving on the best features of each.
+
+### Restaurant reviews
+
+<a
+  href="https://github.com/br3ndonland/udacity-google-mws"
+  rel="external"
+  target="_blank"
+>
+  <Picture
+    src={udacityRestaurantReviews}
+    alt="Udacity Mobile Web Specialist restaurant reviews app screenshot"
+    formats={PICTURE_FORMATS}
+    class:list={["img-thumbnail"]}
+    decoding="async"
+    loading="lazy"
+  />
+</a>
+
+I built a restaurant reviews PWA that displays restaurant locations and info. The app provides offline access through the Service Worker, IndexedDB, and web manifest files. Users can add favorites and reviews for restaurants. If changes are made offline, they sync to the web server when network access is restored.
