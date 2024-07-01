@@ -1,0 +1,11 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/udacity",
+      "destination": "/projects/udacity",
+      "permanent": true
+    }
+  ]
+}
