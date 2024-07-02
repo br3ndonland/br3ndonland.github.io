@@ -8,6 +8,7 @@ export default defineConfig({
     shikiConfig: {
       theme: "dracula",
     },
+    smartypants: false,
   },
   site: "https://www.bws.bio",
 })
