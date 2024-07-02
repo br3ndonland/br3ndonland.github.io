@@ -3,6 +3,10 @@ import type { NavLink, Social } from "@types"
 import Icon from "./Icon.astro"
 import ThemeToggle from "./ThemeToggle.astro"
 import { SITE, SOCIALS, NAV_LINKS } from "@consts"
+
+const socialsInNav: Social[] = SOCIALS.filter(
+  (social: Social) => social.TITLE !== "CV",
+)
 ---
 
 <nav>
@@ -54,7 +58,7 @@ import { SITE, SOCIALS, NAV_LINKS } from "@consts"
     <div class="menu-footer">
       <div class="socials">
         {
-          SOCIALS.map((social: Social) => (
+          socialsInNav.map((social: Social) => (
             <a href={social.HREF} class="social" rel="external" target="_blank">
               <span class="sr-only">{social.TITLE}</span>
               <Icon icon={social.ICON} />
@@ -91,7 +95,7 @@ import { SITE, SOCIALS, NAV_LINKS } from "@consts"
     <div class="menu-footer">
       <div class="socials">
         {
-          SOCIALS.map((social: Social) => (
+          socialsInNav.map((social: Social) => (
             <a href={social.HREF} class="social" rel="external" target="_blank">
               <span class="sr-only">{social.TITLE}</span>
               <Icon icon={social.ICON} />
