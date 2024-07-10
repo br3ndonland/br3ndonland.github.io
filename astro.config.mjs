@@ -10,5 +10,6 @@ export default defineConfig({
     },
     smartypants: false,
   },
+  prefetch: true,
   site: "https://www.bws.bio",
 })

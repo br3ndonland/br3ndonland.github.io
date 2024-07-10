@@ -45,7 +45,13 @@ const socialsInNav: Social[] = SOCIALS.filter(
                       Astro.url.pathname.startsWith(navLink.HREF)),
                 },
               ]}
-              href={navLink.HREF}
+              data-astro-prefetch="viewport"
+              href={
+                navLink.HREF !== "/" &&
+                Astro.site?.hostname.includes("github.io")
+                  ? `${navLink.HREF}/`
+                  : navLink.HREF
+              }
             >
               {navLink.TITLE}
             </a>
@@ -84,7 +90,13 @@ const socialsInNav: Social[] = SOCIALS.filter(
                       Astro.url.pathname.startsWith(navLink.HREF)),
                 },
               ]}
-              href={navLink.HREF}
+              data-astro-prefetch="viewport"
+              href={
+                navLink.HREF !== "/" &&
+                Astro.site?.hostname.includes("github.io")
+                  ? `${navLink.HREF}/`
+                  : navLink.HREF
+              }
             >
               {navLink.TITLE}
             </a>
