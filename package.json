@@ -5,7 +5,7 @@
   "type": "module",
   "version": "0.0.0",
   "scripts": {
-    "check": "prettier . --check && astro check",
+    "check": "prettier . --check && npx -s -y cspell --dot --gitignore **/*.astro **/*.md* && astro check",
     "fmt": "prettier . --write",
     "build": "astro build",
     "dev": "astro dev",
@@ -36,6 +36,7 @@
     "typescript": "^5.4.5"
   },
   "devDependencies": {
+    "cspell": "^8.10.4",
     "prettier": "^3.2.5",
     "prettier-plugin-astro": "^0.14.0"
   }
