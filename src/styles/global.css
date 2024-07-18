@@ -316,6 +316,9 @@ blockquote p {
   body {
     font-size: var(--text-lg);
   }
+  blockquote {
+    font-size: var(--text-md);
+  }
   .img-hero {
     max-height: 40rem;
   }
