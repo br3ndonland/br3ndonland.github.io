@@ -1,8 +1,8 @@
 ---
 title: el2bl
 dateStart: 2019-03-29
-dateEnd: 2020-03-14
-description: Python script for converting note links from Evernote to Bear
+dateEnd: 2024-07-21
+description: Migrate your notes from Evernote to Bear, retaining note links
 image:
   src: "@images/el2bl-logo.jpg"
   alt: el2bl logo, showing Evernote, then right arrow, then Python, then right arrow, then Bear
@@ -160,63 +160,82 @@ The initial implementation converted most of the links in my Evernote exports, b
 
 I updated the pattern matching behavior to accommodate additional attributes in the anchor tag. The regex only needed a minor update, from `(<a href="evernote.*?>)(.*?)(</a>?)` to `(<a.*?href="evernote.*?>)(.*?)(</a>?)`.
 
+#### No soup for you
+
+After implementing regular expressions, I realized that I actually didn't need Beautiful Soup at all. I could just read the file as a string, modify the string, and then write the string to a new file. Simple! I made a few touch-ups, such as using <a href="https://docs.python.org/3/library/pathlib.html" rel="external" target="_blank"><code>pathlib</code></a> instead of `os` for file path operations, but at this point, the code was ready to run.
+
 ## Scripted
 
-Here's the final script. You can also find it on <a href="https://github.com/br3ndonland/el2bl" rel="external" target="_blank">GitHub</a>.
+To download from <a href="https://github.com/br3ndonland/el2bl" rel="external" target="_blank">GitHub</a>:
+
+```sh
+git clone git@github.com:br3ndonland/el2bl.git
+cd el2bl
+python el2bl.py
+```
+
+```text
+Please input the path to a directory with Evernote exports: tests
+Converting export.enex...
+Converted export.enex. New file available at tests/bear/export.enex.
+```
+
+Here's the final script.
 
 ```py
 #!/usr/bin/env python3
 """el2bl: convert Evernote note links to Bear note links"""
-import os
+
+import pathlib
 import re
-from bs4 import BeautifulSoup
 
 
-def input_enex_path():
+def input_enex_path() -> None:
     """Read .enex files in directory.
     ---
     - Accept path to directory from user input
-    - Verify that directory is valid with os.path.exists()
-    - Scan directory with os.scandir and create files object
-    - Create directory for converted files
-    - Run function to convert links in each file
+    - Verify that directory is valid
+    - Iterate over directory and convert links in each file
     """
-    path = input("Please input the path to a directory with Evernote exports: ")
-    if not os.path.exists(path):
-        print(f"Not a valid file path:\n{path}")
-        return
-    else:
-        print(f"Valid file path: {path}")
-    if not os.path.exists(f"{path}/bear"):
-        os.mkdir(f"{path}/bear")
-    for file in os.scandir(path):
-        if file.is_file() and file.name.endswith(".enex"):
-            convert_links(file)
+    input_path = input("Please input the path to a directory with Evernote exports: ")
+    path = pathlib.Path(input_path)
+    try:
+        if not path.is_dir():
+            raise NotADirectoryError(path)
+        for file in path.iterdir():
+            if file.is_file() and file.suffix == ".enex":
+                convert_links(file)
+    except Exception as e:
+        print(f"\n{e.__class__.__qualname__}: {e}")
 
 
-def convert_links(file):
+def convert_links(enex_path: pathlib.Path) -> pathlib.Path:
     """Convert links in .enex files to Bear note link format.
     ---
-    - Read contents of file with Beautiful Soup, and convert to string
+    - Read contents of file
     - Replace Evernote note link URIs, but not other URIs, with Bear note links
     - Remove H1 tags from note body
     - Write to a new file in the bear subdirectory
     """
-    try:
-        print(f"Converting {file.name}...")
-        with open(file) as enex:
-            soup = str(BeautifulSoup(enex, "html.parser"))
-            soup_sub = re.sub(r'(<a.*?href="evernote.*?>)(.*?)(</a>?)', r"[[\2]]", soup)
-            soup_sub = re.sub(r"(<h1.*?>)(.*?)(</h1>?)", r"\2", soup_sub)
-            with open(f"{os.path.dirname(file)}/bear/{file.name}", "x") as new_enex:
-                new_enex.write(soup_sub)
-            print("Done. New file available in the bear subdirectory.")
-    except Exception as e:
-        print(f"An error occurred:\n{e}\nPlease try again.")
+    print(f"Converting {enex_path.name}...")
+    enex_contents = enex_path.read_text()
+    enex_contents_with_converted_links = re.sub(
+        r'(<a.*?href="evernote.*?>)(.*?)(</a>?)', r"[[\2]]", enex_contents
+    )
+    enex_contents_with_converted_links = re.sub(
+        r"(<h1.*?>)(.*?)(</h1>?)", r"\2", enex_contents_with_converted_links
+    )
+    new_enex_dir = enex_path.parent / "bear"
+    new_enex_dir.mkdir(exist_ok=True)
+    new_enex_path = new_enex_dir / enex_path.name
+    new_enex_path.write_text(enex_contents_with_converted_links)
+    print(f"Converted {enex_path.name}. New file available at {new_enex_path}.")
+    return new_enex_path
 
 
 if __name__ == "__main__":
     input_enex_path()
+
 ```
 
 [^1]: From _Stand on Zanzibar_ by John Brunner, Continuity 3
