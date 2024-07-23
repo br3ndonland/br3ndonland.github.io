@@ -233,6 +233,23 @@ blockquote p {
 }
 
 /* Utilities */
+.anchor-link {
+  display: inline-block;
+  font-size: var(--text-md);
+  margin-left: calc(-0.75 * (1em + 1ex));
+  margin-right: calc(-0.25 * (1em + 1ex));
+  width: calc(1 * (1em + 1ex));
+}
+
+.anchor-icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-color: currentColor;
+  content: " ";
+  mask-image: url("/images/link.svg");
+}
+
 .d-none {
   display: none;
 }
@@ -318,6 +335,19 @@ blockquote p {
   }
   blockquote {
     font-size: var(--text-md);
+  }
+  .anchor-link {
+    font-size: var(--text-lg);
+  }
+  .anchor-icon {
+    width: 20px;
+    height: 20px;
+  }
+  :is(h1, h2, h3, h4, h5, h6) .anchor-icon {
+    visibility: hidden;
+  }
+  :is(h1, h2, h3, h4, h5, h6):hover .anchor-icon {
+    visibility: visible;
   }
   .img-hero {
     max-height: 40rem;
