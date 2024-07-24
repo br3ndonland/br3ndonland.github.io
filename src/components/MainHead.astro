@@ -30,6 +30,7 @@ const imageURL = image && new URL(image, Astro.url)
   type="font/woff2"
   crossorigin
 />
+<link rel="sitemap" href="/sitemap-index.xml" />
 {canonicalURL && <link rel="canonical" href={canonicalURL} />}
 <title>{title}</title>
 <meta name="title" content={title} />
