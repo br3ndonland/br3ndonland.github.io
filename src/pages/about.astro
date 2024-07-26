@@ -681,19 +681,10 @@ import { ABOUT, PICTURE_FORMATS, PROJECTS, SITE, WORK } from "@consts"
   .about {
     display: flex;
     flex-direction: column;
-    gap: 3.5rem;
   }
 
   section {
     display: contents;
-  }
-
-  .section-title {
-    grid-column-start: 1;
-  }
-
-  .content {
-    grid-column: 2 / 4;
   }
 
   .content :global(a) {
@@ -711,10 +702,19 @@ import { ABOUT, PICTURE_FORMATS, PROJECTS, SITE, WORK } from "@consts"
     .about {
       display: grid;
       grid-template-columns: 1fr 60% 1fr;
+      gap: 3.5rem;
     }
 
     .about > :global(:first-child) {
       grid-column-start: 2;
+    }
+
+    .section-title {
+      grid-column-start: 1;
+    }
+
+    .content {
+      grid-column: 2 / 4;
     }
   }
 </style>
