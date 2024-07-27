@@ -36,12 +36,6 @@ import Icon from "./Icon.astro"
     color: var(--gray-400);
     text-decoration: solid underline;
     text-underline-offset: 0.25em;
-    transition: text-decoration-color var(--theme-transition);
-  }
-
-  footer a:hover,
-  footer a:focus {
-    text-decoration-color: currentColor;
   }
 
   .group {
@@ -61,6 +55,16 @@ import Icon from "./Icon.astro"
     footer {
       font-size: var(--text-lg);
       padding: 2.5rem 5rem;
+    }
+
+    footer a {
+      text-decoration: solid underline transparent;
+      transition: text-decoration-color var(--theme-transition);
+    }
+
+    footer a:hover,
+    footer a:focus {
+      text-decoration-color: currentColor;
     }
   }
 </style>
