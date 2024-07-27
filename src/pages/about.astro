@@ -49,13 +49,13 @@ import { ABOUT, PICTURE_FORMATS, PROJECTS, SITE, WORK } from "@consts"
         </Hero>
       </header>
       <section>
-        <div class="section-title">
+        <hgroup>
           <h2>Science</h2>
           <p>
             Science is my jam. Before I got into tech, I spent about ten years
             doing science research.
           </p>
-        </div>
+        </hgroup>
         <div class="content">
           <h3>College</h3>
           <Picture
@@ -197,13 +197,13 @@ import { ABOUT, PICTURE_FORMATS, PROJECTS, SITE, WORK } from "@consts"
         </div>
       </section>
       <section>
-        <div class="section-title">
+        <hgroup>
           <h2>Tech</h2>
           <p>
             My experiences as a science researcher motivated me to get into the
             tech industry. I'm all about making scientists productive.
           </p>
-        </div>
+        </hgroup>
         <div class="content">
           <h3>Udacity</h3>
           <Picture
@@ -240,10 +240,10 @@ import { ABOUT, PICTURE_FORMATS, PROJECTS, SITE, WORK } from "@consts"
         </div>
       </section>
       <section>
-        <div class="section-title">
+        <hgroup>
           <h2>Life</h2>
           <p>Here are some things I like to do when I'm not working.</p>
-        </div>
+        </hgroup>
         <div class="content">
           <h3>Coffee</h3>
           <Picture
@@ -638,12 +638,12 @@ import { ABOUT, PICTURE_FORMATS, PROJECTS, SITE, WORK } from "@consts"
       gap: 3.5rem;
     }
 
-    .about > :global(:first-child) {
-      grid-column-start: 2;
+    hgroup {
+      grid-column-start: 1;
     }
 
-    .section-title {
-      grid-column-start: 1;
+    .about > :global(:first-child) {
+      grid-column-start: 2;
     }
 
     .content {
