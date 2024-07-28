@@ -4,7 +4,7 @@ import { AUTHOR } from "@consts"
 ---
 
 <aside>
-  <h2>Want to get in touch?</h2>
+  <p>Want to get in touch?</p>
   <contact-link data-email={AUTHOR.EMAIL}>
     <a href="" rel="nofollow">
       Send me a message
@@ -85,8 +85,10 @@ import { AUTHOR } from "@consts"
     padding: 2rem 0.5rem;
   }
 
-  h2 {
+  p {
+    color: var(--gray-100);
     font-size: var(--text-lg);
+    font-weight: bold;
     text-align: center;
   }
 
@@ -103,7 +105,7 @@ import { AUTHOR } from "@consts"
       padding: 5rem;
     }
 
-    h2 {
+    p {
       font-size: var(--text-2xl);
       text-align: left;
     }
