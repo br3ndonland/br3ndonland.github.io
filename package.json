@@ -5,7 +5,7 @@
   "type": "module",
   "version": "0.0.0",
   "scripts": {
-    "check": "prettier . --check && npx -s -y cspell --dot --gitignore **/*.astro **/*.md* && astro check",
+    "check": "prettier . --check && cspell --dot --gitignore **/*.astro **/*.md* && astro check",
     "fmt": "prettier . --write",
     "build": "astro build",
     "dev": "astro dev",
