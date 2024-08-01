@@ -16,12 +16,10 @@ export type Metadata = {
   HREF: string
 }
 
-interface NavLinkInterface {
+export interface NavLink {
   TITLE: string
   HREF: string
 }
-
-export type NavLink = NavLinkInterface
 
 export type NavLinks = NavLink[]
 
@@ -57,12 +55,8 @@ export type IconNames =
 
 export type IconPaths = Record<IconNames, string>
 
-interface SocialInterface extends NavLink {
-  TITLE: string
-  HREF: string
+export interface Social extends NavLink {
   ICON: IconNames
 }
-
-export type Social = SocialInterface
 
 export type Socials = Social[]
