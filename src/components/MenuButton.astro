@@ -20,11 +20,9 @@ import Icon from "./Icon.astro"
       this.appendChild(this.querySelector("template")!.content.cloneNode(true))
       const btn = this.querySelector("button")!
 
-      // Hide menu (shown by default to support no-JS browsers).
+      // Hide menu by default.
       const menu = document.getElementById("menu-content")!
       menu.hidden = true
-      // Add "menu-content" class in JS to avoid covering content in non-JS browsers.
-      menu.classList.add("menu-content")
 
       // Set whether the menu is currently expanded or collapsed.
       const setExpanded = (expand: boolean) => {

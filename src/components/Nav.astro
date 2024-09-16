@@ -116,6 +116,21 @@ const socialsInNav: Social[] = SOCIALS.filter(
   </div>
 </nav>
 
+<script>
+  /*
+    Add class to overlay menu on top of page when menu is expanded
+
+    The CSS class positions the menu on top of the rest of the page when the
+    menu is expanded on small viewports. Otherwise, the menu pushes the rest
+    of the page downward when expanded on small viewports. The CSS class is
+    added with JavaScript because different behavior is needed if JavaScript
+    is disabled. If JavaScript is disabled, the menu should be permanently
+    expanded and should not cover any other content on the page.
+  */
+  const menu = document.getElementById("menu-content")!
+  menu.classList.add("menu-content")
+</script>
+
 <style>
   nav {
     z-index: 9999;
