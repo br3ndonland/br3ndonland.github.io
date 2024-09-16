@@ -10,7 +10,7 @@ const { menuElementId = "menu-content" } = Astro.props
 
 <menu-button data-menu-element-id={menuElementId}>
   <template>
-    <button class="menu-button" aria-expanded="false">
+    <button aria-expanded="false">
       <span class="sr-only">Menu</span>
       <Icon icon="list" />
     </button>
@@ -54,7 +54,7 @@ const { menuElementId = "menu-content" } = Astro.props
 </script>
 
 <style>
-  .menu-button {
+  button {
     position: relative;
     display: flex;
     border: 0;
@@ -66,17 +66,17 @@ const { menuElementId = "menu-content" } = Astro.props
     box-shadow: var(--shadow-md);
   }
 
-  .menu-button[aria-expanded="true"] {
+  button[aria-expanded="true"] {
     color: var(--gray-0);
     background: linear-gradient(180deg, var(--gray-600), transparent),
       radial-gradient(var(--gray-900), var(--gray-800) 150%);
   }
 
-  .menu-button[hidden] {
+  button[hidden] {
     display: none;
   }
 
-  .menu-button::before {
+  button::before {
     position: absolute;
     inset: -1px;
     content: "";
