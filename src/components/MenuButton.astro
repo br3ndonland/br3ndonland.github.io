@@ -1,8 +1,14 @@
 ---
 import Icon from "./Icon.astro"
+
+interface Props {
+  menuElementId?: string
+}
+
+const { menuElementId = "menu-content" } = Astro.props
 ---
 
-<menu-button>
+<menu-button data-menu-element-id={menuElementId}>
   <template>
     <button class="menu-button" aria-expanded="false">
       <span class="sr-only">Menu</span>
@@ -21,7 +27,8 @@ import Icon from "./Icon.astro"
       const btn = this.querySelector("button")!
 
       // Hide menu by default.
-      const menu = document.getElementById("menu-content")!
+      const menuElementId = this.dataset.menuElementId!
+      const menu = document.getElementById(menuElementId)!
       menu.hidden = true
 
       // Set whether the menu is currently expanded or collapsed.
