@@ -250,6 +250,14 @@ blockquote p {
   mask-image: url("/images/link.svg");
 }
 
+.d-block {
+  display: block;
+}
+
+.d-flex {
+  display: flex;
+}
+
 .d-none {
   display: none;
 }
@@ -354,6 +362,15 @@ blockquote p {
   .img-thumbnail {
     max-height: 20rem;
   }
+  .lg\:d-block {
+    display: block;
+  }
+  .lg\:d-flex {
+    display: flex;
+  }
+  .lg\:d-none {
+    display: none;
+  }
   .lg\:gap-2 {
     gap: 0.5rem;
   }
@@ -377,5 +394,17 @@ blockquote p {
   }
   .lg\:gap-48 {
     gap: 12rem;
+  }
+}
+
+@media (min-width: 75em) {
+  .xl\:d-block {
+    display: block;
+  }
+  .xl\:d-flex {
+    display: flex;
+  }
+  .xl\:d-none {
+    display: none;
   }
 }

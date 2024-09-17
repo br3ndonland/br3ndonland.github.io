@@ -20,6 +20,9 @@ importers:
       '@astrojs/sitemap':
         specifier: ^3.1.6
         version: 3.1.6
+      '@pagefind/default-ui':
+        specifier: ^1.1.1
+        version: 1.1.1
       astro:
         specifier: ^4.11.3
         version: 4.11.3(typescript@5.4.5)
@@ -730,6 +733,9 @@ packages:
     resolution: {integrity: sha512-QjQSE/L5oS1C8N8GdljGaWtjCBMgMtfrPAoiCmINTu9Y9dp0ggAyXvF8K7Qg3VyIMYJ6v8vg2PN7Z3b+AaAqUA==}
     cpu: [x64]
     os: [darwin]
+
+  '@pagefind/default-ui@1.1.1':
+    resolution: {integrity: sha512-ZM0zDatWDnac/VGHhQCiM7UgA4ca8jpjA+VfuTJyHJBaxGqZMQnm4WoTz9E0KFcue1Bh9kxpu7uWFZfwpZZk0A==}
 
   '@pagefind/linux-arm64@1.1.0':
     resolution: {integrity: sha512-8zjYCa2BtNEL7KnXtysPtBELCyv5DSQ4yHeK/nsEq6w4ToAMTBl0K06khqxdSGgjMSwwrxvLzq3so0LC5Q14dA==}
@@ -3216,6 +3222,8 @@ snapshots:
 
   '@pagefind/darwin-x64@1.1.0':
     optional: true
+
+  '@pagefind/default-ui@1.1.1': {}
 
   '@pagefind/linux-arm64@1.1.0':
     optional: true

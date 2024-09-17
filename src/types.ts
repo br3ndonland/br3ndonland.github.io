@@ -35,6 +35,7 @@ export type IconNames =
   | "gear"
   | "github-logo"
   | "linkedin-logo"
+  | "magnifying-glass"
   | "microphone-stage"
   | "moon-stars"
   | "orcid-logo"

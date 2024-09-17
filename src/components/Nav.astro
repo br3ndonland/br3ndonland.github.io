@@ -2,6 +2,7 @@
 import type { NavLink, Social } from "@types"
 import Icon from "./Icon.astro"
 import MenuButton from "./MenuButton.astro"
+import Search from "./Search.astro"
 import ThemeToggle from "./ThemeToggle.astro"
 import { SITE, SOCIALS, NAV_LINKS } from "@consts"
 
@@ -21,7 +22,10 @@ const socialsInNav: Social[] = SOCIALS.filter(
       />
       {SITE.TITLE}
     </a>
-    <MenuButton />
+    <div class="menu-controls">
+      <Search />
+      <MenuButton />
+    </div>
   </div>
   <div id="menu-content" hidden>
     <ul class="nav-items">
@@ -157,6 +161,13 @@ const socialsInNav: Social[] = SOCIALS.filter(
     text-decoration: none;
   }
 
+  .menu-controls {
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    justify-self: end;
+  }
+
   .menu-content {
     position: absolute;
     left: 0;
@@ -239,6 +250,12 @@ const socialsInNav: Social[] = SOCIALS.filter(
 
     .site-title {
       font-size: var(--text-xl);
+    }
+
+    .menu-controls {
+      flex: 1;
+      justify-content: flex-end;
+      justify-self: stretch;
     }
 
     .menu-content {

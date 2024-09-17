@@ -32,6 +32,7 @@
     "@astrojs/markdown-remark": "^5.2.0",
     "@astrojs/mdx": "^3.1.2",
     "@astrojs/sitemap": "^3.1.6",
+    "@pagefind/default-ui": "^1.1.1",
     "astro": "^4.11.3",
     "pagefind": "^1.1.0",
     "rehype": "^13.0.1",
