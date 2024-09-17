@@ -3,7 +3,10 @@ import { defineConfig } from "astro/config"
 import mdx from "@astrojs/mdx"
 import sitemap from "@astrojs/sitemap"
 import { rehypeHeadingIds } from "@astrojs/markdown-remark"
+import { spawn } from "node:child_process"
 import { readFile, writeFile } from "node:fs/promises"
+import { dirname, relative } from "node:path"
+import { fileURLToPath } from "node:url"
 import { rehype } from "rehype"
 import type { Options as RehypeAutolinkOptions } from "rehype-autolink-headings"
 import rehypeAutolinkHeadings from "rehype-autolink-headings"
@@ -57,8 +60,34 @@ const astroAutolinkOptions: AstroAutolinkOptions = {
   rehypeAutolinkOptions: rehypeAutolinkOptions,
 }
 
+const astroSearch = (): AstroIntegration => {
+  const integrationName = "astro-search"
+  return {
+    name: integrationName,
+    hooks: {
+      "astro:build:done": ({ dir }) => {
+        const targetDir = fileURLToPath(dir)
+        const cwd = dirname(fileURLToPath(import.meta.url))
+        const relativeDir = relative(cwd, targetDir)
+        return new Promise<void>((resolve) => {
+          spawn("pagefind", ["--site", relativeDir], {
+            stdio: "inherit",
+            shell: true,
+            cwd,
+          }).on("close", () => resolve())
+        })
+      },
+    },
+  }
+}
+
 export default defineConfig({
-  integrations: [astroAutolinkHeadings(astroAutolinkOptions), mdx(), sitemap()],
+  integrations: [
+    astroAutolinkHeadings(astroAutolinkOptions),
+    astroSearch(),
+    mdx(),
+    sitemap(),
+  ],
   markdown: {
     rehypePlugins: [
       rehypeHeadingIds,

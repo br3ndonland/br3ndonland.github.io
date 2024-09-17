@@ -23,6 +23,9 @@ importers:
       astro:
         specifier: ^4.11.3
         version: 4.11.3(typescript@5.4.5)
+      pagefind:
+        specifier: ^1.1.0
+        version: 1.1.0
       rehype:
         specifier: ^13.0.1
         version: 13.0.1
@@ -717,6 +720,31 @@ packages:
   '@nodelib/fs.walk@1.2.8':
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
+
+  '@pagefind/darwin-arm64@1.1.0':
+    resolution: {integrity: sha512-SLsXNLtSilGZjvqis8sX42fBWsWAVkcDh1oerxwqbac84HbiwxpxOC2jm8hRwcR0Z55HPZPWO77XeRix/8GwTg==}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@pagefind/darwin-x64@1.1.0':
+    resolution: {integrity: sha512-QjQSE/L5oS1C8N8GdljGaWtjCBMgMtfrPAoiCmINTu9Y9dp0ggAyXvF8K7Qg3VyIMYJ6v8vg2PN7Z3b+AaAqUA==}
+    cpu: [x64]
+    os: [darwin]
+
+  '@pagefind/linux-arm64@1.1.0':
+    resolution: {integrity: sha512-8zjYCa2BtNEL7KnXtysPtBELCyv5DSQ4yHeK/nsEq6w4ToAMTBl0K06khqxdSGgjMSwwrxvLzq3so0LC5Q14dA==}
+    cpu: [arm64]
+    os: [linux]
+
+  '@pagefind/linux-x64@1.1.0':
+    resolution: {integrity: sha512-4lsg6VB7A6PWTwaP8oSmXV4O9H0IHX7AlwTDcfyT+YJo/sPXOVjqycD5cdBgqNLfUk8B9bkWcTDCRmJbHrKeCw==}
+    cpu: [x64]
+    os: [linux]
+
+  '@pagefind/windows-x64@1.1.0':
+    resolution: {integrity: sha512-OboCM76BcMKT9IoSfZuFhiqMRgTde8x4qDDvKulFmycgiJrlL5WnIqBHJLQxZq+o2KyZpoHF97iwsGAm8c32sQ==}
+    cpu: [x64]
+    os: [win32]
 
   '@rollup/rollup-android-arm-eabi@4.17.2':
     resolution: {integrity: sha512-NM0jFxY8bB8QLkoKxIQeObCaDlJKewVlIEkuyYKm5An1tdVZ966w2+MPQ2l8LBZLjR+SgyV+nRkTIunzOYBMLQ==}
@@ -1864,6 +1892,10 @@ packages:
   p-try@2.2.0:
     resolution: {integrity: sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==}
     engines: {node: '>=6'}
+
+  pagefind@1.1.0:
+    resolution: {integrity: sha512-1nmj0/vfYcMxNEQj0YDRp6bTVv9hI7HLdPhK/vBBYlrnwjATndQvHyicj5Y7pUHrpCFZpFnLVQXIF829tpFmaw==}
+    hasBin: true
 
   parent-module@1.0.1:
     resolution: {integrity: sha512-GQ2EWRpQV8/o+Aw8YqtfZZPfNRWZYkbidE9k5rpl/hC3vtHHBfGm2Ifi6qWV+coDGkrUKZAxE3Lot5kcsRlh+g==}
@@ -3178,6 +3210,21 @@ snapshots:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.17.1
+
+  '@pagefind/darwin-arm64@1.1.0':
+    optional: true
+
+  '@pagefind/darwin-x64@1.1.0':
+    optional: true
+
+  '@pagefind/linux-arm64@1.1.0':
+    optional: true
+
+  '@pagefind/linux-x64@1.1.0':
+    optional: true
+
+  '@pagefind/windows-x64@1.1.0':
+    optional: true
 
   '@rollup/rollup-android-arm-eabi@4.17.2':
     optional: true
@@ -4742,6 +4789,14 @@ snapshots:
   p-timeout@6.1.2: {}
 
   p-try@2.2.0: {}
+
+  pagefind@1.1.0:
+    optionalDependencies:
+      '@pagefind/darwin-arm64': 1.1.0
+      '@pagefind/darwin-x64': 1.1.0
+      '@pagefind/linux-arm64': 1.1.0
+      '@pagefind/linux-x64': 1.1.0
+      '@pagefind/windows-x64': 1.1.0
 
   parent-module@1.0.1:
     dependencies:
