@@ -237,7 +237,7 @@ const socialsInNav: Social[] = SOCIALS.filter(
     }
 
     .site-title {
-      font-size: var(--text-2xl);
+      font-size: var(--text-xl);
     }
 
     .menu-content {
@@ -306,6 +306,13 @@ const socialsInNav: Social[] = SOCIALS.filter(
       gap: 0;
     }
   }
+
+  @media (min-width: 75em) {
+    .site-title {
+      font-size: var(--text-2xl);
+    }
+  }
+
   @media (forced-colors: active) {
     .link.active {
       color: SelectedItem;
