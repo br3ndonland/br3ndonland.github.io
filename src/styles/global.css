@@ -268,7 +268,6 @@ blockquote p {
 }
 
 .social {
-  padding: var(--icon-padding);
   text-decoration: none;
   color: var(--accent-dark);
   transition: color var(--theme-transition);
