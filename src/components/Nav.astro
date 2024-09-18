@@ -23,51 +23,6 @@ const socialsInNav: Social[] = SOCIALS.filter(
     </a>
     <MenuButton />
   </div>
-  <noscript>
-    <ul class="nav-items">
-      {
-        NAV_LINKS.map((navLink: NavLink) => (
-          <li>
-            <a
-              aria-current={Astro.url.pathname === navLink.HREF}
-              class:list={[
-                "link",
-                {
-                  active:
-                    Astro.url.pathname === navLink.HREF ||
-                    (navLink.HREF !== "/" &&
-                      Astro.url.pathname.startsWith(navLink.HREF)),
-                },
-              ]}
-              data-astro-prefetch="viewport"
-              href={
-                navLink.HREF !== "/" &&
-                Astro.site?.hostname.includes("github.io")
-                  ? `${navLink.HREF}/`
-                  : navLink.HREF
-              }
-            >
-              {navLink.TITLE}
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-  </noscript>
-  <noscript>
-    <div class="menu-footer">
-      <div class="socials">
-        {
-          socialsInNav.map((social: Social) => (
-            <a href={social.HREF} class="social" rel="external" target="_blank">
-              <span class="sr-only">{social.TITLE}</span>
-              <Icon icon={social.ICON} />
-            </a>
-          ))
-        }
-      </div>
-    </div>
-  </noscript>
   <div id="menu-content" hidden>
     <ul class="nav-items">
       {
@@ -114,6 +69,51 @@ const socialsInNav: Social[] = SOCIALS.filter(
       </div>
     </div>
   </div>
+  <noscript>
+    <ul class="nav-items">
+      {
+        NAV_LINKS.map((navLink: NavLink) => (
+          <li>
+            <a
+              aria-current={Astro.url.pathname === navLink.HREF}
+              class:list={[
+                "link",
+                {
+                  active:
+                    Astro.url.pathname === navLink.HREF ||
+                    (navLink.HREF !== "/" &&
+                      Astro.url.pathname.startsWith(navLink.HREF)),
+                },
+              ]}
+              data-astro-prefetch="viewport"
+              href={
+                navLink.HREF !== "/" &&
+                Astro.site?.hostname.includes("github.io")
+                  ? `${navLink.HREF}/`
+                  : navLink.HREF
+              }
+            >
+              {navLink.TITLE}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </noscript>
+  <noscript>
+    <div class="menu-footer">
+      <div class="socials">
+        {
+          socialsInNav.map((social: Social) => (
+            <a href={social.HREF} class="social" rel="external" target="_blank">
+              <span class="sr-only">{social.TITLE}</span>
+              <Icon icon={social.ICON} />
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </noscript>
 </nav>
 
 <script>
