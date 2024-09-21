@@ -133,11 +133,11 @@ const socialsInNav: Social[] = SOCIALS.filter(
 
 <style>
   nav {
-    z-index: 9999;
     position: relative;
+    z-index: 9999;
+    margin-bottom: 3.5rem;
     font-family: var(--font-brand);
     font-weight: 500;
-    margin-bottom: 3.5rem;
   }
 
   .menu-header {
@@ -148,11 +148,11 @@ const socialsInNav: Social[] = SOCIALS.filter(
   }
 
   .site-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     font-family: var(--font-mono);
     font-style: italic;
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
     color: var(--gray-0);
     text-decoration: none;
   }
@@ -164,13 +164,13 @@ const socialsInNav: Social[] = SOCIALS.filter(
   }
 
   .nav-items {
-    margin: 0;
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    margin: 0;
+    padding: 2rem;
     font-size: var(--text-md);
     list-style: none;
-    padding: 2rem;
     background-color: var(--gray-999);
     border-bottom: 1px solid var(--gray-800);
   }
@@ -203,8 +203,8 @@ const socialsInNav: Social[] = SOCIALS.filter(
   .socials {
     display: flex;
     flex-wrap: wrap;
-    font-size: var(--icon-size);
     gap: var(--icon-gap);
+    font-size: var(--icon-size);
   }
 
   .social {
@@ -248,11 +248,11 @@ const socialsInNav: Social[] = SOCIALS.filter(
     .nav-items {
       position: relative;
       flex-direction: row;
+      max-width: fit-content;
+      padding: 0.5rem 0.5625rem;
       font-size: var(--text-sm);
       border-radius: 999rem;
       border: 0;
-      max-width: fit-content;
-      padding: 0.5rem 0.5625rem;
       background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
       box-shadow: var(--shadow-md);
     }
@@ -260,10 +260,10 @@ const socialsInNav: Social[] = SOCIALS.filter(
     .nav-items::before {
       position: absolute;
       inset: -1px;
-      content: "";
+      z-index: -1;
       background: var(--gradient-stroke);
       border-radius: 999rem;
-      z-index: -1;
+      content: "";
     }
 
     .link {
@@ -288,8 +288,8 @@ const socialsInNav: Social[] = SOCIALS.filter(
     .menu-footer {
       --icon-padding: 0.2rem;
 
-      justify-self: flex-end;
       align-items: center;
+      justify-self: flex-end;
       padding: 0;
       background-color: transparent;
       box-shadow: none;
