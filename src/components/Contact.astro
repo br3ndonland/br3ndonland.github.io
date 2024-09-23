@@ -3,21 +3,26 @@ import Icon from "./Icon.astro"
 import { AUTHOR } from "@consts"
 ---
 
-<aside>
-  <p>Want to get in touch?</p>
-  <contact-link data-email={AUTHOR.EMAIL}>
-    <a href="" rel="nofollow">
-      Send me a message
-      <Icon icon="paper-plane-tilt" size="1.2em" />
-    </a>
-  </contact-link>
-  <noscript><em>(requires JavaScript)</em></noscript>
-</aside>
+<contact-link data-email={AUTHOR.EMAIL}>
+  <template>
+    <aside>
+      <p>Want to get in touch?</p>
+      <a href="" rel="nofollow">
+        Send me a message
+        <Icon icon="paper-plane-tilt" size="1.2em" />
+      </a>
+    </aside>
+  </template>
+</contact-link>
+<noscript><div id="contact-link-noscript"></div></noscript>
 
 <script>
   class ContactLink extends HTMLElement {
     constructor() {
       super()
+      // Inject HTML elements when JS runs
+      this.appendChild(this.querySelector("template")!.content.cloneNode(true))
+      // Add href to contact link
       const a = this.querySelector("a")
       const email = this.dataset.email
       if (a && email) {
@@ -55,6 +60,10 @@ import { AUTHOR } from "@consts"
 </script>
 
 <style>
+  :root {
+    --border-contact-link: 1px solid var(--gray-800);
+  }
+
   a {
     background: var(--gradient-accent-orange);
     border-radius: 999rem;
@@ -76,8 +85,8 @@ import { AUTHOR } from "@consts"
   aside {
     align-items: center;
     background-color: var(--gray-999_40);
-    border-bottom: 1px solid var(--gray-800);
-    border-top: 1px solid var(--gray-800);
+    border-bottom: var(--border-contact-link);
+    border-top: var(--border-contact-link);
     box-shadow: var(--shadow-sm);
     display: flex;
     flex-direction: column;
@@ -90,6 +99,10 @@ import { AUTHOR } from "@consts"
     font-size: var(--text-lg);
     text-align: center;
     font-style: italic;
+  }
+
+  #contact-link-noscript {
+    border-bottom: var(--border-contact-link);
   }
 
   @media (min-width: 50em) {
