@@ -1,4 +1,4 @@
-import { type AstroIntegration } from "astro"
+import { type AstroIntegration, type AstroIntegrationLogger } from "astro"
 import { defineConfig } from "astro/config"
 import mdx from "@astrojs/mdx"
 import sitemap from "@astrojs/sitemap"
@@ -24,10 +24,14 @@ const astroAutolinkHeadings = (
   return {
     name: integrationName,
     hooks: {
-      "astro:build:done": async (options) => {
-        const logger = options.logger.fork(`${integrationName}/build`)
+      "astro:build:done": async ({
+        logger,
+      }: {
+        logger: AstroIntegrationLogger
+      }) => {
+        const integrationLogger = logger.fork(`${integrationName}/build`)
         paths.forEach(async (path) => {
-          logger.info(`Processing ${path}`)
+          integrationLogger.info(`Processing ${path}`)
           const fileContents = await readFile(path)
           const processedFileContents = await rehype()
             .use(rehypeHeadingIds)
@@ -65,7 +69,7 @@ const astroSearch = (): AstroIntegration => {
   return {
     name: integrationName,
     hooks: {
-      "astro:build:done": ({ dir }) => {
+      "astro:build:done": ({ dir }: { dir: URL }) => {
         const targetDir = fileURLToPath(dir)
         const cwd = dirname(fileURLToPath(import.meta.url))
         const relativeDir = relative(cwd, targetDir)
