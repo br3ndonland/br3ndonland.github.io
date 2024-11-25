@@ -10,14 +10,15 @@ The site is built with [Astro](https://astro.build/). It was initially generated
 
 Commands in [package.json](./package.json) can be run from a terminal at the root of the project. Commands include:
 
-| Command                    | Action                                                                           |
-| :------------------------- | :------------------------------------------------------------------------------- |
-| `pnpm install`             | Install dependencies                                                             |
-| `pnpm run dev`             | Start local dev server at `localhost:4321` (use `--port` to change default port) |
-| `pnpm run build`           | Build production site to `./dist/`                                               |
-| `pnpm run preview`         | Preview build locally before deploying                                           |
-| `pnpm run astro ...`       | Run CLI commands like `astro add`, `astro check`                                 |
-| `pnpm run astro -- --help` | Get help using the Astro CLI                                                     |
+| Command                        | Action                                                                              |
+| :----------------------------- | :---------------------------------------------------------------------------------- |
+| `pnpm install`                 | Install dependencies                                                                |
+| `pnpm run dev`                 | Start local dev server at `localhost:4321` (use `--port` to change default port)    |
+| `pnpm run build`               | Build production site to `./dist/`                                                  |
+| `pnpm run preview`             | Preview build locally before deploying                                              |
+| `pnpm run astro ...`           | Run CLI commands like `astro add`, `astro check`                                    |
+| `pnpm run astro -- --help`     | Get help using the Astro CLI                                                        |
+| `pnpm -s dlx @astrojs/upgrade` | [Update Astro](https://docs.astro.build/en/upgrade-astro/) and related dependencies |
 
 Media assets and other large files are stored with [Git LFS](https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-large-files-on-github).
 
