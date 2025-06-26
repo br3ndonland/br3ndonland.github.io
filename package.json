@@ -52,7 +52,7 @@
   },
   "devDependencies": {
     "cspell": "^8.10.4",
-    "prettier": "^3.3.3",
+    "prettier": "~3.6",
     "prettier-plugin-astro": "^0.14.1"
   }
 }
