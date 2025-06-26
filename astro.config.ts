@@ -32,7 +32,7 @@ const astroAutolinkHeadings = (
         const integrationLogger = logger.fork(`${integrationName}/build`)
         paths.forEach(async (path) => {
           integrationLogger.info(`Processing ${path}`)
-          const fileContents = await readFile(path)
+          const fileContents = await readFile(path, { encoding: "utf-8" })
           const processedFileContents = await rehype()
             .use(rehypeHeadingIds)
             .use(rehypeAutolinkHeadings, rehypeAutolinkOptions)
