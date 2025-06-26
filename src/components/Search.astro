@@ -301,7 +301,10 @@ const labels = {
     );
     --search-tree-diagram-size: calc(2.5rem * var(--pagefind-ui-scale));
     --search-tree-diagram-inline-start: calc(
-      (var(--search-result-pad-inline-start) - var(--search-tree-diagram-size)) /
+      (
+          var(--search-result-pad-inline-start) -
+            var(--search-tree-diagram-size)
+        ) /
         2
     );
   }
