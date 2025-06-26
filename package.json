@@ -24,6 +24,16 @@
         "options": {
           "parser": "astro"
         }
+      },
+      {
+        "files": [
+          "COMMIT_EDITMSG"
+        ],
+        "options": {
+          "parser": "markdown",
+          "printWidth": 72,
+          "proseWrap": "always"
+        }
       }
     ]
   },
