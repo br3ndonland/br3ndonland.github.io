@@ -38,7 +38,7 @@
     "rehype": "~13.0",
     "rehype-autolink-headings": "^7.1.0",
     "sharp": "^0.34.2",
-    "typescript": "^5.4.5"
+    "typescript": "^5.8.3"
   },
   "devDependencies": {
     "cspell": "^8.10.4",
