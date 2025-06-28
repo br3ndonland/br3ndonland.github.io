@@ -137,3 +137,6 @@ dist
 
 # macOS-specific files
 .DS_Store
+
+# Misc
+[Tt][Oo][Dd][Oo]*
