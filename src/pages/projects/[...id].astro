@@ -1,12 +1,12 @@
 ---
-import { type CollectionEntry, getCollection } from "astro:content"
+import { type CollectionEntry, getCollection, render } from "astro:content"
 import { Picture } from "astro:assets"
 import BaseLayout from "@layouts/BaseLayout.astro"
 import Contact from "@components/Contact.astro"
 import Hero from "@components/Hero.astro"
 import Icon from "@components/Icon.astro"
 import UdacityLogo from "@components/UdacityLogo.astro"
-import { SITE, PICTURE_FORMATS, PROJECTS } from "@consts"
+import { PICTURE_FORMATS, PROJECTS, SITE } from "@consts"
 
 interface Props {
   entry: CollectionEntry<"projects">
@@ -15,13 +15,13 @@ interface Props {
 export async function getStaticPaths() {
   const projects = await getCollection("projects")
   return projects.map((entry) => ({
-    params: { slug: entry.slug },
+    params: { id: entry.id },
     props: { entry },
   }))
 }
 
 const { entry } = Astro.props
-const { Content } = await entry.render()
+const { Content } = await render(entry)
 
 const isSVG = entry.data.image.src.src.endsWith("svg")
 const isUdacious = entry.data.title.toLowerCase().includes("udacity")

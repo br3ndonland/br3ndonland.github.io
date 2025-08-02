@@ -11,7 +11,7 @@ interface Props {
 const { entry } = Astro.props
 ---
 
-<a class="card" href={`/${entry.collection}/${entry.slug}`}>
+<a class="card" href={`/${entry.collection}/${entry.id}`}>
   <h3 class="title">
     {entry.data.title}
     <Icon icon="arrow-right" size="1.2em" />
