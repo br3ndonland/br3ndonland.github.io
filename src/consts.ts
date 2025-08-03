@@ -7,6 +7,8 @@ import type {
   Socials,
 } from "@types"
 
+import { type ImageOutputFormat } from "astro"
+
 export const AUTHOR: Author = {
   NAME: "Brendon Smith",
   EMAIL: "YndzQGJ3cy5iaW8=",
@@ -78,7 +80,7 @@ export const NAV_LINKS: NavLinks = [
   { HREF: WORK.HREF, TITLE: WORK.TITLE },
 ]
 
-export const PICTURE_FORMATS: string[] = ["avif", "webp"]
+export const PICTURE_FORMATS: ImageOutputFormat[] = ["avif", "webp"]
 
 /**
  * Icons adapted from:
