@@ -1,9 +1,9 @@
 import type {
   Author,
   IconPaths,
+  Metadata,
   NavLinks,
   Site,
-  Metadata,
   Socials,
 } from "@types"
 
