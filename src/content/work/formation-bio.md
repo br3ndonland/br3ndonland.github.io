@@ -46,7 +46,7 @@ As a Spacelift administrator, I would also highlight the following key features 
 - <a href="https://docs.spacelift.io/concepts/worker-pools" rel="external" target="_blank">Private worker pools</a>
 - <a href="https://docs.spacelift.io/concepts/policy/push-policy" rel="external" target="_blank">Rego push policies</a>
 - <a href="https://docs.spacelift.io/vendors/terraform/workflow-tool" rel="external" target="_blank">Custom workflow tool</a> - we've adapted this to support Terraspace, an IaC orchestration tool
-- OpenTofu support (Spacelift helped us make a smooth transition from HashCorp Terraform to OpenTofu)
+- OpenTofu support - Spacelift helped us make a smooth transition from HashCorp Terraform to OpenTofu
 
 ## Snowflake
 
