@@ -51,7 +51,7 @@
     "typescript": "^5.8.3"
   },
   "devDependencies": {
-    "cspell": "~9",
+    "cspell": "^9",
     "prettier": "~3.6",
     "prettier-plugin-astro": "^0.14.1"
   }

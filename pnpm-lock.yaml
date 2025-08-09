@@ -43,7 +43,7 @@ importers:
         version: 5.8.3
     devDependencies:
       cspell:
-        specifier: ~9
+        specifier: ^9
         version: 9.1.2
       prettier:
         specifier: ~3.6
