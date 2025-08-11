@@ -5,13 +5,13 @@
   "type": "module",
   "version": "0.0.0",
   "scripts": {
-    "check": "prettier . --check && cspell --dot --gitignore **/*.astro **/*.md* && astro check",
-    "fmt": "prettier . --write",
+    "astro": "astro",
     "build": "astro build",
+    "check": "prettier . --check && cspell --dot --gitignore **/*.astro **/*.md* && astro check",
     "dev": "astro dev",
-    "start": "astro dev",
+    "fmt": "prettier . --write",
     "preview": "astro preview",
-    "astro": "astro"
+    "start": "astro dev"
   },
   "prettier": {
     "semi": false,
