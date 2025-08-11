@@ -11,7 +11,10 @@
     "dev": "astro dev",
     "fmt": "prettier . --write",
     "preview": "astro preview",
-    "start": "astro dev"
+    "start": "astro dev",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest",
+    "test": "vitest run"
   },
   "prettier": {
     "semi": false,
