@@ -43,7 +43,7 @@
     "@astrojs/mdx": "^4.3.3",
     "@astrojs/sitemap": "^3.4.2",
     "@pagefind/default-ui": "~1.3",
-    "astro": "^5.12.8",
+    "astro": "^5.13.1",
     "pagefind": "~1.3",
     "rehype": "~13.0",
     "rehype-autolink-headings": "^7.1.0",
