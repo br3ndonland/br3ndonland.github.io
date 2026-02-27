@@ -18,6 +18,7 @@ Instructions for coding agents working in this repository.
 
 - Keep changes focused and minimal; avoid broad refactors unless requested.
 - Follow existing formatting and naming patterns.
+- Sort lists alphabetically by default unless there is a clear reason not to.
 - Do not add licenses/headers unless explicitly requested.
 - Do not create commits on `main`; work on a feature branch.
 - Preserve content authorship style in `src/content/**`.
