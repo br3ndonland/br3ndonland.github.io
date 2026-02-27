@@ -55,7 +55,8 @@ Keep contributions compatible with this sequence.
 ## Content and Assets
 
 - Prefer editing existing content files rather than moving directories.
-- Keep front matter valid for markdown/MDX content in `src/content/**`.
+- Keep frontmatter valid for markdown/MDX content in `src/content/**`.
+- If cspell flags accepted technical terms (for example, framework-specific words), add them to `cspell.json`; do not add misspellings.
 - When adding images/assets:
   - place route-served static files in `public/`
   - use `src/images/` for source images processed in Astro where appropriate
