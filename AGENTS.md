@@ -38,6 +38,7 @@ Notes:
 
 - `pnpm run check` runs Prettier, cspell, and `astro check`.
 - Build should succeed without changing deployment configuration.
+- Do not run development server commands in agent mode (for example, `astro dev`, `pnpm run dev`, `pnpm run start`, `pnpm run test:watch`, or `vitest` without arguments). Instead, run `pnpm run build` to inspect changes.
 
 ## CI Expectations
 
