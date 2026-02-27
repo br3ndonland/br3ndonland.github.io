@@ -72,10 +72,11 @@ Keep contributions compatible with this sequence.
 ## Pull Request Guidance
 
 - Use a descriptive branch name and small, reviewable diffs.
-- Include a concise PR description:
-  - what changed
-  - why it changed
-  - how it was validated (commands + results)
+- Limit the PR title to around 50 characters if possible so it fits into a squash commit title.
+- Include a concise PR description with these sections:
+  - `## Description`: background and context on why the PR is needed.
+  - `## Changes`: explain what changed, why it changed, and how it was validated (commands + results).
+  - `## Related`: links to related resources. GitHub autolinking syntax may be used when applicable (issues, PRs, commits, GitHub security advisories, and other supported links).
 - If PR creation is blocked by repository restrictions, report the exact GitHub/CLI error message.
 
 ## Agent Workflow for This Repo
