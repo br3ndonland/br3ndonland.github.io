@@ -67,8 +67,9 @@ Keep contributions compatible with this sequence.
 ## Dependency and Tooling Changes
 
 - Do not downgrade dependencies unless explicitly asked.
+- If dependency changes are made, run `pnpm dedupe` and full validation (`check`, `build`, `test`).
 - Keep dependency updates scoped and justified.
-- If dependency changes are made, run full validation (`check`, `build`, `test`).
+- To update Astro and related dependencies, run `pnpm -s dlx @astrojs/upgrade && pnpm dedupe`.
 
 ## Pull Request Guidance
 
