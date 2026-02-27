@@ -84,3 +84,5 @@ Keep contributions compatible with this sequence.
 3. Run validation commands.
 4. Commit on a non-`main` branch.
 5. Open a PR (or report exact error if repo settings prevent it).
+6. Wait for required status checks to complete.
+7. Ensure the PR passes all required status checks; if checks fail, read logs and add commits to fix the failing checks.
