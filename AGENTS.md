@@ -64,6 +64,17 @@ Keep contributions compatible with this sequence.
   - use `src/images/` for source images processed in Astro where appropriate
 - Respect Git LFS usage for large media assets.
 
+### Git LFS
+
+- Media assets and other large files in this repository are stored with Git LFS.
+- Git LFS is installed separately from Git. Install it first so `git lfs` commands are available.
+- After cloning the repository, download LFS objects:
+
+```bash
+git lfs install
+git lfs pull
+```
+
 ## Dependency and Tooling Changes
 
 - Do not downgrade dependencies unless explicitly asked.
