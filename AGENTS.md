@@ -102,7 +102,7 @@ git lfs pull
 1. Read relevant files first (`README.md`, `package.json`, CI workflow, and touched modules).
 2. Implement minimal, targeted changes.
 3. Run validation commands.
-4. Commit on a non-`main` branch.
+4. Commit on a non-`main` branch. Prefix the Git branch with the name of the tool being used, in lowercase with dashes separating words (i.e. `claude-code/`, `codex/`, `kilo-code/`, etc.) and follow the prefix with a descriptive branch name, such as `test-astro-integrations`.
 5. Open a PR (or report exact error if repo settings prevent it).
 6. Wait for required status checks to complete.
 7. Ensure the PR passes all required status checks; if checks fail, read logs and add commits to fix the failing checks.
