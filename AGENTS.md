@@ -90,6 +90,12 @@ git lfs pull
   - `## Description`: background and context on why the PR is needed.
   - `## Changes`: explain what changed, why it changed, and how it was validated (commands + results). Place terminal output/log snippets in fenced code blocks inside HTML `<details><summary>...</summary> ... </details>` sections.
   - `## Related`: links to related resources. Do not link the PR to itself. GitHub autolinking syntax may be used when applicable (issues, PRs, commits, GitHub security advisories, and other supported links). For non-GitHub URLs, use Markdown links with descriptive titles (no bare URLs).
+- Format the PR body with Prettier using the equivalent command-line
+  overrides so the text wraps at 72 characters for use in squash commit
+  messages:
+  ```bash
+  echo "<pr-body>" | pnpm exec prettier --parser markdown --print-width 72 --prose-wrap always
+  ```
 - If PR creation is blocked by repository restrictions, report the exact GitHub/CLI error message.
 
 ## Agent Workflow for This Repo
