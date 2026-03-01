@@ -1,16 +1,13 @@
 import { EventEmitter } from "node:events"
+import * as fsPromises from "node:fs/promises"
+import { dirname, resolve } from "node:path"
 import { describe, expect, it, vi } from "vitest"
 
-const { readFileMock, writeFileMock, spawnMock } = vi.hoisted(() => ({
-  readFileMock: vi.fn(),
-  writeFileMock: vi.fn(),
+const { spawnMock } = vi.hoisted(() => ({
   spawnMock: vi.fn(),
 }))
 
-vi.mock("node:fs/promises", () => ({
-  readFile: readFileMock,
-  writeFile: writeFileMock,
-}))
+vi.mock("node:fs/promises", { spy: true })
 
 vi.mock("node:child_process", () => ({
   spawn: spawnMock,
@@ -53,33 +50,76 @@ const getBuildDoneHook = (
   return hook as BuildDoneHook
 }
 
-describe("Astro integrations in astro.config.ts", () => {
+const aboutHtmlPath = resolve("dist/about/index.html")
+const fixtureHtmlPath = resolve("tests/fixtures/html-document/index.html")
+const backupHtmlPath = resolve("dist/about/index.html.test-backup")
+
+describe("astro-autolink-headings integration", () => {
   it("runs astroAutolinkHeadings build hook and writes processed HTML", async () => {
-    readFileMock.mockResolvedValueOnce('<h2 id="about">About</h2>')
-    writeFileMock.mockResolvedValueOnce(undefined)
-
     const autolinkIntegration = findIntegration("astro-autolink-headings")
-
     const buildDoneHook = getBuildDoneHook(autolinkIntegration)
+
+    let hadExistingAboutHtml = false
+    try {
+      await fsPromises.stat(aboutHtmlPath)
+      hadExistingAboutHtml = true
+    } catch {
+      hadExistingAboutHtml = false
+    }
+
+    if (hadExistingAboutHtml) {
+      await fsPromises.mkdir(dirname(backupHtmlPath), { recursive: true })
+      await fsPromises.copyFile(aboutHtmlPath, backupHtmlPath)
+    }
+
+    await fsPromises.mkdir(dirname(aboutHtmlPath), { recursive: true })
+    const fixtureHtml = await fsPromises.readFile(fixtureHtmlPath, {
+      encoding: "utf-8",
+    })
+    await fsPromises.writeFile(aboutHtmlPath, fixtureHtml)
 
     const info = vi.fn()
     const logger: BuildDoneLogger = {
       fork: vi.fn().mockReturnValue({ info }),
     }
 
-    await buildDoneHook({ logger })
-    await vi.waitFor(() => {
-      expect(writeFileMock).toHaveBeenCalledTimes(1)
-    })
+    let writtenHtml = ""
+    try {
+      await buildDoneHook({ logger })
+      await vi.waitFor(async () => {
+        const currentHtml = await fsPromises.readFile(aboutHtmlPath, {
+          encoding: "utf-8",
+        })
+        expect(currentHtml).toContain("anchor-link")
+        expect(currentHtml).toContain("heading-element")
+        writtenHtml = currentHtml
+      })
 
-    expect(readFileMock).toHaveBeenCalledWith("./dist/about/index.html", {
-      encoding: "utf-8",
-    })
-    const writtenHtml = writeFileMock.mock.calls[0]?.[1]
+      expect(fsPromises.readFile).toHaveBeenCalledWith("./dist/about/index.html", {
+        encoding: "utf-8",
+      })
+      expect(fsPromises.writeFile).toHaveBeenCalledWith(
+        "./dist/about/index.html",
+        expect.any(String),
+      )
+    } finally {
+      if (hadExistingAboutHtml) {
+        await fsPromises.copyFile(backupHtmlPath, aboutHtmlPath)
+        await fsPromises.unlink(backupHtmlPath)
+      } else {
+        await fsPromises.rm(resolve("dist/about"), {
+          recursive: true,
+          force: true,
+        })
+      }
+    }
+
     expect(writtenHtml).toContain("anchor-link")
     expect(writtenHtml).toContain("heading-element")
   })
+})
 
+describe("astro-search integration", () => {
   it("runs astroSearch build hook and executes pagefind with relative dist path", async () => {
     spawnMock.mockImplementationOnce(() => {
       const process = new EventEmitter()
