@@ -46,7 +46,7 @@
     "@astrojs/mdx": "^4.3.13",
     "@astrojs/sitemap": "^3.7.0",
     "@pagefind/default-ui": "~1.4.0",
-    "astro": "^5.18.0",
+    "astro": "^5.18.1",
     "pagefind": "~1.4.0",
     "rehype": "~13.0.2",
     "rehype-autolink-headings": "^7.1.0",
