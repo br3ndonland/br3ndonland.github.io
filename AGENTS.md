@@ -85,7 +85,7 @@ git lfs pull
 ## Pull Request Guidance
 
 - Use a descriptive branch name and small, reviewable diffs.
-- Limit the PR title to around 50 characters if possible so it fits into a squash commit title. This repository does not use Angular commit message conventions or Conventional Commits, so do not prefix PR titles with scopes like "docs: ".
+- Limit the PR title to around 50 characters if possible so it fits into a squash commit title. This repository does not use Angular commit message conventions or Conventional Commits, so do not prefix PR titles with types or scopes like "docs: ".
 - Include a concise PR description with these sections:
   - `## Description`: background and context on why the PR is needed.
   - `## Changes`: explain what changed, why it changed, and how it was validated (commands + results). Place terminal output/log snippets in fenced code blocks inside HTML `<details><summary>...</summary> ... </details>` sections.
