@@ -22,6 +22,24 @@ Commands in [package.json](./package.json) can be run from a terminal at the roo
 
 Media assets and other large files are stored with [Git LFS](https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-large-files-on-github).
 
+The [dev container](https://github.com/devcontainers) configuration provides a cloud development environment compatible with both [GitHub Codespaces](https://docs.github.com/en/codespaces/setting-up-your-project-for-codespaces/adding-a-dev-container-configuration/introduction-to-dev-containers) and [Codex Web](https://developers.openai.com/codex/cloud).
+
+The dev container configuration uses the [Codex universal base image](https://github.com/openai/codex-universal), which is the same image used by Codex Web. The dev container configuration includes `overrideCommand: false` so the image's own entrypoint still runs and can apply Codex-specific runtime setup first.
+
+After the Codex-specific runtime setup is completed, repository-specific setup is completed with a `postCreateCommand` that runs a bootstrap script. The bootstrap script initializes Git LFS, installs dependencies, and runs check and build commands.
+
+In order to maintain a consistent runtime, the Node.js version is set with `engines.node` in `package.json`. [Vercel respects this value](https://vercel.com/docs/functions/runtimes/node-js/node-js-versions), and [the GitHub Actions setup-node action does also if configured](https://github.com/actions/setup-node/blob/main/docs/advanced-usage.md#node-version-file) with `node-version-file: package.json`. The Codex image respects a separate `CODEX_ENV_NODE_VERSION` environment variable that is set in the dev container configuration.
+
+This setup script is then added to each Codex Web environment:
+
+```sh
+#!/usr/bin/env bash
+set -euo pipefail
+
+script="https://raw.githubusercontent.com/br3ndonland/br3ndonland.github.io/HEAD/.devcontainer/bootstrap.sh"
+/usr/bin/env bash -c "$(curl -fsSL $script)"
+```
+
 ## Deployment
 
 - The site is deployed with GitHub Pages to [br3ndonland.github.io](https://br3ndonland.github.io/) using a [GitHub Actions workflow](.github/workflows/ci.yml). The `astro build` step includes `--site "https://${GITHUB_REPOSITORY##*/}"` so that [the site URL can be set for GitHub Pages](https://docs.astro.build/en/guides/deploy/github/) without having to hard-code it in the [Astro config file](https://docs.astro.build/en/guides/configuring-astro/).

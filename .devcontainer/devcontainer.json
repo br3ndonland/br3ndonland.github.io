@@ -1,0 +1,9 @@
+{
+  "name": "br3ndonland.github.io",
+  "image": "ghcr.io/openai/codex-universal:latest",
+  "containerEnv": {
+    "CODEX_ENV_NODE_VERSION": "22"
+  },
+  "overrideCommand": false,
+  "postCreateCommand": "./.devcontainer/bootstrap.sh"
+}

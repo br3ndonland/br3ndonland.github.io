@@ -4,6 +4,9 @@
   "private": true,
   "type": "module",
   "version": "0.0.0",
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "astro": "astro",
     "build": "astro build",
