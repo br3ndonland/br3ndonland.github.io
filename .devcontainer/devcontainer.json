@@ -5,5 +5,5 @@
     "CODEX_ENV_NODE_VERSION": "22"
   },
   "overrideCommand": false,
-  "postCreateCommand": "./.devcontainer/bootstrap.sh"
+  "postCreateCommand": "./.devcontainer/bootstrap.sh br3ndonland/br3ndonland.github.io"
 }

@@ -11,9 +11,11 @@ for command in git git-lfs pnpm; do
   fi
 done
 
+error='ERROR: Please supply a script argument in org/repo format.'
+REPO=${1?$error}
 echo "[bootstrap] \$PWD: $PWD"
 
-DEFAULT_ORIGIN_URL="https://github.com/br3ndonland/br3ndonland.github.io.git"
+DEFAULT_ORIGIN_URL="https://github.com/$REPO.git"
 ORIGIN_URL="$(git config --local --default '' --get remote.origin.url)"
 if [ -z "$ORIGIN_URL" ]; then
   echo "[bootstrap] remote.origin.url is empty; setting it to $DEFAULT_ORIGIN_URL"
