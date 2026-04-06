@@ -6,8 +6,10 @@ set -e
 
 for command in git git-lfs pnpm; do
   if ! command -v $command >/dev/null 2>&1; then
-    echo "[bootstrap] ERROR: $command is required" >&2
-    exit 1
+    case $command in
+    pnpm) npm install --global pnpm@latest-10 ;;
+    *) echo "[bootstrap] ERROR: $command is required" >&2 && exit 1 ;;
+    esac
   fi
 done
 

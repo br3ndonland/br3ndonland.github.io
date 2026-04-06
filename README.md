@@ -24,7 +24,7 @@ Media assets and other large files are stored with [Git LFS](https://docs.github
 
 The [dev container](https://github.com/devcontainers) configuration provides a cloud development environment compatible with both [GitHub Codespaces](https://docs.github.com/en/codespaces/setting-up-your-project-for-codespaces/adding-a-dev-container-configuration/introduction-to-dev-containers) and [Codex Web](https://developers.openai.com/codex/cloud).
 
-The dev container configuration uses the [Codex universal base image](https://github.com/openai/codex-universal), which is the same image used by Codex Web. The dev container configuration includes `overrideCommand: false` so the image's own entrypoint still runs and can apply Codex-specific runtime setup first.
+The dev container configuration uses the [Node.js official image](https://github.com/nodejs/docker-node) instead of the [Codex universal base image](https://github.com/openai/codex-universal) because of the large size of the Codex image. The configuration relies on the default dev container command override so the container stays running long enough for initial setup and lifecycle scripts to complete.
 
 After the Codex-specific runtime setup is completed, repository-specific setup is completed with a `postCreateCommand` that runs a bootstrap script. The bootstrap script initializes Git LFS, installs dependencies, and runs check and build commands.
 
