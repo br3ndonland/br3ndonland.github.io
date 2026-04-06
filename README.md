@@ -33,11 +33,11 @@ In order to maintain a consistent runtime, the Node.js version is set with `engi
 This setup script is then added to each Codex Web environment:
 
 ```sh
-#!/usr/bin/env bash
-set -euo pipefail
+#!/usr/bin/env sh
+set -e
 
 script="https://raw.githubusercontent.com/br3ndonland/br3ndonland.github.io/HEAD/.devcontainer/bootstrap.sh"
-/usr/bin/env bash -c "$(curl -fsSL $script)"
+/usr/bin/env sh -c "$(curl -fsSL $script)"
 ```
 
 ## Deployment

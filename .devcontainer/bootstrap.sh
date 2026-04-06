@@ -1,5 +1,5 @@
-#!/usr/bin/env bash
-set -euo pipefail
+#!/usr/bin/env sh
+set -e
 
 # Setup script for Codex Web cloud environments
 # https://developers.openai.com/codex/cloud/environments
@@ -15,7 +15,7 @@ echo "[bootstrap] \$PWD: $PWD"
 
 DEFAULT_ORIGIN_URL="https://github.com/br3ndonland/br3ndonland.github.io.git"
 ORIGIN_URL="$(git config --local --default '' --get remote.origin.url)"
-if [[ -z "$ORIGIN_URL" ]]; then
+if [ -z "$ORIGIN_URL" ]; then
   echo "[bootstrap] remote.origin.url is empty; setting it to $DEFAULT_ORIGIN_URL"
   git config remote.origin.url "$DEFAULT_ORIGIN_URL"
 fi
