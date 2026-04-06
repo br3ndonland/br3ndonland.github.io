@@ -1,6 +1,13 @@
 {
   "name": "br3ndonland.github.io",
   "image": "docker.io/node:22-trixie",
+  "containerEnv": {
+    "STRAP_GIT_EMAIL": "26674818+br3ndonland@users.noreply.github.com",
+    "STRAP_GIT_NAME": "GitHub Codespaces"
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/git-lfs:1": {}
+  },
   "postCreateCommand": [
     "node",
     "./.devcontainer/bootstrap.mjs",
