@@ -2,7 +2,8 @@
   "name": "br3ndonland.github.io",
   "image": "docker.io/node:22-trixie",
   "postCreateCommand": [
-    "./.devcontainer/bootstrap.sh",
+    "node",
+    "./.devcontainer/bootstrap.mjs",
     "br3ndonland/br3ndonland.github.io"
   ]
 }

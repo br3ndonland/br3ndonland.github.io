@@ -37,8 +37,8 @@ This setup script is then added to each Codex Web environment:
 set -e
 
 repo="br3ndonland/br3ndonland.github.io"
-script="https://raw.githubusercontent.com/$repo/HEAD/.devcontainer/bootstrap.sh"
-curl -fsSL "$script" | /usr/bin/env sh -s -- "$repo"
+script="https://raw.githubusercontent.com/$repo/HEAD/.devcontainer/bootstrap.mjs"
+curl -fsSL "$script" | /usr/bin/env node - "$repo"
 ```
 
 ## Deployment
