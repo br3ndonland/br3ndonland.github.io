@@ -63,6 +63,8 @@
     "fileinput",
     "frontmatter",
     "gawande",
+    "gitlens",
+    "gitless",
     "gruntwork",
     "gunicorn",
     "gusacitinib",

@@ -46,6 +46,11 @@ export const PROJECTS: Metadata = {
 }
 
 export const PROJECT_LOGOS = {
+  gitless: {
+    label: "GitLess logo",
+    srcDark: "/images/gitless-logo-dark-mode.svg",
+    srcLight: "/images/gitless-logo-light-mode.svg",
+  },
   inboard: {
     label: "inboard logo",
     srcDark: "/images/inboard-logo.svg",
