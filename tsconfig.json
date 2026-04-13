@@ -3,7 +3,12 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@*": ["./src/*"]
+      "@components/*": ["./src/components/*"],
+      "@consts": ["./src/consts"],
+      "@images/*": ["./src/images/*"],
+      "@layouts/*": ["./src/layouts/*"],
+      "@styles/*": ["./src/styles/*"],
+      "@types": ["./src/types"]
     }
   },
   "exclude": ["dist"]
