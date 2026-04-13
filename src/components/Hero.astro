@@ -4,18 +4,47 @@ interface Props {
   tagline?: string
   align?: "start" | "center"
   classList?: string[]
+  variant?: "default" | "home"
 }
 
-const { align = "center", classList = [], tagline, title } = Astro.props
+const {
+  align = "center",
+  classList = [],
+  tagline,
+  title,
+  variant = "default",
+} = Astro.props
 ---
 
-<div class:list={["hero stack gap-4", align]}>
-  <div class="stack gap-2">
-    <h1 class:list={classList.concat(["title"])}>{title}</h1>
-    {tagline && <p class="tagline">{tagline}</p>}
-  </div>
-  <slot />
-</div>
+{
+  variant === "home" ? (
+    <header class="home-hero">
+      <div class="hero-copy">
+        <div class:list={["hero stack gap-4", align]}>
+          <div class="stack gap-2">
+            <h1 class:list={classList.concat(["title"])}>{title}</h1>
+            {tagline && <p class="tagline">{tagline}</p>}
+          </div>
+          <slot />
+        </div>
+      </div>
+      <div class="hero-portrait">
+        <slot name="portrait" />
+      </div>
+      <div class="hero-skills">
+        <slot name="skills" />
+      </div>
+    </header>
+  ) : (
+    <div class:list={["hero stack gap-4", align]}>
+      <div class="stack gap-2">
+        <h1 class:list={classList.concat(["title"])}>{title}</h1>
+        {tagline && <p class="tagline">{tagline}</p>}
+      </div>
+      <slot />
+    </div>
+  )
+}
 
 <style>
   .hero {
@@ -35,6 +64,36 @@ const { align = "center", classList = [], tagline, title } = Astro.props
     color: var(--gray-0);
   }
 
+  .home-hero {
+    display: grid;
+    grid-template-areas:
+      "copy"
+      "portrait"
+      "skills";
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .hero-copy {
+    grid-area: copy;
+  }
+
+  .hero-portrait {
+    grid-area: portrait;
+  }
+
+  .hero-skills {
+    grid-area: skills;
+  }
+
+  .hero-portrait :global(img) {
+    aspect-ratio: 5 / 4;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 1.5rem;
+    box-shadow: var(--shadow-md);
+  }
+
   @media (min-width: 50em) {
     .hero {
       font-size: var(--text-xl);
@@ -42,6 +101,26 @@ const { align = "center", classList = [], tagline, title } = Astro.props
 
     .title {
       font-size: var(--text-3xl);
+    }
+
+    .home-hero {
+      grid-template-areas:
+        "copy portrait"
+        "skills portrait";
+      grid-template-columns: minmax(0, 6fr) minmax(18rem, 4fr);
+      padding-inline: 2.5rem;
+      column-gap: 3.75rem;
+      row-gap: 2.5rem;
+    }
+
+    .hero-portrait {
+      align-self: center;
+    }
+
+    .hero-portrait :global(img) {
+      aspect-ratio: 3 / 4;
+      border-radius: 4.5rem;
+      object-fit: cover;
     }
   }
 </style>

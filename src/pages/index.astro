@@ -26,16 +26,14 @@ const works = (await getCollection("work"))
 <BaseLayout title={SITE.TITLE} description={SITE.DESCRIPTION}>
   <div class="stack gap-10 lg:gap-20">
     <div class="wrapper">
-      <header class="home-hero">
-        <div class="hero-copy">
-          <Hero
-            title="Hi, I'm Brendon."
-            tagline=`I build software for science.
-                     I'm based in Cambridge, MA.`
-            align="start"
-          />
-        </div>
-        <div class="hero-portrait">
+      <Hero
+        title="Hi, I'm Brendon."
+        tagline=`I build software for science.
+                 I'm based in Cambridge, MA.`
+        align="start"
+        variant="home"
+      >
+        <Fragment slot="portrait">
           <Picture
             src={portrait}
             alt="Portrait of Brendon Smith smiling in a spiffy button-down shirt"
@@ -43,11 +41,11 @@ const works = (await getCollection("work"))
             decoding="async"
             loading="eager"
           />
-        </div>
-        <div class="hero-skills">
+        </Fragment>
+        <Fragment slot="skills">
           <Skills />
-        </div>
-      </header>
+        </Fragment>
+      </Hero>
     </div>
 
     <main class="wrapper stack gap-20 lg:gap-48">
@@ -102,61 +100,6 @@ const works = (await getCollection("work"))
 </BaseLayout>
 
 <style>
-  /* TODO: hero styles could be encapsulated in the Hero.astro component   */
-  /* ===================================================================== */
-  .home-hero {
-    display: grid;
-    grid-template-areas:
-      "copy"
-      "portrait"
-      "skills";
-    align-items: center;
-    gap: 2rem;
-  }
-
-  .hero-copy {
-    grid-area: copy;
-  }
-
-  .hero-portrait {
-    grid-area: portrait;
-  }
-
-  .hero-skills {
-    grid-area: skills;
-  }
-
-  .hero-portrait img {
-    aspect-ratio: 5 / 4;
-    object-fit: cover;
-    object-position: center;
-    border-radius: 1.5rem;
-    box-shadow: var(--shadow-md);
-  }
-
-  @media (min-width: 50em) {
-    .home-hero {
-      grid-template-areas:
-        "copy portrait"
-        "skills portrait";
-      grid-template-columns: minmax(0, 6fr) minmax(18rem, 4fr);
-      padding-inline: 2.5rem;
-      column-gap: 3.75rem;
-      row-gap: 2.5rem;
-    }
-
-    .hero-portrait {
-      align-self: center;
-    }
-
-    .hero-portrait img {
-      aspect-ratio: 3 / 4;
-      border-radius: 4.5rem;
-      object-fit: cover;
-    }
-  }
-  /* ===================================================================== */
-
   .section {
     display: grid;
     gap: 2rem;
