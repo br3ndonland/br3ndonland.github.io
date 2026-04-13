@@ -22,6 +22,7 @@ Instructions for coding agents working in this repository.
 - Do not add licenses/headers unless explicitly requested.
 - Do not create commits on `main`; work on a feature branch.
 - Preserve content authorship style in `src/content/**`.
+- Always use the Astro MCP server to answer questions about Astro and search the Astro documentation (docs.astro.build).
 
 ## Required Local Validation
 
