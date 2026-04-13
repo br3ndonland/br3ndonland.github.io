@@ -106,11 +106,11 @@ const {
     .home-hero {
       grid-template-areas:
         "copy portrait"
-        "skills portrait";
-      grid-template-columns: minmax(0, 6fr) minmax(18rem, 4fr);
-      padding-inline: 2.5rem;
-      column-gap: 3.75rem;
-      row-gap: 2.5rem;
+        "skills skills";
+      grid-template-columns: minmax(0, 1fr) minmax(14rem, 16rem);
+      padding-inline: 1.5rem;
+      column-gap: 2rem;
+      row-gap: 2rem;
     }
 
     .hero-portrait {
@@ -121,6 +121,18 @@ const {
       aspect-ratio: 3 / 4;
       border-radius: 4.5rem;
       object-fit: cover;
+    }
+  }
+
+  @media (min-width: 64em) {
+    .home-hero {
+      grid-template-areas:
+        "copy portrait"
+        "skills portrait";
+      grid-template-columns: minmax(0, 6fr) minmax(18rem, 4fr);
+      padding-inline: 2.5rem;
+      column-gap: 3.75rem;
+      row-gap: 2.5rem;
     }
   }
 </style>
