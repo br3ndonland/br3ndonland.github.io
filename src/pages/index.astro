@@ -25,23 +25,29 @@ const works = (await getCollection("work"))
 
 <BaseLayout title={SITE.TITLE} description={SITE.DESCRIPTION}>
   <div class="stack gap-10 lg:gap-20">
-    <div class="wrapper stack gap-8 lg:gap-20">
-      <header class="hero">
-        <Hero
-          title="Hi, I'm Brendon."
-          tagline=`I build software for science.
-                   I'm based in Cambridge, MA.`
-          align="start"
-        />
-        <Picture
-          src={portrait}
-          alt="Portrait of Brendon Smith smiling in a spiffy button-down shirt"
-          formats={PICTURE_FORMATS}
-          decoding="async"
-          loading="eager"
-        />
+    <div class="wrapper">
+      <header class="home-hero">
+        <div class="hero-copy">
+          <Hero
+            title="Hi, I'm Brendon."
+            tagline=`I build software for science.
+                     I'm based in Cambridge, MA.`
+            align="start"
+          />
+        </div>
+        <div class="hero-portrait">
+          <Picture
+            src={portrait}
+            alt="Portrait of Brendon Smith smiling in a spiffy button-down shirt"
+            formats={PICTURE_FORMATS}
+            decoding="async"
+            loading="eager"
+          />
+        </div>
+        <div class="hero-skills">
+          <Skills />
+        </div>
       </header>
-      <Skills />
     </div>
 
     <main class="wrapper stack gap-20 lg:gap-48">
@@ -98,14 +104,29 @@ const works = (await getCollection("work"))
 <style>
   /* TODO: hero styles could be encapsulated in the Hero.astro component   */
   /* ===================================================================== */
-  .hero {
+  .home-hero {
     display: grid;
-    flex-direction: column;
+    grid-template-areas:
+      "copy"
+      "portrait"
+      "skills";
     align-items: center;
     gap: 2rem;
   }
 
-  .hero img {
+  .hero-copy {
+    grid-area: copy;
+  }
+
+  .hero-portrait {
+    grid-area: portrait;
+  }
+
+  .hero-skills {
+    grid-area: skills;
+  }
+
+  .hero-portrait img {
     aspect-ratio: 5 / 4;
     object-fit: cover;
     object-position: center;
@@ -114,14 +135,21 @@ const works = (await getCollection("work"))
   }
 
   @media (min-width: 50em) {
-    .hero {
-      display: grid;
-      grid-template-columns: 6fr 4fr;
+    .home-hero {
+      grid-template-areas:
+        "copy portrait"
+        "skills portrait";
+      grid-template-columns: minmax(0, 6fr) minmax(18rem, 4fr);
       padding-inline: 2.5rem;
-      gap: 3.75rem;
+      column-gap: 3.75rem;
+      row-gap: 2.5rem;
     }
 
-    .hero img {
+    .hero-portrait {
+      align-self: center;
+    }
+
+    .hero-portrait img {
       aspect-ratio: 3 / 4;
       border-radius: 4.5rem;
       object-fit: cover;
