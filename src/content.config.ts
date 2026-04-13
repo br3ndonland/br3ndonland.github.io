@@ -2,6 +2,8 @@ import { defineCollection } from "astro:content"
 import { glob } from "astro/loaders"
 import { z } from "astro/zod"
 
+const publicImage = z.string().regex(/^\/images\/.+/)
+
 const projects = defineCollection({
   loader: glob({
     pattern: "**/[^_]*.{md,mdx}",
@@ -13,7 +15,7 @@ const projects = defineCollection({
       dateStart: z.coerce.date(),
       dateEnd: z.union([z.coerce.date(), z.string()]),
       image: z.object({
-        src: image(),
+        src: z.union([publicImage, image()]),
         alt: z.string().default(""),
       }),
       description: z.string(),

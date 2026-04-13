@@ -6,7 +6,7 @@ description: >-
   🚢 Docker images and utilities to power your Python APIs and help you ship faster.
   With support for Uvicorn, Gunicorn, Starlette, and FastAPI.
 image:
-  src: "@images/inboard-logo.svg"
+  src: "/images/inboard-logo.svg"
   alt: inboard logo SVG
 URLdocs: https://inboard.bws.bio
 URLrepo: https://github.com/br3ndonland/inboard

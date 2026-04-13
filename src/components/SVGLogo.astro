@@ -1,0 +1,118 @@
+---
+interface Props {
+  context: "card" | "hero"
+  label: string
+  srcDark: string
+  srcLight?: string
+}
+
+const { context, label, srcDark, srcLight } = Astro.props
+---
+
+<svg-logo data-context={context} role="img" aria-label={label}>
+  <object
+    data={srcDark}
+    type="image/svg+xml"
+    data-logo-mode="dark"
+    aria-hidden="true"
+    tabindex="-1"></object>
+  {
+    srcLight && (
+      <object
+        data={srcLight}
+        type="image/svg+xml"
+        data-logo-mode="light"
+        class="d-none"
+        aria-hidden="true"
+        tabindex="-1"
+      />
+    )
+  }
+</svg-logo>
+
+<script>
+  class SVGLogo extends HTMLElement {
+    constructor() {
+      super()
+      const darkModeLogo = this.querySelector('[data-logo-mode="dark"]')
+      const lightModeLogo = this.querySelector('[data-logo-mode="light"]')
+      const toggleLogo = (
+        darkModeLogo: Element | null,
+        lightModeLogo: Element | null,
+        className: string = "d-none",
+        isDark: boolean = this.isDark(),
+      ) => {
+        if (!lightModeLogo) {
+          darkModeLogo?.classList.remove(className)
+          return
+        }
+        darkModeLogo?.classList[isDark ? "remove" : "add"](className)
+        lightModeLogo?.classList[isDark ? "add" : "remove"](className)
+      }
+      toggleLogo(darkModeLogo, lightModeLogo)
+      if (typeof localStorage !== "undefined") {
+        const observer = new MutationObserver(() => {
+          toggleLogo(darkModeLogo, lightModeLogo)
+        })
+        observer.observe(document.documentElement, {
+          attributes: true,
+          attributeFilter: ["class"],
+        })
+      }
+    }
+
+    isDark(className: string = "theme-dark") {
+      return document.documentElement.classList.contains(className)
+    }
+  }
+
+  if (!customElements.get("svg-logo")) {
+    customElements.define("svg-logo", SVGLogo)
+  }
+</script>
+
+<style>
+  svg-logo {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  svg-logo[data-context="card"] {
+    grid-area: 1 / 1 / 3 / 3;
+    height: 100%;
+  }
+
+  svg-logo[data-context="hero"] {
+    align-self: center;
+    height: 16rem;
+    width: min(100%, 32rem);
+  }
+
+  svg-logo object {
+    display: block;
+    object-fit: contain;
+    pointer-events: none;
+  }
+
+  svg-logo object.d-none {
+    display: none;
+  }
+
+  svg-logo[data-context="card"] object {
+    height: min(82%, 18rem);
+    width: min(82%, 18rem);
+  }
+
+  svg-logo[data-context="hero"] object {
+    height: 100%;
+    width: 100%;
+  }
+
+  @media (min-width: 50em) {
+    svg-logo[data-context="hero"] {
+      height: 24rem;
+    }
+  }
+</style>

@@ -2,13 +2,19 @@
 import type { CollectionEntry } from "astro:content"
 import { Picture } from "astro:assets"
 import Icon from "./Icon.astro"
-import { PICTURE_FORMATS } from "@consts"
+import SVGLogo from "./SVGLogo.astro"
+import { PICTURE_FORMATS, PROJECT_LOGOS } from "@consts"
 
 interface Props {
   entry: CollectionEntry<"projects" | "work">
 }
 
 const { entry } = Astro.props
+const image = entry.data.image.src
+const logo =
+  entry.collection === "projects"
+    ? PROJECT_LOGOS[entry.id as keyof typeof PROJECT_LOGOS]
+    : undefined
 ---
 
 <a class="card" href={`/${entry.collection}/${entry.id}`}>
@@ -16,13 +22,26 @@ const { entry } = Astro.props
     {entry.data.title}
     <Icon icon="arrow-right" size="1.2em" />
   </h3>
-  <Picture
-    src={entry.data.image.src}
-    alt={entry.data.image.alt}
-    formats={PICTURE_FORMATS}
-    decoding="async"
-    loading="lazy"
-  />
+  {
+    logo ? (
+      <SVGLogo context="card" {...logo} />
+    ) : typeof image === "string" ? (
+      <img
+        src={image}
+        alt={entry.data.image.alt}
+        decoding="async"
+        loading="lazy"
+      />
+    ) : (
+      <Picture
+        src={image}
+        alt={entry.data.image.alt}
+        formats={PICTURE_FORMATS}
+        decoding="async"
+        loading="lazy"
+      />
+    )
+  }
 </a>
 
 <style>
@@ -54,10 +73,16 @@ const { entry } = Astro.props
     z-index: 1;
   }
 
-  picture {
+  img,
+  picture,
+  :global(svg-logo) {
     grid-area: 1 / 1 / 3 / 3;
-    width: 100%;
     height: 100%;
+    width: 100%;
+  }
+
+  img,
+  picture {
     object-fit: cover;
   }
 

@@ -45,6 +45,18 @@ export const PROJECTS: Metadata = {
   TITLE: "Projects",
 }
 
+export const PROJECT_LOGOS = {
+  inboard: {
+    label: "inboard logo",
+    srcDark: "/images/inboard-logo.svg",
+  },
+  udacity: {
+    label: "Udacity logo",
+    srcDark: "/images/udacity-logo-dark-mode.svg",
+    srcLight: "/images/udacity-logo-light-mode.svg",
+  },
+} as const
+
 export const SOCIALS: Socials = [
   {
     HREF: "https://github.com/br3ndonland",

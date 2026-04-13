@@ -5,8 +5,8 @@ import BaseLayout from "@layouts/BaseLayout.astro"
 import Contact from "@components/Contact.astro"
 import Hero from "@components/Hero.astro"
 import Icon from "@components/Icon.astro"
-import UdacityLogo from "@components/UdacityLogo.astro"
-import { PICTURE_FORMATS, PROJECTS, SITE } from "@consts"
+import SVGLogo from "@components/SVGLogo.astro"
+import { PICTURE_FORMATS, PROJECT_LOGOS, PROJECTS, SITE } from "@consts"
 
 interface Props {
   entry: CollectionEntry<"projects">
@@ -23,8 +23,10 @@ export async function getStaticPaths() {
 const { entry } = Astro.props
 const { Content } = await render(entry)
 
-const isSVG = entry.data.image.src.src.endsWith("svg")
-const isUdacious = entry.data.title.toLowerCase().includes("udacity")
+const image = entry.data.image.src
+const imageSrc = typeof image === "string" ? image : image.src
+const isSVG = imageSrc.endsWith(".svg")
+const logo = PROJECT_LOGOS[entry.id as keyof typeof PROJECT_LOGOS]
 ---
 
 <BaseLayout
@@ -38,17 +40,21 @@ const isUdacious = entry.data.title.toLowerCase().includes("udacity")
           <a class="back-link" href={PROJECTS.HREF}
             ><Icon icon="arrow-left" />{PROJECTS.TITLE}</a
           >
-          <Hero
-            title={entry.data.title}
-            classList={isUdacious ? ["d-none"] : []}
-            align="start"
-          >
+          <Hero title={entry.data.title} align="start">
             {
-              isUdacious ? (
-                <UdacityLogo />
+              logo ? (
+                <SVGLogo context="hero" {...logo} />
+              ) : typeof image === "string" ? (
+                <img
+                  src={image}
+                  alt={entry.data.image.alt}
+                  class:list={isSVG ? [] : ["img-hero"]}
+                  decoding="async"
+                  loading="eager"
+                />
               ) : (
                 <Picture
-                  src={entry.data.image.src}
+                  src={image}
                   alt={entry.data.image.alt}
                   formats={PICTURE_FORMATS}
                   class:list={isSVG ? [] : ["img-hero"]}
