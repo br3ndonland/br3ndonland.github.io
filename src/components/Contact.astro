@@ -31,25 +31,7 @@ import { AUTHOR } from "@consts"
           a: HTMLAnchorElement,
           encodedEmail: string = email,
         ) => {
-          /* TODO: TypeScript says `atob()` is deprecated:
-            "This function is only provided for compatibility with legacy web
-            platform APIs and should never be used in new code, because they
-            use strings to represent binary data and predate the introduction
-            of typed arrays in JavaScript. For code running using Node.js APIs,
-            converting between base64-encoded strings and binary data should be
-            performed using `Buffer.from(str, 'base64')` and
-            `buf.toString('base64')`."
-
-            The change would be:
-            const encodedEmailBuffer = Buffer.from(encodedEmail, "base64")
-            const decodedEmail = encodedEmailBuffer.toString()
-
-            The problem with this recommendation is that web browsers don't
-            have the `Buffer` prototype. They do have `Window.atob()` though.
-            https://developer.mozilla.org/en-US/docs/Glossary/Base64
-          */
-          // @ts-ignore
-          const decodedEmail = atob(encodedEmail)
+          const decodedEmail = window.atob(encodedEmail)
           a.setAttribute("href", `mailto:${decodedEmail}`)
         }
         events.forEach((e) => a.addEventListener(e, () => setEmailHref(a)))
