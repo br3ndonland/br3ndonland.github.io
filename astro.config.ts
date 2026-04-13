@@ -11,12 +11,12 @@ import { rehype } from "rehype"
 import type { Options as RehypeAutolinkOptions } from "rehype-autolink-headings"
 import rehypeAutolinkHeadings from "rehype-autolink-headings"
 
-interface AstroAutolinkOptions {
+export interface AstroAutolinkOptions {
   paths: string[]
   rehypeAutolinkOptions?: Readonly<RehypeAutolinkOptions> | null | undefined
 }
 
-const astroAutolinkHeadings = (
+export const astroAutolinkHeadings = (
   astroAutolinkOptions: AstroAutolinkOptions,
 ): AstroIntegration => {
   const { paths, rehypeAutolinkOptions } = astroAutolinkOptions
@@ -30,21 +30,23 @@ const astroAutolinkHeadings = (
         logger: AstroIntegrationLogger
       }) => {
         const integrationLogger = logger.fork(`${integrationName}/build`)
-        paths.forEach(async (path) => {
-          integrationLogger.info(`Processing ${path}`)
-          const fileContents = await readFile(path, { encoding: "utf-8" })
-          const processedFileContents = await rehype()
-            .use(rehypeHeadingIds)
-            .use(rehypeAutolinkHeadings, rehypeAutolinkOptions)
-            .process(fileContents)
-          await writeFile(path, String(processedFileContents))
-        })
+        await Promise.all(
+          paths.map(async (path) => {
+            integrationLogger.info(`Processing ${path}`)
+            const fileContents = await readFile(path, { encoding: "utf-8" })
+            const processedFileContents = await rehype()
+              .use(rehypeHeadingIds)
+              .use(rehypeAutolinkHeadings, rehypeAutolinkOptions)
+              .process(fileContents)
+            await writeFile(path, String(processedFileContents))
+          }),
+        )
       },
     },
   }
 }
 
-const rehypeAutolinkOptions: RehypeAutolinkOptions = {
+export const rehypeAutolinkOptions: RehypeAutolinkOptions = {
   behavior: "prepend",
   content: {
     type: "element",
@@ -59,12 +61,12 @@ const rehypeAutolinkOptions: RehypeAutolinkOptions = {
   test: ["h2", "h3", "h4", "h5", "h6"],
 }
 
-const astroAutolinkOptions: AstroAutolinkOptions = {
+export const astroAutolinkOptions: AstroAutolinkOptions = {
   paths: ["./dist/about/index.html"],
   rehypeAutolinkOptions: rehypeAutolinkOptions,
 }
 
-const astroSearch = (): AstroIntegration => {
+export const astroSearch = (): AstroIntegration => {
   const integrationName = "astro-search"
   return {
     name: integrationName,
