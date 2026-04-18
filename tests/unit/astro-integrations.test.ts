@@ -184,6 +184,22 @@ describe("AstroOpenGraph", () => {
     )
   })
 
+  it("decodes html entities once", () => {
+    const result = AstroOpenGraph.html`<div title="&amp;lt;">
+      A &amp;lt; B
+    </div>`
+
+    expect(result).toEqual(
+      openGraphWrap({
+        type: "div",
+        props: {
+          children: "A &lt; B",
+          title: "&lt;",
+        },
+      }),
+    )
+  })
+
   it("returns a PNG response", async () => {
     const fontData = await fs.readFile(
       path.resolve("public", "fonts", "RecursiveSansLinearStatic-Regular.ttf"),

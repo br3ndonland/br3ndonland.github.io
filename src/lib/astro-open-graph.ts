@@ -58,14 +58,19 @@ const openGraphVoidElements = new Set([
   "wbr",
 ])
 
+const openGraphEntities: Record<string, string> = {
+  "&amp;": "&",
+  "&apos;": "'",
+  "&#39;": "'",
+  "&gt;": ">",
+  "&lt;": "<",
+  "&quot;": '"',
+}
+
 const decodeOpenGraphEntities = (value: string): string => {
-  return value
-    .replaceAll("&amp;", "&")
-    .replaceAll("&lt;", "<")
-    .replaceAll("&gt;", ">")
-    .replaceAll("&quot;", '"')
-    .replaceAll("&#39;", "'")
-    .replaceAll("&apos;", "'")
+  return value.replace(/&(amp|apos|#39|gt|lt|quot);/g, (entity) => {
+    return openGraphEntities[entity] ?? entity
+  })
 }
 
 const toOpenGraphStyleName = (name: string): string => {
