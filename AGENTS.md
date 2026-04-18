@@ -14,14 +14,59 @@ Instructions for coding agents working in this repository.
   - `src/styles/` (global styles)
   - `public/` (static assets)
 
-## Ground rules
+## Working agreements
 
-- Keep changes focused and minimal; avoid broad refactors unless requested.
+### Output
+
+- Use ASCII characters only in all written output, code comments, commit messages, and documentation. Forbidden characters include em/en dashes (— –), curly quotes (“ ” ‘ ’), ellipses (…), or other non-ASCII Unicode. Prefer plain ASCII equivalents at all times. The only exceptions to this rule are box-drawing characters (├, └, │, ─) in tree diagrams.
+- Default to pragmatic, concise communication.
+- Keep edits minimal and well-scoped; explain changes.
+- Prefer local context; use the web only when needed.
+- Make safe assumptions; ask only when necessary.
 - Follow existing formatting and naming patterns.
 - Sort lists alphabetically by default unless there is a clear reason not to.
 - Do not add licenses/headers unless explicitly requested.
-- Do not create commits on `main`; work on a feature branch.
 - Preserve content authorship style in `src/content/**`.
+
+### Git commits
+
+- Do not create Git commits on `main`; always work on a feature branch.
+- Do not Git push to `main`; always push to a feature branch.
+- Use descriptive branch names such as `test-astro-integrations`.
+- Format Git commit messages in the following style:
+
+  ```text
+  Imperative commit title limited to 50 characters
+
+  Begin by describing how the code works now and why a change is needed.
+  The commit message body can be detailed. Full paragraphs are acceptable.
+  Lines in commit message paragraphs should be limited to 72 characters.
+
+  Summarize changes by saying "This commit will" and using the imperative.
+
+  - The end of the commit message should have a list of references.
+  - Add an unordered list item for each URL.
+  - Do not hard wrap URLs. URLs can exceed 72 characters if needed.
+  ```
+
+### GitHub pull requests
+
+- Always open GitHub pull requests in draft mode.
+- Each time a new commit is pushed to a pull request branch, check the pull request title and description and update them if needed to match the current state of the pull request.
+- Format GitHub pull request titles and descriptions in the following style:
+  - Limit the PR title to around 50 characters so it fits into a squash commit title.
+  - Include a concise PR description with these sections:
+    - `## Description`: background and context on why the PR is needed.
+    - `## Changes`: summarize changes by saying "This PR will" and using the imperative in each sentence. Explain what will change and why. Place terminal output/log snippets in fenced code blocks inside HTML `<details><summary>...</summary> ... </details>` sections.
+    - `## Related`: unordered list of links to related resources. Do not link the PR to itself.
+  - In the PR description, GitHub autolinked references should be used to refer to issues, PRs, commits, GitHub security advisories, and other supported links. GitHub permanent links to code snippets (permalinks) should be used when referencing code in the same repository as the PR. Permalinks should be on separate lines so they render properly. Non-GitHub URLs should be formatted as Markdown links with descriptive titles (no bare URLs).
+  - Format the PR body with Prettier using the equivalent command-line overrides so the text wraps at 72 characters for use in squash commit messages:
+    ```sh
+    echo "<pr-body>" | pnpm exec prettier --parser markdown --print-width 72 --prose-wrap always
+    ```
+
+### MCP servers
+
 - Always use the Astro MCP server to answer questions about Astro and search the Astro documentation (docs.astro.build).
 
 ## Required local validation
@@ -78,27 +123,12 @@ Keep contributions compatible with this sequence.
 - Keep dependency updates scoped and justified.
 - To update Astro and related dependencies, run `pnpm -s dlx @astrojs/upgrade && pnpm dedupe`.
 
-## Pull request guidance
-
-- Use a descriptive branch name and small, reviewable diffs.
-- Limit the PR title to around 50 characters if possible so it fits into a squash commit title. This repository does not use Angular commit message conventions or Conventional Commits, so do not prefix PR titles with types or scopes like "docs: ".
-- Include a concise PR description with these sections:
-  - `## Description`: background and context on why the PR is needed.
-  - `## Changes`: explain what changed, why it changed, and how it was validated (commands + results). Place terminal output/log snippets in fenced code blocks inside HTML `<details><summary>...</summary> ... </details>` sections.
-  - `## Related`: links to related resources. Do not link the PR to itself.
-- In the PR description, GitHub autolinked references should be used to refer to issues, PRs, commits, GitHub security advisories, and other supported links. GitHub permanent links to code snippets (permalinks) should be used when referencing code in this repository. Permalinks should be on separate lines so they render properly. Non-GitHub URLs should be formatted as Markdown links with descriptive titles (no bare URLs).
-- Format the PR body with Prettier using the equivalent command-line overrides so the text wraps at 72 characters for use in squash commit messages:
-  ```bash
-  echo "<pr-body>" | pnpm exec prettier --parser markdown --print-width 72 --prose-wrap always
-  ```
-- If PR creation is blocked by repository restrictions, report the exact GitHub/CLI error message.
-
 ## Agent workflow for this repo
 
 1. Read relevant files first (`README.md`, `package.json`, CI workflow, and touched modules).
 2. Implement minimal, targeted changes.
 3. Run validation commands.
-4. Commit on a non-`main` branch. Prefix the Git branch with the name of the tool being used, in lowercase with dashes separating words (i.e. `claude-code/`, `codex/`, `kilo-code/`, etc.) and follow the prefix with a descriptive branch name, such as `test-astro-integrations`.
+4. Commit on a non-`main` branch.
 5. Open a PR (or report exact error if repo settings prevent it).
 6. Wait for required status checks to complete.
 7. Ensure the PR passes all required status checks; if checks fail, read logs and add commits to fix the failing checks.
