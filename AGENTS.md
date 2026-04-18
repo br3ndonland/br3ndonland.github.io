@@ -2,7 +2,7 @@
 
 Instructions for coding agents working in this repository.
 
-## Project Overview
+## Project overview
 
 - Personal website built with Astro.
 - Package manager: `pnpm`.
@@ -14,7 +14,7 @@ Instructions for coding agents working in this repository.
   - `src/styles/` (global styles)
   - `public/` (static assets)
 
-## Ground Rules
+## Ground rules
 
 - Keep changes focused and minimal; avoid broad refactors unless requested.
 - Follow existing formatting and naming patterns.
@@ -24,7 +24,7 @@ Instructions for coding agents working in this repository.
 - Preserve content authorship style in `src/content/**`.
 - Always use the Astro MCP server to answer questions about Astro and search the Astro documentation (docs.astro.build).
 
-## Required Local Validation
+## Required local validation
 
 Run these commands from repository root before opening a PR:
 
@@ -41,7 +41,7 @@ Notes:
 - Build should succeed without changing deployment configuration.
 - Do not run development server commands in agent mode (for example, `astro dev`, `pnpm run dev`, `pnpm run start`, `pnpm run test:watch`, or `vitest` without arguments). Instead, run `pnpm run build` to inspect changes.
 
-## CI Expectations
+## CI expectations
 
 GitHub Actions workflow: `.github/workflows/ci.yml`
 
@@ -55,7 +55,7 @@ GitHub Actions workflow: `.github/workflows/ci.yml`
 
 Keep contributions compatible with this sequence.
 
-## Content and Assets
+## Content and assets
 
 - Prefer editing existing content files rather than moving directories.
 - Keep frontmatter valid for markdown/MDX content in `src/content/**`.
@@ -76,14 +76,14 @@ git lfs install
 git lfs pull
 ```
 
-## Dependency and Tooling Changes
+## Dependency and tooling changes
 
 - Do not downgrade dependencies unless explicitly asked.
 - If dependency changes are made, run `pnpm dedupe` and full validation (`check`, `build`, `test`).
 - Keep dependency updates scoped and justified.
 - To update Astro and related dependencies, run `pnpm -s dlx @astrojs/upgrade && pnpm dedupe`.
 
-## Pull Request Guidance
+## Pull request guidance
 
 - Use a descriptive branch name and small, reviewable diffs.
 - Limit the PR title to around 50 characters if possible so it fits into a squash commit title. This repository does not use Angular commit message conventions or Conventional Commits, so do not prefix PR titles with types or scopes like "docs: ".
@@ -98,7 +98,7 @@ git lfs pull
   ```
 - If PR creation is blocked by repository restrictions, report the exact GitHub/CLI error message.
 
-## Agent Workflow for This Repo
+## Agent workflow for this repo
 
 1. Read relevant files first (`README.md`, `package.json`, CI workflow, and touched modules).
 2. Implement minimal, targeted changes.
