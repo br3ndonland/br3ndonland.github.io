@@ -57,24 +57,19 @@ Keep contributions compatible with this sequence.
 
 ## Content and assets
 
+- Media assets and other large files in this repository are stored with Git LFS.
+- Git LFS is installed separately from Git. If the `git-lfs` command is not available, prompt the user to install it first.
+- After cloning the repository, download LFS objects:
+  ```sh
+  git lfs install
+  git lfs pull
+  ```
 - Prefer editing existing content files rather than moving directories.
 - Keep frontmatter valid for markdown/MDX content in `src/content/**`.
 - If cspell flags accepted technical terms (for example, framework-specific words), add them to `cspell.json`; do not add misspellings.
 - When adding images/assets:
   - place route-served static files in `public/`
   - use `src/images/` for source images processed in Astro where appropriate
-- Respect Git LFS usage for large media assets.
-
-### Git LFS
-
-- Media assets and other large files in this repository are stored with Git LFS.
-- Git LFS is installed separately from Git. Install it first so `git lfs` commands are available.
-- After cloning the repository, download LFS objects:
-
-```bash
-git lfs install
-git lfs pull
-```
 
 ## Dependency and tooling changes
 
