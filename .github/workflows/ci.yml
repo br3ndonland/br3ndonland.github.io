@@ -26,6 +26,7 @@ jobs:
           cache: "pnpm"
       - run: pnpm install --frozen-lockfile
       - run: pnpm run check
+      - run: pnpm run test
       - run: pnpm run build --site "https://${GITHUB_REPOSITORY##*/}"
       - name: Upload build artifact
         if: github.ref == 'refs/heads/main' || github.ref_type == 'tag'

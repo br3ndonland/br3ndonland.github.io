@@ -1,4 +1,4 @@
-import { type AstroIntegration, type AstroIntegrationLogger } from "astro"
+import { type AstroIntegration, type HookParameters } from "astro"
 import { defineConfig } from "astro/config"
 import mdx from "@astrojs/mdx"
 import sitemap from "@astrojs/sitemap"
@@ -11,12 +11,13 @@ import { rehype } from "rehype"
 import type { Options as RehypeAutolinkOptions } from "rehype-autolink-headings"
 import rehypeAutolinkHeadings from "rehype-autolink-headings"
 
-interface AstroAutolinkOptions {
+export interface AstroAutolinkOptions {
+  /** Paths are resolved relative to Astro's build output directory. */
   paths: string[]
   rehypeAutolinkOptions?: Readonly<RehypeAutolinkOptions> | null | undefined
 }
 
-const astroAutolinkHeadings = (
+export const astroAutolinkHeadings = (
   astroAutolinkOptions: AstroAutolinkOptions,
 ): AstroIntegration => {
   const { paths, rehypeAutolinkOptions } = astroAutolinkOptions
@@ -25,26 +26,28 @@ const astroAutolinkHeadings = (
     name: integrationName,
     hooks: {
       "astro:build:done": async ({
+        dir,
         logger,
-      }: {
-        logger: AstroIntegrationLogger
-      }) => {
+      }: HookParameters<"astro:build:done">) => {
         const integrationLogger = logger.fork(`${integrationName}/build`)
-        paths.forEach(async (path) => {
-          integrationLogger.info(`Processing ${path}`)
-          const fileContents = await readFile(path, { encoding: "utf-8" })
-          const processedFileContents = await rehype()
-            .use(rehypeHeadingIds)
-            .use(rehypeAutolinkHeadings, rehypeAutolinkOptions)
-            .process(fileContents)
-          await writeFile(path, String(processedFileContents))
-        })
+        await Promise.all(
+          paths.map(async (path) => {
+            const filePath = fileURLToPath(new URL(path, dir))
+            integrationLogger.info(`Processing ${filePath}`)
+            const fileContents = await readFile(filePath, { encoding: "utf-8" })
+            const processedFileContents = await rehype()
+              .use(rehypeHeadingIds)
+              .use(rehypeAutolinkHeadings, rehypeAutolinkOptions)
+              .process(fileContents)
+            await writeFile(filePath, String(processedFileContents))
+          }),
+        )
       },
     },
   }
 }
 
-const rehypeAutolinkOptions: RehypeAutolinkOptions = {
+export const rehypeAutolinkOptions: RehypeAutolinkOptions = {
   behavior: "prepend",
   content: {
     type: "element",
@@ -60,16 +63,16 @@ const rehypeAutolinkOptions: RehypeAutolinkOptions = {
 }
 
 const astroAutolinkOptions: AstroAutolinkOptions = {
-  paths: ["./dist/about/index.html"],
+  paths: ["about/index.html"],
   rehypeAutolinkOptions: rehypeAutolinkOptions,
 }
 
-const astroSearch = (): AstroIntegration => {
+export const astroSearch = (): AstroIntegration => {
   const integrationName = "astro-search"
   return {
     name: integrationName,
     hooks: {
-      "astro:build:done": ({ dir }: { dir: URL }) => {
+      "astro:build:done": ({ dir }: HookParameters<"astro:build:done">) => {
         const targetDir = fileURLToPath(dir)
         const cwd = dirname(fileURLToPath(import.meta.url))
         const relativeDir = relative(cwd, targetDir)
