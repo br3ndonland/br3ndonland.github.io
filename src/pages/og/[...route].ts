@@ -2,11 +2,10 @@ import type { APIRoute, GetStaticPaths, ImageMetadata } from "astro"
 import { getCollection } from "astro:content"
 import { readFile } from "node:fs/promises"
 import { extname, join } from "node:path"
-import { satoriAstroOG } from "satori-astro"
-import { html } from "satori-html"
 import sharp from "sharp"
 import defaultImage from "@images/brendon-smith-portrait-2025-07-15-1920.jpg"
 import { ABOUT, HOME, PROJECTS, SITE, WORK } from "@consts"
+import { AstroOpenGraph } from "../../lib/astro-open-graph"
 import { getOgImageRoute, OG_IMAGE_HEIGHT, OG_IMAGE_WIDTH } from "../../lib/og"
 
 type OgImageSource = ImageMetadata | string
@@ -214,7 +213,7 @@ const getTemplate = async (page: OgPage) => {
   const titleSize = getTitleSize(title)
   const descriptionSize = getDescriptionSize(description)
 
-  return html`<div
+  return AstroOpenGraph.html`<div
     style="background: #f3f4f7; color: #090b11; display: flex; font-family: Recursive Sans; height: 100%; width: 100%;"
   >
     <div
@@ -271,7 +270,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const GET: APIRoute = async ({ props }) => {
   const { page } = props as OgRouteProps
 
-  return await satoriAstroOG({
+  return await AstroOpenGraph.image({
     height: OG_IMAGE_HEIGHT,
     template: await getTemplate(page),
     width: OG_IMAGE_WIDTH,
