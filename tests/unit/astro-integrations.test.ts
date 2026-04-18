@@ -1,6 +1,8 @@
+import type { HookParameters } from "astro"
 import fs from "node:fs/promises"
 import os from "node:os"
 import path from "node:path"
+import { pathToFileURL } from "node:url"
 import {
   astroAutolinkHeadings,
   astroSearch,
@@ -8,16 +10,49 @@ import {
 } from "../../astro.config"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
+type AstroBuildDoneHookOptions = HookParameters<"astro:build:done">
+
+const pathToDirectoryURL = (directoryPath: string) =>
+  pathToFileURL(
+    directoryPath.endsWith(path.sep)
+      ? directoryPath
+      : `${directoryPath}${path.sep}`,
+  )
+
+const createIntegrationLogger = (
+  label: string,
+): AstroBuildDoneHookOptions["logger"] => {
+  const logger: AstroBuildDoneHookOptions["logger"] = {
+    debug: () => undefined,
+    error: () => undefined,
+    fork: () => logger,
+    info: () => undefined,
+    label,
+    options: {
+      dest: {
+        write: () => true,
+      },
+      level: "info",
+    },
+    warn: () => undefined,
+  }
+
+  return logger
+}
+
 let htmlDir: string
-let tempDir: string
-let tempDirPath: string
+let outDir: string
+let outDirPath: string
 
 describe("astroAutolinkHeadings", () => {
   beforeEach(async () => {
     htmlDir = path.resolve("tests", "fixtures", "html-document")
-    tempDirPath = path.join(os.tmpdir(), "astro-autolink-headings-")
-    tempDir = await fs.mkdtemp(tempDirPath)
-    await fs.cp(htmlDir, tempDir, { errorOnExist: false, recursive: true })
+    outDirPath = path.join(os.tmpdir(), "astro-autolink-out-dir-")
+    outDir = await fs.mkdtemp(outDirPath)
+    await fs.cp(htmlDir, path.join(outDir, "about"), {
+      errorOnExist: false,
+      recursive: true,
+    })
   })
 
   afterEach(async () => {
@@ -26,20 +61,28 @@ describe("astroAutolinkHeadings", () => {
 
   it("adds ids and anchor links to h2-h6 headings", async () => {
     const integration = astroAutolinkHeadings({
-      paths: [path.join(tempDir, "index.html")],
+      paths: ["about/index.html"],
       rehypeAutolinkOptions,
     })
     const hook = integration.hooks["astro:build:done"]
-    const logger = {
-      fork: vi.fn(() => ({ info: vi.fn() })),
-    }
+    const htmlPath = path.join(outDir, "about", "index.html")
+    const logger = createIntegrationLogger("astro-autolink-headings")
+    const forkSpy = vi.spyOn(logger, "fork")
+    const infoSpy = vi.spyOn(logger, "info")
 
-    await hook?.({
+    const hookOptions = {
+      assets: new Map(),
+      dir: pathToDirectoryURL(outDir),
       logger,
-    } as unknown as Parameters<NonNullable<typeof hook>>[0])
+      pages: [{ pathname: "/about/" }],
+    } satisfies AstroBuildDoneHookOptions
 
-    const output = await fs.readFile(path.join(tempDir, "index.html"), "utf-8")
+    await hook?.(hookOptions)
 
+    const output = await fs.readFile(htmlPath, "utf-8")
+
+    expect(forkSpy).toHaveBeenCalledWith("astro-autolink-headings/build")
+    expect(infoSpy).toHaveBeenCalledWith(`Processing ${htmlPath}`)
     expect(output).toContain('h2 id="this-is-an-html-h2-heading"')
     expect(output).toContain('class="heading-element"')
     expect(output).toContain('class="anchor-link"')
@@ -63,12 +106,14 @@ describe("astroSearch", () => {
     const integration = astroSearch()
     const hook = integration.hooks["astro:build:done"]
 
-    await hook?.({
+    const hookOptions = {
       assets: new Map(),
-      dir: new URL(`file://${pagefindSitePath}/`),
-      logger: {} as Parameters<NonNullable<typeof hook>>[0]["logger"],
-      pages: [],
-    })
+      dir: pathToDirectoryURL(pagefindSitePath),
+      logger: createIntegrationLogger("astro-search"),
+      pages: [{ pathname: "/" }],
+    } satisfies AstroBuildDoneHookOptions
+
+    await hook?.(hookOptions)
 
     const entryFile = await fs.stat(
       path.join(pagefindSitePath, "pagefind", "pagefind-entry.json"),
