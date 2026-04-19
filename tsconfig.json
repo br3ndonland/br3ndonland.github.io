@@ -6,7 +6,6 @@
       "@components/*": ["./src/components/*"],
       "@consts": ["./src/consts"],
       "@images/*": ["./src/images/*"],
-      "@integrations/*": ["./src/integrations/*"],
       "@layouts/*": ["./src/layouts/*"],
       "@styles/*": ["./src/styles/*"],
       "@types": ["./src/types"]
