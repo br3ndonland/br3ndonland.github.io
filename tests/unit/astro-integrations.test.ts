@@ -4,7 +4,7 @@ import os from "node:os"
 import path from "node:path"
 import { pathToFileURL } from "node:url"
 import {
-  AstroOpenGraph,
+  astroOpenGraph,
   astroAutolinkHeadings,
   astroSearch,
   rehypeAutolinkOptions,
@@ -107,13 +107,13 @@ describe("astroAutolinkHeadings", () => {
   })
 })
 
-describe("AstroOpenGraph", () => {
+describe("astroOpenGraph", () => {
   it("creates an Astro integration", () => {
-    expect(AstroOpenGraph().name).toBe("astro-open-graph")
+    expect(astroOpenGraph().name).toBe("astro-open-graph")
   })
 
   it("converts basic html into a Satori element tree", () => {
-    const result = AstroOpenGraph.html`<div>Hello ${"world"}</div>`
+    const result = astroOpenGraph.html`<div>Hello ${"world"}</div>`
 
     expect(result).toEqual(
       openGraphWrap({
@@ -126,7 +126,7 @@ describe("AstroOpenGraph", () => {
   })
 
   it("supports function input", () => {
-    const result = AstroOpenGraph.html("<div>Hello world</div>")
+    const result = astroOpenGraph.html("<div>Hello world</div>")
 
     expect(result).toEqual(
       openGraphWrap({
@@ -139,7 +139,7 @@ describe("AstroOpenGraph", () => {
   })
 
   it("parses style attributes for Satori", () => {
-    const result = AstroOpenGraph.html`<div
+    const result = astroOpenGraph.html`<div
       style="
         background-image: linear-gradient(135deg, #ef629f, #eecda3);
         border-top: 1px solid green;
@@ -165,7 +165,7 @@ describe("AstroOpenGraph", () => {
   })
 
   it("preserves self-closing image attributes", () => {
-    const result = AstroOpenGraph.html`<img
+    const result = astroOpenGraph.html`<img
       src="data:image/png;base64,AAAA"
       height="10"
       width="20"
@@ -185,7 +185,7 @@ describe("AstroOpenGraph", () => {
   })
 
   it("decodes html entities once", () => {
-    const result = AstroOpenGraph.html`<div title="&amp;lt;">
+    const result = astroOpenGraph.html`<div title="&amp;lt;">
       A &amp;lt; B
     </div>`
 
@@ -204,26 +204,28 @@ describe("AstroOpenGraph", () => {
     const fontData = await fs.readFile(
       path.resolve("public", "fonts", "RecursiveSansLinearStatic-Regular.ttf"),
     )
-    const response = await AstroOpenGraph.image({
-      height: 126,
-      template: AstroOpenGraph.html`<div
+    const response = await astroOpenGraph
+      .image({
+        height: 126,
+        template: astroOpenGraph.html`<div
         style="color: black; display: flex; font-family: Recursive Sans;"
       >
         Hello world
       </div>`,
-      width: 240,
-    }).toResponse({
-      satori: {
-        fonts: [
-          {
-            data: fontData,
-            name: "Recursive Sans",
-            style: "normal",
-            weight: 400,
-          },
-        ],
-      },
-    })
+        width: 240,
+      })
+      .toResponse({
+        satori: {
+          fonts: [
+            {
+              data: fontData,
+              name: "Recursive Sans",
+              style: "normal",
+              weight: 400,
+            },
+          ],
+        },
+      })
 
     const bytes = Buffer.from(await response.arrayBuffer())
 

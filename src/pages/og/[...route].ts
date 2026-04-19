@@ -5,7 +5,7 @@ import { join } from "node:path"
 import sharp from "sharp"
 import defaultImage from "@images/brendon-smith-portrait-2025-07-15-1920.jpg"
 import { ABOUT, HOME, PROJECTS, SITE, WORK } from "@consts"
-import { AstroOpenGraph } from "@integrations/astro-open-graph"
+import { astroOpenGraph } from "@integrations/astro-open-graph"
 import {
   getOgImageRoute,
   OG_IMAGE_HEIGHT,
@@ -227,7 +227,7 @@ const getTemplate = async (page: OgPage) => {
   const titleSize = getTitleSize(title)
   const descriptionSize = getDescriptionSize(description)
 
-  return AstroOpenGraph.html`<div
+  return astroOpenGraph.html`<div
     style="background: #141925; color: #ffffff; display: flex; font-family: Recursive Sans; gap: 54px; height: 100%; padding: 58px 64px 52px 78px; position: relative; width: 100%;"
   >
     <div
@@ -310,13 +310,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const GET: APIRoute = async ({ props }) => {
   const { page } = props as OgRouteProps
 
-  return await AstroOpenGraph.image({
-    height: OG_IMAGE_HEIGHT,
-    template: await getTemplate(page),
-    width: OG_IMAGE_WIDTH,
-  }).toResponse({
-    satori: {
-      fonts: await getFontData(),
-    },
-  })
+  return await astroOpenGraph
+    .image({
+      height: OG_IMAGE_HEIGHT,
+      template: await getTemplate(page),
+      width: OG_IMAGE_WIDTH,
+    })
+    .toResponse({
+      satori: {
+        fonts: await getFontData(),
+      },
+    })
 }

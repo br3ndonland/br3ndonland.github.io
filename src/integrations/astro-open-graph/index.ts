@@ -3,7 +3,7 @@ import { image } from "./image.js"
 import { createIntegration, integrationName } from "./integration.js"
 import type { AstroOpenGraphIntegration } from "./types.js"
 
-export const AstroOpenGraph = Object.assign(createIntegration, {
+export const astroOpenGraph = Object.assign(createIntegration, {
   html,
   image,
 }) satisfies AstroOpenGraphIntegration
