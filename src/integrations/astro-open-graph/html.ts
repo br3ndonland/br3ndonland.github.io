@@ -1,38 +1,8 @@
-import type { AstroIntegration } from "astro"
-import type { SatoriOptions } from "satori"
-import createSatoriSvg from "satori"
-import sharp, { type SharpOptions } from "sharp"
-
-type SatoriTemplate = Parameters<typeof createSatoriSvg>[0]
-type AstroOpenGraphChild = AstroOpenGraphElement | string
-
-interface AstroOpenGraphElement {
-  type: string
-  props: {
-    children?: AstroOpenGraphChild | AstroOpenGraphChild[]
-    style?: Record<string, string>
-    [prop: string]: unknown
-  }
-}
-
-interface AstroOpenGraphOptions {
-  height: number
-  template: SatoriTemplate
-  width: number
-}
-
-type AstroOpenGraphSvgOptions = Omit<SatoriOptions, "height" | "width">
-
-interface AstroOpenGraphImageOptions {
-  satori: AstroOpenGraphSvgOptions
-  sharp?:
-    | SharpOptions
-    | ((params: { height: number; width: number }) => SharpOptions)
-}
-
-interface AstroOpenGraphResponseOptions extends AstroOpenGraphImageOptions {
-  response?: ResponseInit
-}
+import type {
+  AstroOpenGraphChild,
+  AstroOpenGraphElement,
+  AstroOpenGraphTemplate,
+} from "./types.js"
 
 const openGraphRootStyle = {
   display: "flex",
@@ -209,10 +179,10 @@ const stringifyOpenGraphTemplate = (
   }, "")
 }
 
-const astroOpenGraphHtml = (
+export const html = (
   template: string | TemplateStringsArray,
   ...expressions: unknown[]
-): SatoriTemplate => {
+): AstroOpenGraphTemplate => {
   const markup = stringifyOpenGraphTemplate(template, expressions).trim()
   const root: AstroOpenGraphElement = {
     type: "div",
@@ -265,61 +235,5 @@ const astroOpenGraphHtml = (
     }
   }
 
-  return normalizeOpenGraphElement(root) as SatoriTemplate
+  return normalizeOpenGraphElement(root) as AstroOpenGraphTemplate
 }
-
-const astroOpenGraphImage = ({
-  height,
-  template,
-  width,
-}: AstroOpenGraphOptions) => {
-  const toSvg = async (options: AstroOpenGraphSvgOptions): Promise<string> => {
-    return await createSatoriSvg(template, { ...options, height, width })
-  }
-
-  const toImage = async ({
-    satori: satoriOptions,
-    sharp: sharpOptionsInput,
-  }: AstroOpenGraphImageOptions): Promise<Buffer> => {
-    const sharpOptions =
-      typeof sharpOptionsInput === "function"
-        ? sharpOptionsInput({ height, width })
-        : sharpOptionsInput
-    const svg = await toSvg(satoriOptions)
-
-    return await sharp(Buffer.from(svg), sharpOptions)
-      .resize(width, height)
-      .png()
-      .toBuffer()
-  }
-
-  const toResponse = async ({
-    response,
-    ...options
-  }: AstroOpenGraphResponseOptions): Promise<Response> => {
-    const image = await toImage(options)
-
-    return new Response(new Uint8Array(image), {
-      ...response,
-      headers: {
-        "Cache-Control": "public, max-age=31536000, immutable",
-        "Content-Length": image.byteLength.toString(),
-        "Content-Type": "image/png",
-        ...response?.headers,
-      },
-    })
-  }
-
-  return { toImage, toResponse, toSvg }
-}
-
-export const AstroOpenGraph = Object.assign(
-  (): AstroIntegration => {
-    const integrationName = "astro-open-graph"
-    return { hooks: {}, name: integrationName }
-  },
-  {
-    html: astroOpenGraphHtml,
-    image: astroOpenGraphImage,
-  },
-)

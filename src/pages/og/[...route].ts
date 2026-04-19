@@ -5,8 +5,12 @@ import { extname, join } from "node:path"
 import sharp from "sharp"
 import defaultImage from "@images/brendon-smith-portrait-2025-07-15-1920.jpg"
 import { ABOUT, HOME, PROJECTS, SITE, WORK } from "@consts"
-import { AstroOpenGraph } from "../../lib/astro-open-graph"
-import { getOgImageRoute, OG_IMAGE_HEIGHT, OG_IMAGE_WIDTH } from "../../lib/og"
+import { AstroOpenGraph } from "@integrations/astro-open-graph"
+import {
+  getOgImageRoute,
+  OG_IMAGE_HEIGHT,
+  OG_IMAGE_WIDTH,
+} from "../../open-graph"
 
 type OgImageSource = ImageMetadata | string
 

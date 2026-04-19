@@ -10,9 +10,9 @@ import { fileURLToPath } from "node:url"
 import { rehype } from "rehype"
 import type { Options as RehypeAutolinkOptions } from "rehype-autolink-headings"
 import rehypeAutolinkHeadings from "rehype-autolink-headings"
-import { AstroOpenGraph } from "./src/lib/astro-open-graph"
+import { AstroOpenGraph } from "./src/integrations/astro-open-graph/index"
 
-export { AstroOpenGraph } from "./src/lib/astro-open-graph"
+export { AstroOpenGraph } from "./src/integrations/astro-open-graph/index"
 
 export interface AstroAutolinkOptions {
   /** Paths are resolved relative to Astro's build output directory. */
