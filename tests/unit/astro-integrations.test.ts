@@ -4,6 +4,7 @@ import os from "node:os"
 import path from "node:path"
 import { pathToFileURL } from "node:url"
 import {
+  astroOpenGraph,
   astroAutolinkHeadings,
   astroSearch,
   rehypeAutolinkOptions,
@@ -39,6 +40,19 @@ const createIntegrationLogger = (
 
   return logger
 }
+
+const openGraphWrap = (...children: unknown[]) => ({
+  type: "div",
+  props: {
+    style: {
+      display: "flex",
+      flexDirection: "column",
+      height: "100%",
+      width: "100%",
+    },
+    children,
+  },
+})
 
 let htmlDir: string
 let outDir: string
@@ -90,6 +104,139 @@ describe("astroAutolinkHeadings", () => {
     expect(output).toContain('class="anchor-icon"')
     expect(output).toContain('h1 id="this-is-an-html-h1-heading"')
     expect(output).not.toContain('href="#this-is-an-html-h1-heading"')
+  })
+})
+
+describe("astroOpenGraph", () => {
+  it("creates an Astro integration", () => {
+    expect(astroOpenGraph().name).toBe("astro-open-graph")
+  })
+
+  it("converts basic html into a Satori element tree", () => {
+    const result = astroOpenGraph.html`<div>Hello ${"world"}</div>`
+
+    expect(result).toEqual(
+      openGraphWrap({
+        type: "div",
+        props: {
+          children: "Hello world",
+        },
+      }),
+    )
+  })
+
+  it("supports function input", () => {
+    const result = astroOpenGraph.html("<div>Hello world</div>")
+
+    expect(result).toEqual(
+      openGraphWrap({
+        type: "div",
+        props: {
+          children: "Hello world",
+        },
+      }),
+    )
+  })
+
+  it("parses style attributes for Satori", () => {
+    const result = astroOpenGraph.html`<div
+      style="
+        background-image: linear-gradient(135deg, #ef629f, #eecda3);
+        border-top: 1px solid green;
+        color: red;
+      "
+    >
+      Hello world
+    </div>`
+
+    expect(result).toEqual(
+      openGraphWrap({
+        type: "div",
+        props: {
+          children: "Hello world",
+          style: {
+            backgroundImage: "linear-gradient(135deg, #ef629f, #eecda3)",
+            borderTop: "1px solid green",
+            color: "red",
+          },
+        },
+      }),
+    )
+  })
+
+  it("preserves self-closing image attributes", () => {
+    const result = astroOpenGraph.html`<img
+      src="data:image/png;base64,AAAA"
+      height="10"
+      width="20"
+    />`
+
+    expect(result).toEqual(
+      openGraphWrap({
+        type: "img",
+        props: {
+          children: [],
+          height: "10",
+          src: "data:image/png;base64,AAAA",
+          width: "20",
+        },
+      }),
+    )
+  })
+
+  it("decodes html entities once", () => {
+    const result = astroOpenGraph.html`<div title="&amp;lt;">
+      A &amp;lt; B
+    </div>`
+
+    expect(result).toEqual(
+      openGraphWrap({
+        type: "div",
+        props: {
+          children: "A &lt; B",
+          title: "&lt;",
+        },
+      }),
+    )
+  })
+
+  it("returns a PNG response", async () => {
+    const fontData = await fs.readFile(
+      path.resolve("public", "fonts", "RecursiveSansLinearStatic-Regular.ttf"),
+    )
+    const response = await astroOpenGraph
+      .image({
+        height: 126,
+        template: astroOpenGraph.html`<div
+        style="color: black; display: flex; font-family: Recursive Sans;"
+      >
+        Hello world
+      </div>`,
+        width: 240,
+      })
+      .toResponse({
+        satori: {
+          fonts: [
+            {
+              data: fontData,
+              name: "Recursive Sans",
+              style: "normal",
+              weight: 400,
+            },
+          ],
+        },
+      })
+
+    const bytes = Buffer.from(await response.arrayBuffer())
+
+    expect(response.headers.get("Cache-Control")).toBe(
+      "public, max-age=31536000, immutable",
+    )
+    expect(response.headers.get("Content-Length")).toBe(
+      bytes.byteLength.toString(),
+    )
+    expect(response.headers.get("Content-Type")).toBe("image/png")
+    expect([...bytes.subarray(0, 8)]).toEqual([137, 80, 78, 71, 13, 10, 26, 10])
   })
 })
 

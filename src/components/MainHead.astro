@@ -2,6 +2,13 @@
 import "@styles/global.css"
 import Favicon from "./Favicon.astro"
 import { SITE } from "@consts"
+import {
+  getOgImageBaseUrl,
+  getOgImagePath,
+  OG_IMAGE_HEIGHT,
+  OG_IMAGE_TYPE,
+  OG_IMAGE_WIDTH,
+} from "../open-graph"
 
 interface Props {
   title?: string | undefined
@@ -12,11 +19,11 @@ interface Props {
 const {
   title = SITE.TITLE,
   description = SITE.DESCRIPTION,
-  image = "/images/og.jpg",
+  image = getOgImagePath(Astro.url),
 } = Astro.props
 
 const canonicalURL = Astro.site
-const imageURL = image && new URL(image, Astro.url)
+const imageURL = image && new URL(image, getOgImageBaseUrl(Astro.url))
 ---
 
 <meta charset="utf-8" />
@@ -39,6 +46,17 @@ const imageURL = image && new URL(image, Astro.url)
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 {imageURL && <meta property="og:image" content={imageURL} />}
+{
+  imageURL && (
+    <meta property="og:image:width" content={String(OG_IMAGE_WIDTH)} />
+  )
+}
+{
+  imageURL && (
+    <meta property="og:image:height" content={String(OG_IMAGE_HEIGHT)} />
+  )
+}
+{imageURL && <meta property="og:image:type" content={OG_IMAGE_TYPE} />}
 <meta property="og:url" content={Astro.url} />
 <meta property="og:type" content="website" />
 <meta property="twitter:card" content="summary_large_image" />

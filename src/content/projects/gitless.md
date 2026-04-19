@@ -4,7 +4,7 @@ dateStart: 2026-03-22
 dateEnd: Present
 description: Git in VSCode with less bloat.
 image:
-  src: "/images/gitless-logo-light-mode.svg"
+  src: "/images/gitless-logo-dark-mode.svg"
   alt: GitLess logo
 URLrepo: https://github.com/br3ndonland/gitless-vscode
 ---

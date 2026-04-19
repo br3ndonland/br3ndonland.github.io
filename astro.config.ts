@@ -10,6 +10,9 @@ import { fileURLToPath } from "node:url"
 import { rehype } from "rehype"
 import type { Options as RehypeAutolinkOptions } from "rehype-autolink-headings"
 import rehypeAutolinkHeadings from "rehype-autolink-headings"
+import { astroOpenGraph } from "./src/integrations/astro-open-graph/index"
+
+export { astroOpenGraph } from "./src/integrations/astro-open-graph/index"
 
 export interface AstroAutolinkOptions {
   /** Paths are resolved relative to Astro's build output directory. */
@@ -91,6 +94,7 @@ export const astroSearch = (): AstroIntegration => {
 export default defineConfig({
   integrations: [
     astroAutolinkHeadings(astroAutolinkOptions),
+    astroOpenGraph(),
     astroSearch(),
     mdx(),
     sitemap(),
