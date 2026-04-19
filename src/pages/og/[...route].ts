@@ -216,7 +216,7 @@ const getTitleSize = (title: string): number => {
 }
 
 const getDescriptionSize = (description: string): number => {
-  return description.length > 96 ? 28 : 32
+  return description.length > 256 ? 28 : 32
 }
 
 const getTemplate = async (page: OgPage) => {
@@ -238,12 +238,12 @@ const getTemplate = async (page: OgPage) => {
     >
       <div style="display: flex; flex-direction: column; gap: 28px;">
         <div
-          style="align-items: center; color: #ffffff; display: flex; font-family: Recursive Mono; font-size: 26px; font-style: italic; gap: 14px; line-height: 1;"
+          style="align-items: center; color: #ffffff; display: flex; font-family: Recursive Mono; font-size: 32px; font-style: italic; gap: 14px; line-height: 1;"
         >
           <svg
-            height="42"
+            height="48"
             viewBox="0 0 256 256"
-            width="42"
+            width="48"
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
@@ -281,7 +281,7 @@ const getTemplate = async (page: OgPage) => {
         </p>
       </div>
       <p
-        style="color: #8490b5; font-family: Recursive Mono; font-size: 23px; line-height: 1; margin: 0;"
+        style="color: #8490b5; font-family: Recursive Mono; font-size: 32px; line-height: 1; margin: 0;"
       >
         ${escapeHtml(host)}
       </p>
