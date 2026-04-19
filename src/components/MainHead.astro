@@ -3,6 +3,7 @@ import "@styles/global.css"
 import Favicon from "./Favicon.astro"
 import { SITE } from "@consts"
 import {
+  getOgImageBaseUrl,
   getOgImagePath,
   OG_IMAGE_HEIGHT,
   OG_IMAGE_TYPE,
@@ -22,7 +23,7 @@ const {
 } = Astro.props
 
 const canonicalURL = Astro.site
-const imageURL = image && new URL(image, Astro.url)
+const imageURL = image && new URL(image, getOgImageBaseUrl(Astro.url))
 ---
 
 <meta charset="utf-8" />
