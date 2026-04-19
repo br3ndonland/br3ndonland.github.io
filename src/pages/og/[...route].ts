@@ -206,7 +206,7 @@ const getOgPages = async (): Promise<OgPage[]> => {
 }
 
 const getTitleSize = (title: string): number => {
-  if (title.length > 54) {
+  if (title.length > 56) {
     return 48
   }
   if (title.length > 28) {
