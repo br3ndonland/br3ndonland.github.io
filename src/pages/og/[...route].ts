@@ -216,7 +216,7 @@ const getTitleSize = (title: string): number => {
 }
 
 const getDescriptionSize = (description: string): number => {
-  return description.length > 96 ? 27 : 31
+  return description.length > 96 ? 28 : 32
 }
 
 const getTemplate = async (page: OgPage) => {
