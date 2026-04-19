@@ -1,7 +1,7 @@
 import type { APIRoute, GetStaticPaths, ImageMetadata } from "astro"
 import { getCollection } from "astro:content"
 import { readFile } from "node:fs/promises"
-import { extname, join } from "node:path"
+import { join } from "node:path"
 import sharp from "sharp"
 import defaultImage from "@images/brendon-smith-portrait-2025-07-15-1920.jpg"
 import { ABOUT, HOME, PROJECTS, SITE, WORK } from "@consts"
@@ -37,6 +37,10 @@ const DEFAULT_IMAGE_FILE = join(
 
 const FONT_FILES = {
   mono: join(process.cwd(), "public/fonts/RecursiveMonoDuotone-Regular.ttf"),
+  monoItalic: join(
+    process.cwd(),
+    "public/fonts/RecursiveMonoDuotone-Italic.ttf",
+  ),
   sansBold: join(
     process.cwd(),
     "public/fonts/RecursiveSansCasualStatic-Bold.ttf",
@@ -88,11 +92,10 @@ const getImageDataUri = async (
 ): Promise<string> => {
   const imageFile = getImageFilePath(source) ?? DEFAULT_IMAGE_FILE
   const imageBuffer = await readFile(imageFile)
-  const isSvg = extname(imageFile).toLowerCase() === ".svg"
   const resizedImage = await sharp(imageBuffer, { density: 192 })
     .resize(432, 432, {
       background: { alpha: 0, b: 0, g: 0, r: 0 },
-      fit: isSvg ? "contain" : "cover",
+      fit: "contain",
     })
     .png()
     .toBuffer()
@@ -101,10 +104,11 @@ const getImageDataUri = async (
 }
 
 const getFontData = async () => {
-  const [sansRegular, sansBold, mono] = await Promise.all([
+  const [sansRegular, sansBold, mono, monoItalic] = await Promise.all([
     readFile(FONT_FILES.sansRegular),
     readFile(FONT_FILES.sansBold),
     readFile(FONT_FILES.mono),
+    readFile(FONT_FILES.monoItalic),
   ])
 
   return [
@@ -125,6 +129,12 @@ const getFontData = async () => {
       data: mono,
       weight: 400 as const,
       style: "normal" as const,
+    },
+    {
+      name: "Recursive Mono",
+      data: monoItalic,
+      weight: 400 as const,
+      style: "italic" as const,
     },
   ]
 }
@@ -179,7 +189,7 @@ const getOgPages = async (): Promise<OgPage[]> => {
     ...projects.map((entry) =>
       withRoute({
         pathname: `${PROJECTS.HREF}/${entry.id}`,
-        title: `${SITE.TITLE}: ${PROJECTS.TITLE} - ${entry.data.title}`,
+        title: entry.data.title,
         description: `Summary of ${SITE.TITLE}'s project ${entry.data.title}.`,
         image: entry.data.image.src,
       }),
@@ -187,7 +197,7 @@ const getOgPages = async (): Promise<OgPage[]> => {
     ...work.map((entry) =>
       withRoute({
         pathname: `${WORK.HREF}/${entry.id}`,
-        title: `${SITE.TITLE}: ${WORK.TITLE} - ${entry.data.title}`,
+        title: entry.data.title,
         description: `Summary of ${SITE.TITLE}'s work at ${entry.data.title}.`,
         image: entry.data.image.src,
       }),
@@ -196,17 +206,17 @@ const getOgPages = async (): Promise<OgPage[]> => {
 }
 
 const getTitleSize = (title: string): number => {
-  if (title.length > 58) {
-    return 48
-  }
-  if (title.length > 42) {
+  if (title.length > 54) {
     return 56
   }
-  return 66
+  if (title.length > 28) {
+    return 68
+  }
+  return 82
 }
 
 const getDescriptionSize = (description: string): number => {
-  return description.length > 96 ? 26 : 30
+  return description.length > 96 ? 27 : 31
 }
 
 const getTemplate = async (page: OgPage) => {
@@ -218,39 +228,66 @@ const getTemplate = async (page: OgPage) => {
   const descriptionSize = getDescriptionSize(description)
 
   return AstroOpenGraph.html`<div
-    style="background: #f3f4f7; color: #090b11; display: flex; font-family: Recursive Sans; height: 100%; width: 100%;"
+    style="background: #090b11; color: #ffffff; display: flex; font-family: Recursive Sans; gap: 34px; height: 100%; padding: 48px; width: 100%;"
   >
     <div
-      style="background: #ffffff; border-left: 18px solid #7611a6; display: flex; flex-direction: column; height: 100%; justify-content: space-between; padding: 66px 54px 52px 66px; width: 58%;"
+      style="background: #141925; border: 1px solid #283044; border-left: 16px solid #7611a6; border-radius: 8px; display: flex; flex-direction: column; height: 100%; justify-content: space-between; padding: 52px 54px 48px 58px; width: 58%;"
     >
-      <div style="display: flex; flex-direction: column; gap: 26px;">
-        <p
-          style="color: #505d84; font-family: Recursive Mono; font-size: 25px; line-height: 1;"
+      <div style="display: flex; flex-direction: column; gap: 28px;">
+        <div
+          style="align-items: center; color: #ffffff; display: flex; font-family: Recursive Mono; font-size: 26px; font-style: italic; gap: 14px; line-height: 1;"
         >
-          ${escapeHtml(SITE.TITLE)}
-        </p>
+          <svg
+            height="42"
+            viewBox="0 0 256 256"
+            width="42"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="m80 96 40 32-40 32m56 0h40"
+              fill="none"
+              stroke="#c561f6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="16"
+            />
+            <rect
+              fill="none"
+              height="160"
+              rx="8.5"
+              stroke="#7611a6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="16.97"
+              width="192"
+              x="32"
+              y="48"
+            />
+          </svg>
+          <span>${escapeHtml(SITE.TITLE)}</span>
+        </div>
         <h1
-          style="color: #090b11; font-size: ${titleSize}px; font-weight: 700; line-height: 1.03; margin: 0;"
+          style="color: #ffffff; font-size: ${titleSize}px; font-weight: 700; line-height: 1.02; margin: 0;"
         >
           ${title}
         </h1>
         <p
-          style="color: #283044; font-size: ${descriptionSize}px; line-height: 1.28; margin: 0;"
+          style="color: #c3cadb; font-size: ${descriptionSize}px; line-height: 1.3; margin: 0;"
         >
           ${description}
         </p>
       </div>
       <p
-        style="color: #6474a2; font-family: Recursive Mono; font-size: 23px; line-height: 1; margin: 0;"
+        style="color: #8490b5; font-family: Recursive Mono; font-size: 23px; line-height: 1; margin: 0;"
       >
         ${escapeHtml(host)}
       </p>
     </div>
     <div
-      style="align-items: center; background: #e3e6ee; display: flex; height: 100%; justify-content: center; padding: 48px 60px 48px 42px; width: 42%;"
+      style="align-items: center; background: #141925; border: 1px solid #283044; border-radius: 8px; display: flex; height: 100%; justify-content: center; padding: 38px; width: 42%;"
     >
       <div
-        style="align-items: center; background: #ffffff; border: 1px solid #c3cadb; border-radius: 8px; display: flex; height: 458px; justify-content: center; width: 458px;"
+        style="align-items: center; background: #090b11; border: 1px solid #3d4663; border-radius: 8px; display: flex; height: 458px; justify-content: center; width: 458px;"
       >
         <img
           src="${imageDataUri}"
