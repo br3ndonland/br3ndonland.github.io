@@ -190,7 +190,7 @@ const getOgPages = async (): Promise<OgPage[]> => {
       withRoute({
         pathname: `${PROJECTS.HREF}/${entry.id}`,
         title: entry.data.title,
-        description: `Summary of ${SITE.TITLE}'s project ${entry.data.title}.`,
+        description: entry.data.description,
         image: entry.data.image.src,
       }),
     ),
@@ -207,12 +207,12 @@ const getOgPages = async (): Promise<OgPage[]> => {
 
 const getTitleSize = (title: string): number => {
   if (title.length > 54) {
-    return 56
+    return 40
   }
   if (title.length > 28) {
-    return 68
+    return 48
   }
-  return 82
+  return 58
 }
 
 const getDescriptionSize = (description: string): number => {
@@ -228,10 +228,13 @@ const getTemplate = async (page: OgPage) => {
   const descriptionSize = getDescriptionSize(description)
 
   return AstroOpenGraph.html`<div
-    style="background: #090b11; color: #ffffff; display: flex; font-family: Recursive Sans; gap: 34px; height: 100%; padding: 48px; width: 100%;"
+    style="background: #141925; color: #ffffff; display: flex; font-family: Recursive Sans; gap: 54px; height: 100%; padding: 58px 64px 52px 78px; position: relative; width: 100%;"
   >
     <div
-      style="background: #141925; border: 1px solid #283044; border-left: 16px solid #7611a6; border-radius: 8px; display: flex; flex-direction: column; height: 100%; justify-content: space-between; padding: 52px 54px 48px 58px; width: 58%;"
+      style="background: #7611a6; display: flex; height: 100%; left: 0; position: absolute; top: 0; width: 16px;"
+    ></div>
+    <div
+      style="display: flex; flex-direction: column; height: 100%; justify-content: space-between; width: 58%;"
     >
       <div style="display: flex; flex-direction: column; gap: 28px;">
         <div
@@ -284,18 +287,14 @@ const getTemplate = async (page: OgPage) => {
       </p>
     </div>
     <div
-      style="align-items: center; background: #141925; border: 1px solid #283044; border-radius: 8px; display: flex; height: 100%; justify-content: center; padding: 38px; width: 42%;"
+      style="align-items: center; display: flex; height: 100%; justify-content: center; width: 42%;"
     >
-      <div
-        style="align-items: center; background: #090b11; border: 1px solid #3d4663; border-radius: 8px; display: flex; height: 458px; justify-content: center; width: 458px;"
-      >
-        <img
-          src="${imageDataUri}"
-          height="432"
-          width="432"
-          style="border-radius: 8px; height: 432px; width: 432px;"
-        />
-      </div>
+      <img
+        src="${imageDataUri}"
+        height="432"
+        width="432"
+        style="border-radius: 8px; height: 432px; width: 432px;"
+      />
     </div>
   </div>`
 }
