@@ -31,7 +31,7 @@ const logo = PROJECT_LOGOS[entry.id as keyof typeof PROJECT_LOGOS]
 
 <BaseLayout
   title=`${SITE.TITLE}: ${PROJECTS.TITLE} - ${entry.data.title}`
-  description=`Summary of ${SITE.TITLE}'s project ${entry.data.title}.`
+  description={entry.data.description}
 >
   <div class="stack gap-10">
     <div class="stack gap-4">
