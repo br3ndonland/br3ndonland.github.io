@@ -30,7 +30,7 @@ const createIntegrationLogger = (
     info: () => undefined,
     label,
     options: {
-      dest: {
+      destination: {
         write: () => true,
       },
       level: "info",
