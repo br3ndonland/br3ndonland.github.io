@@ -10,7 +10,6 @@ description: >-
   Here's a summary of my accomplishments.
 ---
 
-import { Picture } from "astro:assets"
 import Icon from "@components/Icon.astro"
 import LightboxImage from "@components/LightboxImage.astro"
 import udacityBostonsBestBeans from "@images/udacity-full-stack-web-developer-nanodegree-bostons-best-beans.png"
@@ -27,24 +26,18 @@ import udacityGoogleScholarshipAward from "@images/udacity-google-scholarship-aw
 import udacityMobileScholarshipAward from "@images/udacity-mobile-web-specialist-scholarship-award.png"
 import udacityPortfolio from "@images/udacity-full-stack-web-developer-nanodegree-portfolio.png"
 import udacityRestaurantReviews from "@images/udacity-mobile-web-specialist-restaurant-reviews.png"
-import { PICTURE_FORMATS } from "@consts"
 
 ## Full Stack Web Developer
 
-<a
-  href="https://www.udacity.com/certificate/e/ba1d7d96-b5cf-11e7-b0d5-771ba4ef450b"
-  rel="external"
-  target="_blank"
->
-  <Picture
-    src={udacityCertFullStack}
-    alt="Udacity Full Stack Web Developer Nanodegree certificate screenshot"
-    formats={PICTURE_FORMATS}
-    class:list={["img-thumbnail"]}
-    decoding="async"
-    loading="eager"
-  />
-</a>
+<LightboxImage
+  src={udacityCertFullStack}
+  alt="Udacity Full Stack Web Developer Nanodegree certificate screenshot"
+  imageClass="img-thumbnail"
+  gallery="udacity"
+  description={`<a href="https://www.udacity.com/certificate/e/ba1d7d96-b5cf-11e7-b0d5-771ba4ef450b" rel="external" target="_blank">View certificate</a>`}
+  decoding="async"
+  loading="eager"
+/>
 
 ### Description
 
@@ -104,58 +97,43 @@ for i in range(4):
 
 ### Portfolio website
 
-<a
-  href="https://github.com/br3ndonland/udacity-portfolio"
-  rel="external"
-  target="_blank"
->
-  <Picture
-    src={udacityPortfolio}
-    alt="Udacity portfolio website screenshot"
-    formats={PICTURE_FORMATS}
-    class:list={["img-thumbnail"]}
-    decoding="async"
-    loading="lazy"
-  />
-</a>
+<LightboxImage
+  src={udacityPortfolio}
+  alt="Udacity portfolio website screenshot"
+  imageClass="img-thumbnail"
+  gallery="udacity"
+  description={`<a href="https://github.com/br3ndonland/udacity-portfolio" rel="external" target="_blank">View source</a>`}
+  decoding="async"
+  loading="lazy"
+/>
 
 **The website you're at now began as a Udacity project**. We were provided with a design mockup (screenshot) of a developer portfolio webpage, and had to replicate the design with HTML and CSS. I based the webpage styling on Bootstrap 4. After replicating the design, I added some customizations, including a toggle button that used JavaScript to change the page color scheme. I then built the single webpage into a full website with <a href="https://jekyllrb.com/" rel="external" target="_blank">Jekyll</a> and hosted it on <a href="https://pages.github.com/" rel="external" target="_blank">GitHub Pages</a>. I later adapted the Udacity website to create <a href="https://github.com/br3ndonland/br3ndonland.github.io-jekyll" rel="external" target="_blank">my first personal website</a>, which I used for years until I created a new site with <a href="https://astro.build" rel="external" target="_blank">Astro</a>.
 
 ### Brendon's bodybuilding bazaar
 
-<a
-  href="https://github.com/br3ndonland/udacity-fsnd-flask-catalog"
-  rel="external"
-  target="_blank"
->
-  <Picture
-    src={udacityBrendonsBodybuildingBazaar}
-    alt="Udacity Brendon's bodybuilding bazaar full-stack app screenshot"
-    formats={PICTURE_FORMATS}
-    class:list={["img-thumbnail"]}
-    decoding="async"
-    loading="lazy"
-  />
-</a>
+<LightboxImage
+  src={udacityBrendonsBodybuildingBazaar}
+  alt="Udacity Brendon's bodybuilding bazaar full-stack app screenshot"
+  imageClass="img-thumbnail"
+  gallery="udacity"
+  description={`<a href="https://github.com/br3ndonland/udacity-fsnd-flask-catalog" rel="external" target="_blank">View source</a>`}
+  decoding="async"
+  loading="lazy"
+/>
 
 I was able to bring together my work on Python, databases, and websites to create a full-stack web application. The app was a mock e-commerce site called "Brendon's Bodybuilding Bazaar" with a sample catalog of bodybuilding items, along with a classic picture of Arnold Schwarzenegger and Franco Columbu. I used <a href="https://palletsprojects.com/p/flask/" rel="external" target="_blank">Flask</a> to control the app and generate a JSON API, and a SQLite database to store data. Users could sign in with Google. After signing in, users could add items and categories to the catalog. The creator of each item or category could also edit or delete it. I passed Udacity code review with no required corrections, and the reviewer commended me for my work on the project.
 
 ### Boston's best beans
 
-<a
-  href="https://github.com/br3ndonland/udacity-fsnd-p5-map"
-  rel="external"
-  target="_blank"
->
-  <Picture
-    src={udacityBostonsBestBeans}
-    alt="Udacity Boston's Best Beans map app screenshot"
-    formats={PICTURE_FORMATS}
-    class:list={["img-thumbnail"]}
-    decoding="async"
-    loading="lazy"
-  />
-</a>
+<LightboxImage
+  src={udacityBostonsBestBeans}
+  alt="Udacity Boston's Best Beans map app screenshot"
+  imageClass="img-thumbnail"
+  gallery="udacity"
+  description={`<a href="https://github.com/br3ndonland/udacity-fsnd-p5-map" rel="external" target="_blank">View source</a>`}
+  decoding="async"
+  loading="lazy"
+/>
 
 This project required me to create a map-based web app that combines data from multiple APIs. I decided to theme the app after another one of my favorite things, specialty coffee. I used the Foursquare API to retrieve places and their data, and the Knockout framework to bind the JavaScript code with the webpage (so click events would trigger changes on the map). I went beyond the project's requirements to implement ES6+ JavaScript features, like Fetch, Async/Await, and array methods. Again, I passed Udacity code review with complements from the reviewer and no required corrections.
 
@@ -258,20 +236,15 @@ March 24, 2018_
 
 ### MBTAccess
 
-<a
-  href="https://github.com/growwithgooglema/mbtaccess"
-  rel="external"
-  target="_blank"
->
-  <Picture
-    src={udacityGoogleMBTAccess}
-    alt="MBTAccess app screenshot simulating iPhone X"
-    formats={PICTURE_FORMATS}
-    class:list={["img-thumbnail"]}
-    decoding="async"
-    loading="lazy"
-  />
-</a>
+<LightboxImage
+  src={udacityGoogleMBTAccess}
+  alt="MBTAccess app screenshot simulating iPhone X"
+  imageClass="img-thumbnail"
+  gallery="udacity"
+  description={`<a href="https://github.com/growwithgooglema/mbtaccess" rel="external" target="_blank">View source</a>`}
+  decoding="async"
+  loading="lazy"
+/>
 
 The Grow with Google meetups led us to develop an app together.
 
@@ -291,20 +264,15 @@ We created a web app that quickly and conveniently identified wheelchair accessi
   decoding="async"
   loading="lazy"
 />
-<a
-  href="https://www.udacity.com/certificate/e/27125202-4741-11e8-9b83-3b54c1fa5cc2"
-  rel="external"
-  target="_blank"
->
-  <Picture
-    src={udacityCertMobile}
-    alt="Udacity Mobile Web Specialist Nanodegree certificate screenshot"
-    formats={PICTURE_FORMATS}
-    class:list={["img-thumbnail"]}
-    decoding="async"
-    loading="lazy"
-  />
-</a>
+<LightboxImage
+  src={udacityCertMobile}
+  alt="Udacity Mobile Web Specialist Nanodegree certificate screenshot"
+  imageClass="img-thumbnail"
+  gallery="udacity"
+  description={`<a href="https://www.udacity.com/certificate/e/27125202-4741-11e8-9b83-3b54c1fa5cc2" rel="external" target="_blank">View certificate</a>`}
+  decoding="async"
+  loading="lazy"
+/>
 
 ### Description
 
@@ -314,19 +282,14 @@ Mobile Web Specialists are trained in building "Progressive Web Apps" (PWAs, see
 
 ### Restaurant reviews
 
-<a
-  href="https://github.com/br3ndonland/udacity-google-mws"
-  rel="external"
-  target="_blank"
->
-  <Picture
-    src={udacityRestaurantReviews}
-    alt="Udacity Mobile Web Specialist restaurant reviews app screenshot"
-    formats={PICTURE_FORMATS}
-    class:list={["img-thumbnail"]}
-    decoding="async"
-    loading="lazy"
-  />
-</a>
+<LightboxImage
+  src={udacityRestaurantReviews}
+  alt="Udacity Mobile Web Specialist restaurant reviews app screenshot"
+  imageClass="img-thumbnail"
+  gallery="udacity"
+  description={`<a href="https://github.com/br3ndonland/udacity-google-mws" rel="external" target="_blank">View source</a>`}
+  decoding="async"
+  loading="lazy"
+/>
 
 I built a restaurant reviews PWA that displays restaurant locations and info. The app provides offline access through the Service Worker, IndexedDB, and web manifest files. Users can add favorites and reviews for restaurants. If changes are made offline, they sync to the web server when network access is restored.
