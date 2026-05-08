@@ -50,6 +50,7 @@
     "@astrojs/sitemap": "^3.7.2",
     "@pagefind/default-ui": "~1.4.0",
     "astro": "^6.1.9",
+    "glightbox": "^3.3.1",
     "pagefind": "~1.4.0",
     "rehype": "~13.0.2",
     "rehype-autolink-headings": "^7.1.0",

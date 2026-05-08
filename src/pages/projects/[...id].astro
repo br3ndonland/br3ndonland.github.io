@@ -1,12 +1,12 @@
 ---
 import { type CollectionEntry, getCollection, render } from "astro:content"
-import { Picture } from "astro:assets"
 import BaseLayout from "@layouts/BaseLayout.astro"
 import Contact from "@components/Contact.astro"
 import Hero from "@components/Hero.astro"
 import Icon from "@components/Icon.astro"
+import LightboxImage from "@components/LightboxImage.astro"
 import SVGLogo from "@components/SVGLogo.astro"
-import { PICTURE_FORMATS, PROJECT_LOGOS, PROJECTS, SITE } from "@consts"
+import { PROJECT_LOGOS, PROJECTS, SITE } from "@consts"
 
 interface Props {
   entry: CollectionEntry<"projects">
@@ -44,20 +44,18 @@ const logo = PROJECT_LOGOS[entry.id as keyof typeof PROJECT_LOGOS]
             {
               logo ? (
                 <SVGLogo context="hero" {...logo} />
-              ) : typeof image === "string" ? (
+              ) : typeof image === "string" && isSVG ? (
                 <img
                   src={image}
                   alt={entry.data.image.alt}
-                  class:list={isSVG ? [] : ["img-hero"]}
                   decoding="async"
                   loading="eager"
                 />
               ) : (
-                <Picture
+                <LightboxImage
                   src={image}
                   alt={entry.data.image.alt}
-                  formats={PICTURE_FORMATS}
-                  class:list={isSVG ? [] : ["img-hero"]}
+                  imageClass="img-hero"
                   decoding="async"
                   loading="eager"
                 />
