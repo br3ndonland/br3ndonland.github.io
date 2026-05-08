@@ -1,0 +1,102 @@
+<script>
+  import "glightbox/dist/css/glightbox.min.css"
+  import "plyr/dist/plyr.css"
+
+  type LightboxInstance = {
+    destroy: () => void
+    reload: () => void
+  }
+
+  type GLightboxModule = {
+    default: (options: Record<string, unknown>) => LightboxInstance
+  }
+
+  type LightboxState = {
+    instance: LightboxInstance | undefined
+    isListening: boolean | undefined
+    plyrPromise: Promise<void> | undefined
+  }
+
+  const videoLightboxSelector = [
+    '.glightbox[data-type="video"]',
+    '.glightbox[href$=".mov" i]',
+    '.glightbox[href$=".mp4" i]',
+    '.glightbox[href$=".ogg" i]',
+    '.glightbox[href$=".webm" i]',
+  ].join(", ")
+  const windowWithLightbox = window as Window & {
+    bwsLightbox?: LightboxState
+    Plyr?: unknown
+  }
+  const state = (windowWithLightbox.bwsLightbox ??= {
+    instance: undefined,
+    isListening: undefined,
+    plyrPromise: undefined,
+  })
+
+  const ensurePlyr = async () => {
+    if (windowWithLightbox.Plyr) {
+      return
+    }
+
+    state.plyrPromise ??= import("plyr").then(({ default: Plyr }) => {
+      windowWithLightbox.Plyr = Plyr
+    }) as Promise<void>
+
+    await state.plyrPromise
+  }
+
+  const initLightbox = async () => {
+    const lightboxLinks = document.querySelectorAll(".glightbox")
+
+    if (lightboxLinks.length === 0) {
+      state.instance?.destroy()
+      state.instance = undefined
+      return
+    }
+
+    if (document.querySelector(videoLightboxSelector)) {
+      await ensurePlyr()
+    }
+
+    if (state.instance) {
+      state.instance.reload()
+      return
+    }
+
+    const { default: GLightbox } = (await import(
+      "glightbox"
+    )) as GLightboxModule
+
+    state.instance = GLightbox({
+      selector: ".glightbox",
+      touchNavigation: true,
+      keyboardNavigation: true,
+      loop: false,
+      zoomable: true,
+      draggable: true,
+      openEffect: "zoom",
+      closeEffect: "zoom",
+      slideEffect: "slide",
+      autoplayVideos: false,
+      plyr: {
+        css: "local-plyr.css",
+        js: "local-plyr.js",
+        config: {
+          ratio: "16:9",
+          fullscreen: {
+            enabled: true,
+            iosNative: true,
+          },
+        },
+      },
+    })
+  }
+
+  if (!state.isListening) {
+    document.addEventListener("astro:page-load", initLightbox)
+    state.isListening = true
+  }
+
+  void initLightbox()
+</script>

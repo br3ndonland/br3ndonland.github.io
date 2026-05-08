@@ -1,0 +1,91 @@
+---
+import { Picture } from "astro:assets"
+import type { ImageMetadata, ImageOutputFormat } from "astro"
+import { PICTURE_FORMATS } from "@consts"
+import LightboxInit from "./LightboxInit.astro"
+
+interface Props {
+  decoding?: "async" | "auto" | "sync" | null | undefined
+  description?: string | undefined
+  formats?: ImageOutputFormat[] | undefined
+  gallery?: string | undefined
+  height?: number | string | undefined
+  loading?: "eager" | "lazy" | null | undefined
+  poster?: ImageMetadata | string | undefined
+  posterAlt?: string | undefined
+  posterClass?: string | undefined
+  src: string
+  title?: string | undefined
+  width?: number | string | undefined
+}
+
+const {
+  decoding = "async",
+  description,
+  formats = PICTURE_FORMATS,
+  gallery,
+  height,
+  loading = "lazy",
+  poster,
+  posterAlt,
+  posterClass,
+  src,
+  title,
+  width,
+} = Astro.props
+
+const videoTitle = title ?? posterAlt
+const ariaLabel = videoTitle ? `Open video: ${videoTitle}` : "Open video"
+const posterAltText = posterAlt ?? title ?? ""
+const videoHeight = typeof height === "number" ? `${height}px` : height
+const videoWidth = typeof width === "number" ? `${width}px` : width
+const videoPosterClass = ["lightbox-video-poster", posterClass]
+  .filter(Boolean)
+  .join(" ")
+const hasDefaultSlot = Astro.slots.has("default")
+---
+
+<a
+  class="glightbox lightbox-video"
+  href={src}
+  data-type="video"
+  data-video-provider="local"
+  data-gallery={gallery}
+  data-title={videoTitle}
+  data-description={description}
+  data-width={videoWidth}
+  data-height={videoHeight}
+  aria-label={ariaLabel}
+>
+  {
+    poster ? (
+      typeof poster === "string" ? (
+        <img
+          src={poster}
+          alt={posterAltText}
+          class={videoPosterClass}
+          decoding={decoding}
+          loading={loading}
+        />
+      ) : (
+        <Picture
+          src={poster}
+          alt={posterAltText}
+          formats={formats}
+          class={videoPosterClass}
+          decoding={decoding}
+          loading={loading}
+        />
+      )
+    ) : hasDefaultSlot ? (
+      <slot />
+    ) : (
+      <span class={`${videoPosterClass} lightbox-video-fallback`}>
+        {videoTitle ?? "Video"}
+      </span>
+    )
+  }
+  <span class="lightbox-video-frame" aria-hidden="true"></span>
+</a>
+
+<LightboxInit />

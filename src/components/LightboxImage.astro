@@ -2,6 +2,7 @@
 import { Picture } from "astro:assets"
 import type { ImageMetadata, ImageOutputFormat } from "astro"
 import { PICTURE_FORMATS } from "@consts"
+import LightboxInit from "./LightboxInit.astro"
 
 interface Props {
   alt: string
@@ -65,66 +66,4 @@ const ariaLabel = imageTitle ? `Open image: ${imageTitle}` : "Open image"
   }
 </a>
 
-<script>
-  import "glightbox/dist/css/glightbox.min.css"
-
-  type LightboxInstance = {
-    destroy: () => void
-    reload: () => void
-  }
-
-  type GLightboxModule = {
-    default: (options: Record<string, unknown>) => LightboxInstance
-  }
-
-  type LightboxState = {
-    instance: LightboxInstance | undefined
-    isListening: boolean | undefined
-  }
-
-  const windowWithLightbox = window as Window & {
-    bwsLightbox?: LightboxState
-  }
-  const state = (windowWithLightbox.bwsLightbox ??= {
-    instance: undefined,
-    isListening: undefined,
-  })
-
-  const initLightbox = async () => {
-    const lightboxLinks = document.querySelectorAll(".glightbox")
-
-    if (lightboxLinks.length === 0) {
-      state.instance?.destroy()
-      state.instance = undefined
-      return
-    }
-
-    if (state.instance) {
-      state.instance.reload()
-      return
-    }
-
-    const { default: GLightbox } = (await import(
-      "glightbox"
-    )) as GLightboxModule
-
-    state.instance = GLightbox({
-      selector: ".glightbox",
-      touchNavigation: true,
-      keyboardNavigation: true,
-      loop: false,
-      zoomable: true,
-      draggable: true,
-      openEffect: "zoom",
-      closeEffect: "zoom",
-      slideEffect: "slide",
-    })
-  }
-
-  if (!state.isListening) {
-    document.addEventListener("astro:page-load", initLightbox)
-    state.isListening = true
-  }
-
-  void initLightbox()
-</script>
+<LightboxInit />
