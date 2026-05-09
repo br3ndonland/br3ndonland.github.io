@@ -68,6 +68,7 @@
   },
   "pnpm": {
     "overrides": {
+      "fast-uri": "^3.1.2",
       "lodash": "^4.17.23",
       "postcss": "^8.5.10",
       "yaml": "^2.8.3"
