@@ -112,6 +112,8 @@ export const GLIGHTBOX_OPTIONS = {
   slideEffect: "slide",
   autoplayVideos: false,
   plyr: {
+    // prevent GLightbox from loading separate plyr assets from CDN
+    // https://github.com/biati-digital/glightbox/blob/a9385e5/src/js/glightbox.js#L54-L55
     css: "",
     js: "",
     config: {

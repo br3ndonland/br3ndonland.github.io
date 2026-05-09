@@ -6,7 +6,8 @@ describe("GLightbox options", () => {
     expect(GLIGHTBOX_OPTIONS.moreLength).toBe(0)
   })
 
-  it("defines Plyr asset URL overrides", () => {
+  // https://github.com/biati-digital/glightbox/blob/a9385e5/src/js/glightbox.js#L54-L55
+  it("prevents GLightbox from loading separate plyr assets from CDN", () => {
     expect(GLIGHTBOX_OPTIONS.plyr.css).toBeDefined()
     expect(GLIGHTBOX_OPTIONS.plyr.js).toBeDefined()
   })
