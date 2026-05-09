@@ -24,8 +24,10 @@ const createIntegrationLogger = (
   label: string,
 ): AstroBuildDoneHookOptions["logger"] => {
   const logger: AstroBuildDoneHookOptions["logger"] = {
+    close: () => undefined,
     debug: () => undefined,
     error: () => undefined,
+    flush: () => undefined,
     fork: () => logger,
     info: () => undefined,
     label,
