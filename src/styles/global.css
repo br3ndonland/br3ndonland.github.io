@@ -588,12 +588,13 @@ blockquote p {
   --lightbox-mobile-image-height: calc(
     100vh - var(--lightbox-mobile-caption-space) - 6rem
   );
+  --lightbox-mobile-inline-space: clamp(1rem, 4vw, 1.25rem);
 }
 
 .glightbox-mobile .glightbox-container .ginner-container.desc-bottom {
   box-sizing: border-box;
   height: 100vh;
-  padding: 4.75rem 0 1.25rem;
+  padding: 4.75rem var(--lightbox-mobile-inline-space) 1.25rem;
 }
 
 @supports (height: 100dvh) {
@@ -611,12 +612,15 @@ blockquote p {
 
 .glightbox-mobile .glightbox-container .gslide-image img {
   max-height: var(--lightbox-mobile-image-height);
+  max-width: 100%;
   min-width: 0;
 }
 
 .glightbox-mobile .glightbox-container .gslide-media {
   flex: 0 1 auto;
   max-height: var(--lightbox-mobile-image-height);
+  max-width: 100%;
+  min-width: 0;
 }
 
 .glightbox-mobile .glightbox-container .gslide-description {
@@ -625,7 +629,7 @@ blockquote p {
   box-sizing: border-box;
   flex: 0 0 auto;
   max-height: var(--lightbox-mobile-caption-space);
-  padding: 0 clamp(1rem, 4vw, 1.25rem);
+  padding: 0;
   position: relative;
 }
 
