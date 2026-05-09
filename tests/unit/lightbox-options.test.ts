@@ -8,16 +8,12 @@ describe("GLightbox options", () => {
 
   // https://github.com/biati-digital/glightbox/blob/a9385e5/src/js/glightbox.js#L54-L55
   it("prevents GLightbox from loading separate plyr assets from CDN", () => {
+    const cdn_domain = "cdn.plyr.io"
+    expect(GLIGHTBOX_OPTIONS.plyr.config.blankVideo).not.toContain(cdn_domain)
+    expect(GLIGHTBOX_OPTIONS.plyr.config.blankVideo).toBeDefined()
+    expect(GLIGHTBOX_OPTIONS.plyr.config.iconUrl).not.toContain(cdn_domain)
+    expect(GLIGHTBOX_OPTIONS.plyr.config.iconUrl).toBeDefined()
     expect(GLIGHTBOX_OPTIONS.plyr.css).toBeDefined()
     expect(GLIGHTBOX_OPTIONS.plyr.js).toBeDefined()
-  })
-
-  it("serves Plyr fallback assets from this site", () => {
-    const { blankVideo, iconUrl } = GLIGHTBOX_OPTIONS.plyr.config
-
-    expect(blankVideo).toBeDefined()
-    expect(blankVideo).not.toContain("cdn.plyr.io")
-    expect(iconUrl).toBeDefined()
-    expect(iconUrl).not.toContain("cdn.plyr.io")
   })
 })
