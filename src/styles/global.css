@@ -583,6 +583,33 @@ blockquote p {
   opacity: 0.25;
 }
 
+@media (min-width: 769px) {
+  .glightbox-container {
+    --lightbox-desktop-inline-space: clamp(1.5rem, 5vw, 5rem);
+    --lightbox-desktop-content-width: min(
+      calc(
+        100vw - var(--lightbox-desktop-inline-space) -
+          var(--lightbox-desktop-inline-space)
+      ),
+      83rem
+    );
+  }
+
+  .glightbox-container .ginner-container.desc-bottom,
+  .glightbox-container .ginner-container.desc-top {
+    box-sizing: border-box;
+    max-width: var(--lightbox-desktop-content-width);
+  }
+
+  .glightbox-container .ginner-container.desc-bottom .gslide-media,
+  .glightbox-container .ginner-container.desc-top .gslide-media,
+  .glightbox-container .ginner-container.desc-bottom .gslide-image img,
+  .glightbox-container .ginner-container.desc-top .gslide-image img {
+    max-width: 100%;
+    min-width: 0;
+  }
+}
+
 .glightbox-mobile .glightbox-container {
   --lightbox-mobile-caption-space: clamp(7rem, 19vh, 9rem);
   --lightbox-mobile-image-height: calc(
