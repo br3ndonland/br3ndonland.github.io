@@ -166,12 +166,7 @@
   /* Lightbox */
   --lightbox-backdrop: rgba(9, 11, 17, 0.94);
   --lightbox-border-radius: 1rem;
-  --lightbox-caption-background: linear-gradient(
-    to bottom,
-    rgba(9, 11, 17, 0),
-    rgba(9, 11, 17, 0.92) 35%,
-    rgba(9, 11, 17, 0.96)
-  );
+  --lightbox-caption-background: transparent;
   --lightbox-caption-link-over: #ffffff;
   --lightbox-caption-text-over: #e3e6ee;
   --lightbox-caption-title-over: #ffffff;
@@ -499,16 +494,16 @@ blockquote p {
 }
 
 .glightbox-clean .gslide-description {
-  background: var(--lightbox-surface);
-  color: var(--gray-200);
+  background: var(--lightbox-caption-background);
+  color: var(--lightbox-caption-text-over);
 }
 
 .glightbox-clean .gdesc-inner {
-  padding: 0.75rem 1rem;
+  padding: 0.75rem 0 0;
 }
 
 .glightbox-clean .gslide-title {
-  color: var(--gray-100);
+  color: var(--lightbox-caption-title-over);
   font-family: var(--font-brand);
   font-size: var(--text-base);
   font-weight: 600;
@@ -517,14 +512,14 @@ blockquote p {
 }
 
 .glightbox-clean .gslide-desc {
-  color: var(--gray-300);
+  color: var(--lightbox-caption-text-over);
   font-family: var(--font-body);
   font-size: var(--text-sm);
   line-height: 1.5;
 }
 
 .gslide-desc a {
-  color: var(--link-color);
+  color: var(--lightbox-caption-link-over);
   font-weight: 600;
   text-decoration-thickness: 0.08em;
   text-underline-offset: 0.18em;
@@ -532,7 +527,7 @@ blockquote p {
 
 .gslide-desc a:hover,
 .gslide-desc a:focus {
-  color: var(--accent-dark);
+  color: var(--lightbox-caption-link-over);
 }
 
 .glightbox-clean .gprev,
