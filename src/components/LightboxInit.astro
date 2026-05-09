@@ -24,8 +24,6 @@
     '.glightbox[href$=".ogg" i]',
     '.glightbox[href$=".webm" i]',
   ].join(", ")
-  const bundledPlyrCss = "data:text/css,/*plyr.css-bundled-by-astro*/"
-  const bundledPlyrJs = "data:text/javascript,/*plyr-js-bundled-by-astro*/"
   const windowWithLightbox = window as Window & {
     bwsLightbox?: LightboxState
     Plyr?: unknown
@@ -82,8 +80,8 @@
       slideEffect: "slide",
       autoplayVideos: false,
       plyr: {
-        css: bundledPlyrCss,
-        js: bundledPlyrJs,
+        css: "" /* plyr CSS bundled by astro*/,
+        js: "" /* plyr JS bundled by astro */,
         config: {
           ratio: "16:9",
           fullscreen: {
