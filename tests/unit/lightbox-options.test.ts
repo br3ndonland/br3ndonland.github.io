@@ -2,7 +2,8 @@ import { GLIGHTBOX_OPTIONS } from "../../src/consts"
 import { describe, expect, it } from "vitest"
 
 describe("GLightbox options", () => {
-  it("keeps mobile captions as full HTML", () => {
+  // https://github.com/biati-digital/glightbox/blob/a9385e5/src/js/core/slide.js#L85-L87
+  it("prevents GLightbox from altering captions on mobile devices", () => {
     expect(GLIGHTBOX_OPTIONS.moreLength).toBe(0)
   })
 

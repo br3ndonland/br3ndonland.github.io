@@ -106,6 +106,8 @@ export const GLIGHTBOX_OPTIONS = {
   loop: false,
   zoomable: true,
   draggable: true,
+  // prevent GLightbox from altering captions on mobile devices
+  // https://github.com/biati-digital/glightbox/blob/a9385e5/src/js/core/slide.js#L85-L87
   moreLength: 0,
   openEffect: "zoom",
   closeEffect: "zoom",
