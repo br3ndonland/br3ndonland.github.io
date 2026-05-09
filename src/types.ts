@@ -61,3 +61,9 @@ export interface Social extends NavLink {
 }
 
 export type Socials = Social[]
+
+export interface VercelEnvironment {
+  readonly [key: string]: string | boolean | undefined
+  readonly VERCEL_ENV?: string | boolean | undefined
+  readonly VERCEL_URL?: string | boolean | undefined
+}

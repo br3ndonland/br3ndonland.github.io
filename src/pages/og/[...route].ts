@@ -4,13 +4,8 @@ import { readFile } from "node:fs/promises"
 import { join } from "node:path"
 import sharp from "sharp"
 import defaultImage from "@images/brendon-smith-portrait-2025-07-15-1920.jpg"
-import { ABOUT, HOME, PROJECTS, SITE, WORK } from "@consts"
+import { ABOUT, HOME, OPEN_GRAPH, PROJECTS, SITE, WORK } from "@consts"
 import { astroOpenGraph } from "@integrations/astro-open-graph"
-import {
-  getOgImageRoute,
-  OG_IMAGE_HEIGHT,
-  OG_IMAGE_WIDTH,
-} from "../../open-graph"
 
 type OgImageSource = ImageMetadata | string
 
@@ -52,7 +47,7 @@ const FONT_FILES = {
 } as const
 
 const withRoute = (page: Omit<OgPage, "route">): OgPage => {
-  return { ...page, route: getOgImageRoute(page.pathname) }
+  return { ...page, route: OPEN_GRAPH.getImageRoute(page.pathname) }
 }
 
 const normalizeText = (text: string): string => {
@@ -312,9 +307,9 @@ export const GET: APIRoute = async ({ props }) => {
 
   return await astroOpenGraph
     .image({
-      height: OG_IMAGE_HEIGHT,
+      height: OPEN_GRAPH.IMAGE_HEIGHT,
       template: await getTemplate(page),
-      width: OG_IMAGE_WIDTH,
+      width: OPEN_GRAPH.IMAGE_WIDTH,
     })
     .toResponse({
       satori: {

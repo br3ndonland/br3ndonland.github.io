@@ -1,14 +1,7 @@
 ---
 import "@styles/global.css"
 import Favicon from "./Favicon.astro"
-import { SITE } from "@consts"
-import {
-  getOgImageBaseUrl,
-  getOgImagePath,
-  OG_IMAGE_HEIGHT,
-  OG_IMAGE_TYPE,
-  OG_IMAGE_WIDTH,
-} from "../open-graph"
+import { OPEN_GRAPH, SITE } from "@consts"
 
 interface Props {
   title?: string | undefined
@@ -19,11 +12,11 @@ interface Props {
 const {
   title = SITE.TITLE,
   description = SITE.DESCRIPTION,
-  image = getOgImagePath(Astro.url),
+  image = OPEN_GRAPH.getImagePath(Astro.url),
 } = Astro.props
 
 const canonicalURL = Astro.site
-const imageURL = image && new URL(image, getOgImageBaseUrl(Astro.url))
+const imageURL = image && new URL(image, OPEN_GRAPH.getImageBaseUrl(Astro.url))
 ---
 
 <meta charset="utf-8" />
@@ -48,15 +41,18 @@ const imageURL = image && new URL(image, getOgImageBaseUrl(Astro.url))
 {imageURL && <meta property="og:image" content={imageURL} />}
 {
   imageURL && (
-    <meta property="og:image:width" content={String(OG_IMAGE_WIDTH)} />
+    <meta property="og:image:width" content={String(OPEN_GRAPH.IMAGE_WIDTH)} />
   )
 }
 {
   imageURL && (
-    <meta property="og:image:height" content={String(OG_IMAGE_HEIGHT)} />
+    <meta
+      property="og:image:height"
+      content={String(OPEN_GRAPH.IMAGE_HEIGHT)}
+    />
   )
 }
-{imageURL && <meta property="og:image:type" content={OG_IMAGE_TYPE} />}
+{imageURL && <meta property="og:image:type" content={OPEN_GRAPH.IMAGE_TYPE} />}
 <meta property="og:url" content={Astro.url} />
 <meta property="og:type" content="website" />
 <meta property="twitter:card" content="summary_large_image" />

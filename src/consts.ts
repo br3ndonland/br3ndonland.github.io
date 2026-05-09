@@ -5,6 +5,7 @@ import type {
   NavLinks,
   Site,
   Socials,
+  VercelEnvironment,
 } from "@types"
 
 import { type ImageOutputFormat } from "astro"
@@ -99,6 +100,52 @@ export const NAV_LINKS: NavLinks = [
 
 export const PICTURE_FORMATS: ImageOutputFormat[] = ["avif", "webp"]
 
+/**
+ * Open Graph
+ */
+const normalizePathname = (pathname: string | URL): string => {
+  const path = pathname instanceof URL ? pathname.pathname : pathname
+  const trimmedPath = path.replace(/\/+$/, "").replace(/^\/+/, "")
+  return trimmedPath || "index"
+}
+
+const getVercelPreviewUrl = (env: VercelEnvironment): string | undefined => {
+  if (env.VERCEL_ENV !== "preview" || typeof env.VERCEL_URL !== "string") {
+    return undefined
+  }
+
+  const deploymentHost = env.VERCEL_URL.trim().replace(/^https?:\/\//, "")
+  return deploymentHost ? `https://${deploymentHost}` : undefined
+}
+
+const getOpenGraphImageRoute = (pathname: string | URL): string => {
+  return `${normalizePathname(pathname)}.png`
+}
+
+const getOpenGraphImagePath = (pathname: string | URL): string => {
+  return `/og/${getOpenGraphImageRoute(pathname)}`
+}
+
+const getOpenGraphImageBaseUrl = (
+  fallback: string | URL,
+  env: VercelEnvironment = import.meta.env,
+): URL => {
+  const previewUrl = getVercelPreviewUrl(env)
+  return new URL(previewUrl ?? fallback)
+}
+
+export const OPEN_GRAPH = {
+  IMAGE_HEIGHT: 630,
+  IMAGE_TYPE: "image/png",
+  IMAGE_WIDTH: 1200,
+  getImageBaseUrl: getOpenGraphImageBaseUrl,
+  getImagePath: getOpenGraphImagePath,
+  getImageRoute: getOpenGraphImageRoute,
+} as const
+
+/**
+ * Lightbox
+ */
 export const GLIGHTBOX_OPTIONS = {
   selector: ".glightbox",
   touchNavigation: true,
