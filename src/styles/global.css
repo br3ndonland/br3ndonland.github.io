@@ -585,14 +585,43 @@ blockquote p {
 
 @media (min-width: 769px) {
   .glightbox-container {
-    --lightbox-desktop-inline-space: clamp(1.5rem, 5vw, 5rem);
+    --lightbox-desktop-control-edge: clamp(1rem, 2vw, 1.5rem);
+    --lightbox-desktop-control-gap: clamp(0.75rem, 1.5vw, 1.25rem);
+    --lightbox-desktop-control-size: 3.25rem;
+    --lightbox-desktop-side-space: calc(
+      var(--lightbox-desktop-control-edge) +
+        var(--lightbox-desktop-control-size) +
+        var(--lightbox-desktop-control-gap)
+    );
     --lightbox-desktop-content-width: min(
       calc(
-        100vw - var(--lightbox-desktop-inline-space) -
-          var(--lightbox-desktop-inline-space)
+        100vw - var(--lightbox-desktop-side-space) -
+          var(--lightbox-desktop-side-space)
       ),
       83rem
     );
+  }
+
+  .glightbox-clean .gprev,
+  .glightbox-clean .gnext,
+  .glightbox-clean .gclose {
+    height: var(--lightbox-desktop-control-size);
+    width: var(--lightbox-desktop-control-size);
+  }
+
+  .glightbox-clean .gprev,
+  .glightbox-clean .gnext {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .glightbox-clean .gprev {
+    left: var(--lightbox-desktop-control-edge);
+  }
+
+  .glightbox-clean .gnext,
+  .glightbox-clean .gclose {
+    right: var(--lightbox-desktop-control-edge);
   }
 
   .glightbox-container .ginner-container.desc-bottom,
