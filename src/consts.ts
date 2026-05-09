@@ -99,6 +99,31 @@ export const NAV_LINKS: NavLinks = [
 
 export const PICTURE_FORMATS: ImageOutputFormat[] = ["avif", "webp"]
 
+export const GLIGHTBOX_OPTIONS = {
+  selector: ".glightbox",
+  touchNavigation: true,
+  keyboardNavigation: true,
+  loop: false,
+  zoomable: true,
+  draggable: true,
+  moreLength: 0,
+  openEffect: "zoom",
+  closeEffect: "zoom",
+  slideEffect: "slide",
+  autoplayVideos: false,
+  plyr: {
+    css: "",
+    js: "",
+    config: {
+      ratio: "16:9",
+      fullscreen: {
+        enabled: true,
+        iosNative: true,
+      },
+    },
+  },
+} as const
+
 /**
  * Icons adapted from:
  * https://phosphoricons.com/ (MIT license)

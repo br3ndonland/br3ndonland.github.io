@@ -1,6 +1,7 @@
 <script>
   import "glightbox/dist/css/glightbox.min.css"
   import "plyr/dist/plyr.css"
+  import { GLIGHTBOX_OPTIONS } from "@consts"
 
   type LightboxInstance = {
     destroy: () => void
@@ -68,29 +69,7 @@
       "glightbox"
     )) as GLightboxModule
 
-    state.instance = GLightbox({
-      selector: ".glightbox",
-      touchNavigation: true,
-      keyboardNavigation: true,
-      loop: false,
-      zoomable: true,
-      draggable: true,
-      openEffect: "zoom",
-      closeEffect: "zoom",
-      slideEffect: "slide",
-      autoplayVideos: false,
-      plyr: {
-        css: "" /* plyr CSS bundled by astro*/,
-        js: "" /* plyr JS bundled by astro */,
-        config: {
-          ratio: "16:9",
-          fullscreen: {
-            enabled: true,
-            iosNative: true,
-          },
-        },
-      },
-    })
+    state.instance = GLightbox(GLIGHTBOX_OPTIONS)
   }
 
   if (!state.isListening) {
