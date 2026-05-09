@@ -585,6 +585,7 @@ blockquote p {
 
 @media (min-width: 769px) {
   .glightbox-container {
+    --lightbox-desktop-caption-space: clamp(5rem, 12vh, 7rem);
     --lightbox-desktop-control-edge: clamp(1rem, 2vw, 1.5rem);
     --lightbox-desktop-control-gap: clamp(0.75rem, 1.5vw, 1.25rem);
     --lightbox-desktop-control-size: 3.25rem;
@@ -599,6 +600,13 @@ blockquote p {
           var(--lightbox-desktop-side-space)
       ),
       83rem
+    );
+    --lightbox-desktop-image-height: min(
+      74vh,
+      calc(
+        100vh - var(--lightbox-desktop-caption-space) -
+          var(--lightbox-desktop-side-space)
+      )
     );
   }
 
@@ -631,11 +639,18 @@ blockquote p {
   }
 
   .glightbox-container .ginner-container.desc-bottom .gslide-media,
-  .glightbox-container .ginner-container.desc-top .gslide-media,
-  .glightbox-container .ginner-container.desc-bottom .gslide-image img,
-  .glightbox-container .ginner-container.desc-top .gslide-image img {
+  .glightbox-container .ginner-container.desc-top .gslide-media {
     max-width: 100%;
     min-width: 0;
+  }
+
+  .glightbox-container .ginner-container.desc-bottom .gslide-image img,
+  .glightbox-container .ginner-container.desc-top .gslide-image img {
+    height: auto;
+    max-height: var(--lightbox-desktop-image-height) !important;
+    max-width: 100%;
+    min-width: 0;
+    width: auto;
   }
 }
 
