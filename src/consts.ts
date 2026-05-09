@@ -117,11 +117,13 @@ export const GLIGHTBOX_OPTIONS = {
     css: "",
     js: "",
     config: {
-      ratio: "16:9",
+      blankVideo: "/videos/blank.mp4",
       fullscreen: {
         enabled: true,
         iosNative: true,
       },
+      iconUrl: "/images/plyr.svg",
+      ratio: "16:9",
     },
   },
 } as const

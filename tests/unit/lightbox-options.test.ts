@@ -11,4 +11,13 @@ describe("GLightbox options", () => {
     expect(GLIGHTBOX_OPTIONS.plyr.css).toBeDefined()
     expect(GLIGHTBOX_OPTIONS.plyr.js).toBeDefined()
   })
+
+  it("serves Plyr fallback assets from this site", () => {
+    const { blankVideo, iconUrl } = GLIGHTBOX_OPTIONS.plyr.config
+
+    expect(blankVideo).toBeDefined()
+    expect(blankVideo).not.toContain("cdn.plyr.io")
+    expect(iconUrl).toBeDefined()
+    expect(iconUrl).not.toContain("cdn.plyr.io")
+  })
 })
