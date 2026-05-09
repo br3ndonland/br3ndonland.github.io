@@ -10,12 +10,11 @@ URLdemo: https://br3ndonland.github.io/R-guide
 URLrepo: https://github.com/br3ndonland/R-guide
 ---
 
-import { Picture } from "astro:assets"
 import Icon from "@components/Icon.astro"
+import LightboxImage from "@components/LightboxImage.astro"
 import HTMLExample from "@images/r-guide-html-example.png"
 import markdownExample from "@images/r-guide-markdown-example.png"
 import punchedCard from "@images/punched-card.jpg"
-import { PICTURE_FORMATS } from "@consts"
 
 ## Description
 
@@ -67,11 +66,11 @@ Obs    price    product
 
 Note the `cards;` line in the input code. What's up with that? It was originally a reference to <a href="https://en.wikipedia.org/wiki/Punched_card" rel="external" target="_blank">punched cards</a>. Early computer programs were just stacks of paper cards with holes punched in them. The cards were fed into the computer to run the program. Punched cards therefore acted like a primitive form of computer memory before hard drives were big enough to store data.
 
-<Picture
+<LightboxImage
   src={punchedCard}
   alt="IBM 360 PL/1 punched card program"
-  formats={PICTURE_FORMATS}
-  class:list={["img-thumbnail"]}
+  imageClass="img-thumbnail"
+  gallery="r-guide"
   decoding="async"
   loading="lazy"
 />
@@ -97,19 +96,19 @@ When I was first learning R, I took notes in a Microsoft Word document, which wa
 
 When I started learning to code, I needed a way to take notes. I started working with <a href="https://www.markdownguide.org/" rel="external" target="_blank">Markdown</a>, a plain-text format based on <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" rel="external" target="_blank">HTML</a>, the language used to structure web pages. It has most of the functionality of HTML while being simpler to read and write. For someone learning to code, mastering Markdown is a great place to start.
 
-<Picture
+<LightboxImage
   src={markdownExample}
   alt="Screenshot of Markdown code containing the R code example from this page"
-  formats={PICTURE_FORMATS}
-  class:list={["img-thumbnail"]}
+  imageClass="img-thumbnail"
+  gallery="r-guide"
   decoding="async"
   loading="lazy"
 />
-<Picture
+<LightboxImage
   src={HTMLExample}
   alt="Screenshot of HTML code containing the R code example from this page"
-  formats={PICTURE_FORMATS}
-  class:list={["img-thumbnail"]}
+  imageClass="img-thumbnail"
+  gallery="r-guide"
   decoding="async"
   loading="lazy"
 />

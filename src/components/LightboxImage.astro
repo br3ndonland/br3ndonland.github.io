@@ -1,0 +1,69 @@
+---
+import { Picture } from "astro:assets"
+import type { ImageMetadata, ImageOutputFormat } from "astro"
+import { PICTURE_FORMATS } from "@consts"
+import LightboxInit from "./LightboxInit.astro"
+
+interface Props {
+  alt: string
+  decoding?: "async" | "auto" | "sync" | null | undefined
+  description?: string | undefined
+  formats?: ImageOutputFormat[] | undefined
+  gallery?: string | undefined
+  href?: string | undefined
+  imageClass?: string | undefined
+  loading?: "eager" | "lazy" | null | undefined
+  src: ImageMetadata | string
+  title?: string | undefined
+}
+
+const {
+  alt,
+  decoding = "async",
+  description,
+  formats = PICTURE_FORMATS,
+  gallery,
+  href,
+  imageClass,
+  loading = "lazy",
+  src,
+  title,
+} = Astro.props
+
+const imageHref = href ?? (typeof src === "string" ? src : src.src)
+const imageTitle = title ?? (alt || undefined)
+const ariaLabel = imageTitle ? `Open image: ${imageTitle}` : "Open image"
+---
+
+<a
+  class="glightbox lightbox-image"
+  href={imageHref}
+  data-type="image"
+  data-gallery={gallery}
+  data-title={imageTitle}
+  data-description={description}
+  aria-label={ariaLabel}
+>
+  {
+    typeof src === "string" ? (
+      <img
+        src={src}
+        alt={alt}
+        class={imageClass}
+        decoding={decoding}
+        loading={loading}
+      />
+    ) : (
+      <Picture
+        src={src}
+        alt={alt}
+        formats={formats}
+        class={imageClass}
+        decoding={decoding}
+        loading={loading}
+      />
+    )
+  }
+</a>
+
+<LightboxInit />

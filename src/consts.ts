@@ -99,6 +99,37 @@ export const NAV_LINKS: NavLinks = [
 
 export const PICTURE_FORMATS: ImageOutputFormat[] = ["avif", "webp"]
 
+export const GLIGHTBOX_OPTIONS = {
+  selector: ".glightbox",
+  touchNavigation: true,
+  keyboardNavigation: true,
+  loop: false,
+  zoomable: true,
+  draggable: true,
+  // prevent GLightbox from altering captions on mobile devices
+  // https://github.com/biati-digital/glightbox/blob/a9385e5/src/js/core/slide.js#L85-L87
+  moreLength: 0,
+  openEffect: "zoom",
+  closeEffect: "zoom",
+  slideEffect: "slide",
+  autoplayVideos: false,
+  plyr: {
+    // prevent GLightbox from loading separate plyr assets from CDN
+    // https://github.com/biati-digital/glightbox/blob/a9385e5/src/js/glightbox.js#L54-L55
+    css: "",
+    js: "",
+    config: {
+      blankVideo: "/videos/blank.mp4",
+      fullscreen: {
+        enabled: true,
+        iosNative: true,
+      },
+      iconUrl: "/images/plyr.svg",
+      ratio: "16:9",
+    },
+  },
+} as const
+
 /**
  * Icons adapted from:
  * https://phosphoricons.com/ (MIT license)

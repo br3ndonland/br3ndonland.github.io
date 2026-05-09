@@ -1,13 +1,13 @@
 ---
 import { type CollectionEntry, getCollection, render } from "astro:content"
-import { Picture } from "astro:assets"
 import BaseLayout from "@layouts/BaseLayout.astro"
 import Contact from "@components/Contact.astro"
 import DateRange from "@components/DateRange.astro"
 import Hero from "@components/Hero.astro"
 import Icon from "@components/Icon.astro"
+import LightboxImage from "@components/LightboxImage.astro"
 import Pill from "@components/Pill.astro"
-import { PICTURE_FORMATS, SITE, WORK } from "@consts"
+import { SITE, WORK } from "@consts"
 
 interface Props {
   entry: CollectionEntry<"work">
@@ -50,11 +50,11 @@ const { Content } = await render(entry)
                 ))
               }
             </div>
-            <Picture
+            <LightboxImage
               src={entry.data.image.src}
               alt={entry.data.image.alt}
-              class:list={["img-hero"]}
-              formats={PICTURE_FORMATS}
+              imageClass="img-hero"
+              gallery={entry.id}
               decoding="async"
               loading="eager"
             />
