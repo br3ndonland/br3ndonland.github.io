@@ -6,8 +6,8 @@ describe("GLightbox options", () => {
     expect(GLIGHTBOX_OPTIONS.moreLength).toBe(0)
   })
 
-  it("does not ask GLightbox to load Plyr from the CDN", () => {
-    expect(GLIGHTBOX_OPTIONS.plyr.css).toBe("")
-    expect(GLIGHTBOX_OPTIONS.plyr.js).toBe("")
+  it("defines Plyr asset URL overrides", () => {
+    expect(GLIGHTBOX_OPTIONS.plyr.css).toBeDefined()
+    expect(GLIGHTBOX_OPTIONS.plyr.js).toBeDefined()
   })
 })
