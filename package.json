@@ -1,6 +1,7 @@
 {
   "name": "bws",
   "license": "UNLICENSED",
+  "packageManager": "pnpm@11.0.9",
   "private": true,
   "type": "module",
   "version": "0.0.0",
@@ -65,13 +66,5 @@
     "prettier": "~3.6.2",
     "prettier-plugin-astro": "^0.14.1",
     "vitest": "~4.1.4"
-  },
-  "pnpm": {
-    "overrides": {
-      "fast-uri": "^3.1.2",
-      "lodash": "^4.17.23",
-      "postcss": "^8.5.10",
-      "yaml": "^2.8.3"
-    }
   }
 }
