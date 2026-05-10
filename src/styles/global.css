@@ -360,6 +360,10 @@ blockquote p {
   max-height: 12rem;
 }
 
+.lightbox-image .img-thumbnail {
+  display: block;
+}
+
 .lightbox-image,
 .lightbox-video {
   display: inline-block;
@@ -370,6 +374,16 @@ blockquote p {
 .lightbox-image {
   border-radius: 1rem;
   cursor: zoom-in;
+}
+
+/* Improve display of side-by-side images */
+.lightbox-image:has(.img-thumbnail):has(+ .lightbox-image .img-thumbnail),
+.lightbox-image:has(.img-thumbnail) + .lightbox-image:has(.img-thumbnail) {
+  max-width: calc((100% - 1rem) / 2);
+  vertical-align: top;
+}
+.lightbox-image:has(.img-thumbnail) + .lightbox-image:has(.img-thumbnail) {
+  margin-left: 0.5rem;
 }
 
 .lightbox-image:has(.img-hero) {
