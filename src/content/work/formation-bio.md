@@ -8,8 +8,10 @@ image:
 roles:
   - Senior Site Reliability Engineer
 tags:
+  - AI
   - AWS
   - CI/CD
+  - Claude Code
   - Docker
   - Git
   - GitHub
@@ -19,6 +21,7 @@ tags:
   - Snowflake
   - Spacelift
   - Terraform
+  - Vercel
 ---
 
 ## Overview
@@ -26,6 +29,16 @@ tags:
 <a href="https://www.formation.bio/" rel="external" target="_blank">Formation Bio</a> is a biotech company with a mission "to deliver new treatments to patients faster and more efficiently." They accomplish this with an innovative business model and the help of AI. Pharmaceutical drug development is a difficult process with a high probability of failure. Rather than starting off attempting to do the entire end-to-end process, they've created an intermediary business model. They acquire drugs (or "assets" as they call them) that have already gone through some early development, creating a new subsidiary corporation for each asset (called a "hub and spoke" business model). They then use their in-house AI products to improve the efficiency of clinical trial logistics. Finally, once the the assets hit a value inflection point, they then sell or license the assets. This strategy of "flipping drugs" has already been successful - <a href="https://www.prnewswire.com/news-releases/libertas-bio-a-formation-bio-subsidiary-license-of-gusacitinib-a-dual-jaksyk-inhibitor-to-sanofi-302487403.html" rel="external" target="_blank">Formation Bio licensed their asset gusacitinib to Sanofi in June 2025</a>.
 
 As a Senior Site Reliability Engineer (SRE) in the Platform Engineering organization, I am responsible for Formation Bio's cloud infrastructure and platform tools. This is an important role because of the company's strong focus on AI and data, all of which requires cloud infrastructure. I've worked on some interesting initiatives so far.
+
+## Citizen Builder initiative
+
+In a <a href="https://www.formation.bio/blog/building-an-ai-native-pharma-company" rel="external" target="_blank">blog post</a>, CTO Dan Neil described Formation Bio as an "AI-native pharma company." This means that AI technology impacts everything the company does. It's not limited to products built by engineering teams.
+
+We demonstrated this during our April 2026 in-person week. The entire company converged on our NYC HQ for a "Citizen Builder" AI initiative. Each person used AI to build, deploy, and demo a web application that could help make their job more efficient, even if they had never written code before. The results were remarkable. Builders used AI to ship practical software tools that went way beyond "hello, world" projects and solved real problems for the company. Just a few years ago, entire startups would have been created to provide these applications. Now, they can be built in a matter of days.
+
+I played a major role in making that possible from the platform side. I helped set up Claude Code settings, skills, plugins, and related tooling so employees had a paved path from start to finish. I also managed the Vercel cloud infrastructure used to deploy these applications. Vercel gave builders a fast path from prototype to working web application, while centralized platform management helped standardize deployment settings, networking, and identity management. This was a practical example of platform engineering enabling AI adoption: giving domain experts enough tooling and infrastructure to turn their own ideas into usable software. Deploying over a hundred applications to our Vercel Enterprise in a matter of days was a good stress test of the Vercel platform. We hit some limitations, but we were able to work through them quickly. Vercel was actively involved, and even sent our account rep to the Formation Bio offices during the week to keep their finger on the pulse and collect feedback. Huge thanks to Vercel for partnering with us on this initiative.
+
+See the <a href="https://www.linkedin.com/posts/danielneil_ai-native-is-a-term-a-lot-of-companies-use-activity-7456012975024386048-33OO" rel="external" target="_blank">LinkedIn post</a> for a promotional video and further information.
 
 ## OpenTofu
 
