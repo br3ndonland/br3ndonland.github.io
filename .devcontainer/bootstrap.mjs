@@ -58,13 +58,8 @@ const hasCommand = (command) => {
 }
 
 try {
-  for (const command of ["git", "git-lfs", "pnpm"]) {
+  for (const command of ["git", "git-lfs", "corepack"]) {
     if (hasCommand(command)) {
-      continue
-    }
-
-    if (command === "pnpm") {
-      run("npm", ["install", "--global", "pnpm@latest-10"])
       continue
     }
 
@@ -99,21 +94,21 @@ try {
   }
 
   log("Installing dependencies...")
-  run("pnpm", ["install", "--frozen-lockfile"], {
+  run("corepack", ["pnpm", "install", "--frozen-lockfile"], {
     env: {
       ...process.env,
       CI: "true",
     },
   })
-  run("pnpm", ["run", "astro", "telemetry", "disable"])
+  run("corepack", ["pnpm", "run", "astro", "telemetry", "disable"])
   log("Dependencies installed.")
 
   log("Running repository checks...")
-  run("pnpm", ["run", "check"])
+  run("corepack", ["pnpm", "run", "check"])
   log("Checks complete.")
 
   log("Running production build...")
-  run("pnpm", ["run", "build"])
+  run("corepack", ["pnpm", "run", "build"])
   log("Build complete.")
 
   log("Done.")
