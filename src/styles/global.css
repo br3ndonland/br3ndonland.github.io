@@ -386,6 +386,18 @@ blockquote p {
   margin-left: 0.5rem;
 }
 
+/* Reduce spacing between lightbox images and captions below */
+.content > .lightbox-image:has(.img-thumbnail) {
+  margin-bottom: 0.25rem;
+}
+.content > .lightbox-image:has(.img-thumbnail) + p:has(> svg:first-child + em),
+.content
+  > .lightbox-image:has(.img-thumbnail)
+  + .lightbox-image:has(.img-thumbnail)
+  + p:has(> svg:first-child + em) {
+  margin-top: 0.25rem;
+}
+
 .lightbox-image:has(.img-hero) {
   border-radius: 1.5rem;
 }
