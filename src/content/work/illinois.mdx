@@ -16,12 +16,24 @@ tags:
 
 import elisa from "@images/elisa.png"
 import endothelialDysfunction from "@images/endothelial-dysfunction.png"
+import gradSchoolAlmaMaterBeforeRestoration from "@images/illinois-alma-mater-statue-before-restoration.jpg"
+import gradSchoolAlmaMaterRestored from "@images/illinois-alma-mater-statue-restored.jpg"
+import gradSchoolArcExterior from "@images/illinois-arc-exterior.jpg"
+import gradSchoolBevierHPLC from "@images/illinois-bevier-hall-hplc-room.jpg"
+import gradSchoolEngineeringHall from "@images/illinois-engineering-hall.jpg"
 import gradSchoolLab from "@images/brendon-smith-grad-school-lab.jpg"
+import gradSchoolBardeenQuadPlaque from "@images/illinois-bardeen-quad-plaque.jpg"
+import gradSchoolBeckmanExterior from "@images/brendon-smith-grad-school-beckman-institute-exterior.jpg"
+import gradSchoolBlueWatersExterior from "@images/illinois-ncsa-blue-waters-exterior.jpg"
+import gradSchoolBlueWatersServerInternals from "@images/illinois-ncsa-blue-waters-internals.jpg"
+import gradSchoolBlueWatersServerRoom from "@images/illinois-ncsa-blue-waters-server-room.jpg"
+import gradSchoolRedHerringExterior from "@images/illinois-channing-murray-foundation-exterior.jpg"
+import gradSchoolRedHerringFood from "@images/illinois-channing-murray-foundation-red-herring-restaurant-vegan-cultural-dinners-2014-02-19-ethopian-food.jpg"
+import gradSchoolRedHerringMenu from "@images/illinois-channing-murray-foundation-red-herring-restaurant-vegan-cultural-dinners-2014-02-19-ethopian-menu.jpg"
+import gradSchoolNutritionSymposiumPosterPresentation from "@images/brendon-smith-grad-school-nutrition-symposium-2012-04-18-poster.jpg"
 import Icon from "@components/Icon.astro"
 import LightboxImage from "@components/LightboxImage.astro"
 import { PROJECTS } from "@consts"
-
-I went directly from college into the Nutritional Sciences PhD program at the University of Illinois at Urbana-Champaign.
 
 ## Research
 
@@ -31,12 +43,23 @@ I went directly from college into the Nutritional Sciences PhD program at the Un
   imageClass="img-thumbnail"
   gallery="illinois"
   decoding="async"
+  loading="eager"
+/>
+
+I went directly from college into the Nutritional Sciences PhD program at the University of Illinois at Urbana-Champaign. I worked in both engineering and nutrition labs and led projects on a large interdisciplinary team. I fully funded my tuition and living expenses with research grants and fellowships. You can download my dissertation for free <a href="https://www.ideals.illinois.edu/items/73150" rel="external" target="_blank">here</a>, and you can look up my publications on my <a href="https://orcid.org/0000-0001-6615-8677" rel="external" target="_blank">ORCID profile</a>.
+
+The engineering lab, the Bioacoustics Research Lab, has a long <a href="https://brl.illinois.edu/History/" rel="external" target="_blank">history</a> of studying <a href="https://en.wikipedia.org/wiki/Ultrasound" rel="external" target="_blank">ultrasound</a>. Ultrasound is sound waves above the frequency range of human hearing (>20 kHz, usually 1-40 MHz for diagnostic imaging). My projects were focused on cardiovascular ultrasound imaging. Blood vessels can be small and located deep within the body, so they can sometimes be difficult to see with ultrasound. To help see blood vessels with ultrasound, <a href="https://en.wikipedia.org/wiki/Contrast-enhanced_ultrasound" rel="external" target="_blank">contrast agents</a> can be used. These are tiny bubbles (1-4 micrometers in diameter) that are injected intravenously and flow through the blood. When ultrasound waves pass through these bubbles, they pop and release gas, which helps delineate the blood vessel wall. This process has biological effects. Ultrasound is mechanical energy, and a metric called the "<a href="https://en.wikipedia.org/wiki/Mechanical_index" rel="external" target="_blank">mechanical index</a>" has been developed to measure and limit this mechanical energy for safety. The interaction of ultrasound with contrast agents introduces additional biological effects. We studied these effects in an effort to ensure the safety of patients undergoing cardiovascular ultrasound imaging. Thankfully, ultrasound imaging is considered safe, especially compared with other imaging modalities like CT and MRI.
+
+<LightboxImage
+  src={gradSchoolBevierHPLC}
+  alt="HPLC room in Bevier Hall at the University of Illinois at Urbana-Champaign, with yellow lights optimized for work with carotenoids"
+  imageClass="img-thumbnail"
+  gallery="illinois"
+  decoding="async"
   loading="lazy"
 />
 
-I got rigorous research training, working in both nutritional biochemistry and engineering labs, and leading projects on a large interdisciplinary team. My tuition and living expenses were fully funded by research grants and fellowships.
-
-I began to see the computing challenges involved in scientific research. I wrote VBA macros to automate experimental data analysis and used SAS for statistical programming _(I later switched from SAS to R -- see the [R guide page](/projects/r-guide) for more)_. I worked with Adobe Illustrator to design science illustrations.
+The nutrition lab was well-known for the study of <a href="https://en.wikipedia.org/wiki/Carotenoid" rel="external" target="_blank">carotenoids</a>. I studied <a href="https://en.wikipedia.org/wiki/Lycopene" rel="external" target="_blank">lycopene</a>, the carotenoid that gives tomatoes their red color. I used analytical chemistry techniques like HPLC (<a href="https://en.wikipedia.org/wiki/High-performance_liquid_chromatography" rel="external" target="_blank">high-performance liquid chromatography</a>) to analyze carotenoid levels in various tissues and research diets. Carotenoids are sensitive to light, so we had special yellow lights in the lab to prevent degradation of the carotenoids we were working with.
 
 {/* prettier-ignore */}
 <LightboxImage
@@ -44,23 +67,191 @@ I began to see the computing challenges involved in scientific research. I wrote
   alt="Diagram of an ELISA method (enzyme-linked immunosorbent assay) from Brendon Smith's publication <em>Validated Sandwich ELISA for the Quantification of von Willebrand Factor in Rabbit Plasma</em> (10.4137/bmi.s6051)"
   imageClass="img-thumbnail"
   gallery="illinois"
-  description={`<a href="https://doi.org/10.4137/bmi.s6051" rel="external" target="_blank">View publication</a>`}
+  description={`<a href="https://doi.org/10.4137/bmi.s6051" rel="external" target="_blank">Publication</a> licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/" rel="external" target="_blank">CC BY-NC 4.0</a>.`}
   decoding="async"
-  loading="eager"
+  loading="lazy"
 /><LightboxImage
   src={endothelialDysfunction}
   alt="Endothelial dysfunction diagram"
   imageClass="img-thumbnail"
   gallery="illinois"
   decoding="async"
-  loading="eager"
+  loading="lazy"
 />
-<Icon icon="arrow-bend-left-up" size="1.2em" verticalAlign="top" /> _I designed some science illustrations with Adobe Illustrator. On the left, a diagram of an ELISA method (enzyme-linked immunosorbent assay) for my publication "Validated Sandwich ELISA for the Quantification of von Willebrand Factor in Rabbit Plasma" (<a href="https://doi.org/10.4137/bmi.s6051" rel="external" target="_blank">10.4137/bmi.s6051</a>). On the right, a diagram of a process called "endothelial dysfunction" for a fellowship proposal._
+<Icon icon="arrow-bend-left-up" size="1.2em" verticalAlign="top" /> _At left, a diagram of an ELISA method (enzyme-linked immunosorbent assay) from one of my publications (<a href="https://doi.org/10.4137/bmi.s6051" rel="external" target="_blank">10.4137/bmi.s6051</a>). At right, a diagram of a process called <a href="https://en.wikipedia.org/wiki/Endothelial_dysfunction" rel="external" target="_blank">endothelial dysfunction</a> for a fellowship proposal._
 
-You can download my dissertation for free <a href="https://www.ideals.illinois.edu/items/73150" rel="external" target="_blank">here</a>, and you can look up my publications on my <a href="https://orcid.org/0000-0001-6615-8677" rel="external" target="_blank">ORCID profile</a>.
+I began to see the computing challenges involved in scientific research. I wrote VBA macros to automate experimental data analysis, used SAS for statistical programming _(I later switched from SAS to R -- see the [R guide page](/projects/r-guide) for more)_, and worked with Adobe Illustrator to design science illustrations.
+
+<LightboxImage
+  src={gradSchoolNutritionSymposiumPosterPresentation}
+  alt="Brendon Smith presenting a research poster to Dr. James O. Hill at the 2012 Nutrition Symposium in the Division of Nutritional Sciences at the University of Illinois at Urbana-Champaign"
+  imageClass="img-thumbnail"
+  gallery="illinois"
+  decoding="async"
+  loading="lazy"
+/>
+
+I attended many conferences and even helped organize a few, like a nutrition symposium at which we hosted obesity researcher <a href="https://en.wikipedia.org/wiki/James_O._Hill" rel="external" target="_blank">Jim Hill</a>.
 
 ## Classes
 
 My coursework opened my mind to the wonderful world of cells, molecules, and biochemical reactions, and to the effects of food from cell to community.
 
-I also did some teaching. I completed a teaching certification and ranked in the top 10% of campus teachers based on student feedback.
+In addition to the classes I took, I also did some teaching. I completed a teaching certification and ranked in the top 10% of campus teachers based on student feedback.
+
+## Life
+
+These were a few of my favorite things about campus life.
+
+### Red Herring
+
+{/* prettier-ignore */}
+<LightboxImage
+  src={gradSchoolRedHerringExterior}
+  alt="Exterior of the Channing-Murray Foundation on the campus of the University of Illinois at Urbana-Champaign"
+  description={`From <a href="https://commons.wikimedia.org/w/index.php?curid=29387723" rel="external" target="_blank">Wikimedia Commons by user Beyond My Ken</a>, licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="external" target="_blank">CC BY-SA 4.0</a>.`}
+  imageClass="img-thumbnail"
+  gallery="illinois"
+  decoding="async"
+  loading="lazy"
+/><span /><LightboxImage
+  src={gradSchoolRedHerringMenu}
+  alt="Menu of the Ethiopian meal from the vegan cultural dinners series at the Red Herring restaurant, 2014-02-19"
+  imageClass="img-thumbnail"
+  gallery="illinois"
+  decoding="async"
+  loading="lazy"
+/><LightboxImage
+  src={gradSchoolRedHerringFood}
+  alt="Ethiopian meal from the vegan cultural dinners series at the Red Herring restaurant, 2014-02-19"
+  imageClass="img-thumbnail"
+  gallery="illinois"
+  decoding="async"
+  loading="lazy"
+/>
+
+One of the lesser-known corners of campus that I frequented was the Red Herring restaurant in the basement of the Unitarian-Universalist <a href="https://en.wikipedia.org/wiki/Channing-Murray_Foundation" rel="external" target="_blank">Channing-Murray Foundation</a>. They had a "vegan cultural dinners" series in which they featured recipes from different cultures each week. I learned that I liked Ethiopian food.
+
+### Activities and Recreation Center
+
+<LightboxImage
+  src={gradSchoolArcExterior}
+  alt="Exterior of the at the Activities and Recreation Center (ARC) at the University of Illinois at Urbana-Champaign"
+  description={`From <a href="https://commons.wikimedia.org/w/index.php?curid=93205989" rel="external" target="_blank">Wikimedia Commons by user Mahir256</a>, licensed under <a href="https://creativecommons.org/licenses/by-sa/3.0/" rel="external" target="_blank">CC BY-SA 3.0</a>.`}
+  imageClass="img-thumbnail"
+  gallery="illinois"
+  decoding="async"
+  loading="lazy"
+/>
+
+I spent much of my free time working out at the Activities and Recreation Center (ARC). My favorite parts were the basement weight room, the yoga studios, the atrium (visible in the picture), and the outdoor lap pool.
+
+### Alma Mater
+
+{/* prettier-ignore */}
+<LightboxImage
+  src={gradSchoolAlmaMaterBeforeRestoration}
+  alt="The Alma Mater statue at the University of Illinois at Urbana-Champaign before restoration"
+  imageClass="img-thumbnail"
+  gallery="illinois"
+  description={`From <a href="https://commons.wikimedia.org/w/index.php?curid=4440276" rel="external" target="_blank">Wikimedia Commons by user HalloweenHJB</a>, licensed under <a href="https://creativecommons.org/licenses/by/3.0/" rel="external" target="_blank">CC BY 3.0</a>.`}
+  decoding="async"
+  loading="lazy"
+/><LightboxImage
+  src={gradSchoolAlmaMaterRestored}
+  alt="The Alma Mater statue at the University of Illinois at Urbana-Champaign after restoration"
+  imageClass="img-thumbnail"
+  gallery="illinois"
+  decoding="async"
+  loading="lazy"
+/>
+<Icon icon="arrow-bend-left-up" size="1.2em" verticalAlign="top" /> _The Alma Mater before (left) and after (right) restoration._
+
+The campus has an iconic statue called the <a href="https://en.wikipedia.org/wiki/Alma_Mater_%28Illinois_sculpture%29" rel="external" target="_blank"><em>Alma Mater</em></a>. I walked by it frequently. For most of my time in grad school, the brass statue languished under a teal crust, but a few months before I graduated, the University restored the statue to its former glory.
+
+### Blue Waters
+
+{/* prettier-ignore */}
+<LightboxImage
+  src={gradSchoolBlueWatersExterior}
+  alt="Exterior of the Blue Waters petascale supercomputing facility at the University of Illinois at Urbana-Champaign"
+  imageClass="img-thumbnail"
+  gallery="illinois"
+  description={`From <a href="https://commons.wikimedia.org/w/index.php?curid=9976340" rel="external" target="_blank">Wikimedia Commons by user HorsePunchKid</a>, licensed under <a href="https://creativecommons.org/licenses/by-sa/3.0/" rel="external" target="_blank">CC BY-SA 3.0</a>.`}
+  decoding="async"
+  loading="lazy"
+/><span /><LightboxImage
+  src={gradSchoolBlueWatersServerRoom}
+  alt="Blue Waters petascale supercomputer server room"
+  imageClass="img-thumbnail"
+  gallery="illinois"
+  decoding="async"
+  loading="lazy"
+/><LightboxImage
+  src={gradSchoolBlueWatersServerInternals}
+  alt="Blue Waters petascale supercomputer server internals"
+  imageClass="img-thumbnail"
+  gallery="illinois"
+  decoding="async"
+  loading="lazy"
+/>
+
+While I was in grad school, the National Center for Supercomputing Applications built a new facility to house the <a href="https://en.wikipedia.org/wiki/Blue_Waters" rel="external" target="_blank">Blue Waters</a> petascale supercomputer. I got to tour the facility before it opened.
+
+### Beckman Institute
+
+{/* prettier-ignore */}
+<LightboxImage
+  src={gradSchoolBeckmanExterior}
+  alt="Brendon Smith outside the Beckman Institute for Advanced Science and Technology at the University of Illinois at Urbana-Champaign"
+  imageClass="img-thumbnail"
+  gallery="illinois"
+  decoding="async"
+  loading="lazy"
+/><span /><LightboxImage
+  src={gradSchoolEngineeringHall}
+  alt="Engineering Hall on the Engineering Quad at the University of Illinois at Urbana-Champaign"
+  description={`From <a href="https://commons.wikimedia.org/w/index.php?curid=145120484" rel="external" target="_blank">Wikimedia Commons by user Amphylite</a>, licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="external" target="_blank">CC BY-SA 4.0</a>.`}
+  imageClass="img-thumbnail"
+  gallery="illinois"
+  decoding="async"
+  loading="lazy"
+/><LightboxImage
+  src={gradSchoolBardeenQuadPlaque}
+  alt="A plaque on the Bardeen Engineering Quad at the University of Illinois at Urbana-Champaign honoring the achievements of John Bardeen"
+  description={`From <a href="https://upload.wikimedia.org/wikipedia/commons/6/60/Theory_of_Superconductivity_plaque%2C_UIUC_-_DSC09157.JPG" rel="external" target="_blank">Wikimedia Commons</a>, public domain.`}
+  imageClass="img-thumbnail"
+  gallery="illinois"
+  decoding="async"
+  loading="lazy"
+/>
+
+I appreciated my daily walk through the Bardeen Engineering Quad and into the Beckman Institute.
+
+{/* prettier-ignore */}
+<a href="https://en.wikipedia.org/wiki/John_Bardeen" rel="external" target="_blank">John Bardeen</a> was the only two-time Nobel laureate in physics. His first Nobel Prize was awarded for the development of the <a href="https://en.wikipedia.org/wiki/Transistor" rel="external" target="_blank">transistor</a> at <a href="https://en.wikipedia.org/wiki/The_Idea_Factory" rel="external" target="_blank">Bell Labs</a>. His second Nobel Prize was awarded for a theory of <a href="https://en.wikipedia.org/wiki/Superconductivity" rel="external" target="_blank">superconductivity</a>.
+
+When I arrived at the <a href="https://en.wikipedia.org/wiki/Beckman_Institute_for_Advanced_Science_and_Technology" rel="external" target="_blank">Beckman Institute</a>, I walked past a display honoring <a href="https://en.wikipedia.org/wiki/Arnold_Beckman" rel="external" target="_blank">Arnold Beckman</a>, the inventor who financed the Institute. In addition to founding <a href="https://en.wikipedia.org/wiki/Beckman_Coulter" rel="external" target="_blank">Beckman Instruments</a>, he also provided early financing for production of semiconductors that were based on Bardeen's work, leading to the birth of modern computers and Silicon Valley.
+
+It was inspiring to participate in this legacy of science and engineering in my own small way.
+
+> **Rules that Govern My Life**<br />
+> By Arnold O. Beckman
+>
+> Maintain absolute integrity at all times.
+>
+> Always do your best: never do anything half-heartedly (either get into it, or get out of it).
+>
+> Never do anything to harm others.
+>
+> Never do anything for which you'll be ashamed later (this is an important one!).
+>
+> Always strive for excellence -- there's no substitute for it.
+>
+> Practice moderation in all things -- including moderation (there's nothing wrong with a little excess once in a while).
+>
+> Don't take yourself too seriously.
+>
+> Arnold Orville Beckman, Ph.D.<br />
+> Great Man of Science and Humanity<br />
+> April 10, 1900 - May 18, 2004
