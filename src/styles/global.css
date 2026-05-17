@@ -356,7 +356,6 @@ blockquote p {
 .img-thumbnail {
   border-radius: 1rem;
   box-shadow: var(--shadow-md);
-  margin-top: 1rem;
   max-height: 12rem;
 }
 
@@ -382,6 +381,12 @@ blockquote p {
 }
 .content > .lightbox-image:has(.img-thumbnail) + p:has(> svg:first-child + em) {
   margin-top: 0.25rem;
+}
+
+/* Align spacing around content images */
+.content > .lightbox-image:has(.img-thumbnail),
+.content > .image-grid:has(.img-thumbnail) {
+  margin-top: 1rem;
 }
 
 /* Improve display of image groups */
