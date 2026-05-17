@@ -84,7 +84,7 @@ Notes:
 
 - `pnpm run check` runs Prettier, cspell, and `astro check`.
 - Build should succeed without changing deployment configuration.
-- Do not run development server commands in agent mode (for example, `astro dev`, `pnpm run dev`, `pnpm run start`, `pnpm run test:watch`, or `vitest` without arguments). Instead, run `pnpm run build` to inspect changes.
+- Do not run local server or watch commands (for example, `astro dev`, `pnpm run dev`, `pnpm run start`, `pnpm run test:watch`, `python -m http.server`, or `vitest` without arguments). Instead, run `pnpm run build` to verify successful builds after making changes. Optionally, to serve the site after building, run `pnpm run preview`. Prompt the user before running `pnpm run preview` because this command also starts a server and the user should be aware that a server is running. If `pnpm run preview` is approved, stop the preview server before finishing the task.
 
 ## CI expectations
 
