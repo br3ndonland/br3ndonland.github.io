@@ -710,7 +710,7 @@ blockquote p {
 }
 
 .glightbox-mobile .glightbox-container {
-  --lightbox-mobile-caption-space: clamp(7rem, 19vh, 9rem);
+  --lightbox-mobile-caption-space: clamp(11rem, 30vh, 16rem);
   --lightbox-mobile-image-height: calc(
     100vh - var(--lightbox-mobile-caption-space) - 6rem
   );
@@ -725,7 +725,7 @@ blockquote p {
 
 @supports (height: 100dvh) {
   .glightbox-mobile .glightbox-container {
-    --lightbox-mobile-caption-space: clamp(7rem, 19dvh, 9rem);
+    --lightbox-mobile-caption-space: clamp(11rem, 30dvh, 16rem);
     --lightbox-mobile-image-height: calc(
       100dvh - var(--lightbox-mobile-caption-space) - 6rem
     );
@@ -755,8 +755,12 @@ blockquote p {
   box-sizing: border-box;
   flex: 0 0 auto;
   max-height: var(--lightbox-mobile-caption-space);
+  min-height: 0;
+  overflow-y: auto !important;
+  overscroll-behavior: contain;
   padding: 0;
   position: relative;
+  -webkit-overflow-scrolling: touch;
 }
 
 .glightbox-mobile .glightbox-container .gslide-title {
@@ -764,11 +768,13 @@ blockquote p {
   font-family: var(--font-brand);
   font-size: var(--text-base);
   font-weight: 600;
+  overflow-wrap: break-word;
 }
 
 .glightbox-mobile .glightbox-container .gslide-desc {
   color: var(--lightbox-caption-text-over);
   font-family: var(--font-body);
+  overflow-wrap: break-word;
 }
 
 .glightbox-mobile .glightbox-container .gslide-desc a {
