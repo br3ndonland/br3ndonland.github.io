@@ -90,31 +90,37 @@ import { ABOUT, PROJECTS, SITE, WORK } from "@consts"
             direction for my career.
           </p>
           <h3>Grad School</h3>
-          <LightboxImage
-            src={gradSchoolLab}
-            alt=`Brendon Smith in the Bioacoustics Research Lab
-            at the University of Illinois at Urbana-Champaign`
-            imageClass="img-thumbnail"
-            gallery="about"
-            decoding="async"
-            loading="lazy"
-          />
-          <LightboxImage
-            src={gradSchoolRegalia}
-            alt="Brendon Smith in doctoral regalia after defending dissertation"
-            imageClass="img-thumbnail"
-            gallery="about"
-            decoding="async"
-            loading="lazy"
-          />
-          <p>
-            <Icon icon="arrow-bend-left-up" size="1.2em" verticalAlign="top" />
-            <em
-              >Me in the lab during my first year of grad school, and me after
-              defending my dissertation. The more science I did, the longer my
-              hair got. Correlation or causation?</em
-            >
-          </p>
+          <figure class="image-grid image-grid-pair">
+            <LightboxImage
+              src={gradSchoolLab}
+              alt=`Brendon Smith in the Bioacoustics Research Lab
+              at the University of Illinois at Urbana-Champaign`
+              imageClass="img-thumbnail"
+              gallery="about"
+              decoding="async"
+              loading="lazy"
+            />
+            <LightboxImage
+              src={gradSchoolRegalia}
+              alt="Brendon Smith in doctoral regalia after defending dissertation"
+              imageClass="img-thumbnail"
+              gallery="about"
+              decoding="async"
+              loading="lazy"
+            />
+            <figcaption>
+              <Icon
+                icon="arrow-bend-left-up"
+                size="1.2em"
+                verticalAlign="top"
+              />
+              <em>
+                Me in the lab during my first year of grad school, and me after
+                defending my dissertation. The more science I did, the longer my
+                hair got. Correlation or causation?
+              </em>
+            </figcaption>
+          </figure>
           <p>
             I went directly from college into the Nutritional Sciences PhD
             program at the University of Illinois at Urbana-Champaign. You can
@@ -133,22 +139,24 @@ import { ABOUT, PROJECTS, SITE, WORK } from "@consts"
             >.
           </p>
           <h3>Postdoc</h3>
-          <LightboxImage
-            src={postdocLabBench}
-            alt="Brendon Smith at postdoc lab bench at Harvard"
-            imageClass="img-thumbnail"
-            gallery="about"
-            decoding="async"
-            loading="lazy"
-          />
-          <LightboxImage
-            src={postdocLabHands}
-            alt="Brendon Smith's hands at postdoc lab bench at Harvard"
-            imageClass="img-thumbnail"
-            gallery="about"
-            decoding="async"
-            loading="lazy"
-          />
+          <div class="image-grid image-grid-pair">
+            <LightboxImage
+              src={postdocLabBench}
+              alt="Brendon Smith at postdoc lab bench at Harvard"
+              imageClass="img-thumbnail"
+              gallery="about"
+              decoding="async"
+              loading="lazy"
+            />
+            <LightboxImage
+              src={postdocLabHands}
+              alt="Brendon Smith's hands at postdoc lab bench at Harvard"
+              imageClass="img-thumbnail"
+              gallery="about"
+              decoding="async"
+              loading="lazy"
+            />
+          </div>
           <p>
             After I finished my PhD, I moved to Boston for postdoctoral
             research. During this time, I decided to learn software engineering
@@ -208,23 +216,25 @@ import { ABOUT, PROJECTS, SITE, WORK } from "@consts"
         <div class="content">
           <p>Here are some things I like to do when I'm not working.</p>
           <h3>Coffee</h3>
-          <LightboxImage
-            src={coffeeGeorgeHowellModbar}
-            alt="George Howell Coffee Godfrey Hotel Modbar pour-over system"
-            imageClass="img-thumbnail"
-            gallery="about"
-            decoding="async"
-            loading="lazy"
-          />
-          <LightboxImage
-            src={coffeeNYCCounterCulture}
-            alt=`Brendon Smith and Kent Langston at the 2017 New York Coffee Festival
-              Counter Culture booth`
-            imageClass="img-thumbnail"
-            gallery="about"
-            decoding="async"
-            loading="lazy"
-          />
+          <div class="image-grid image-grid-pair">
+            <LightboxImage
+              src={coffeeGeorgeHowellModbar}
+              alt="George Howell Coffee Godfrey Hotel Modbar pour-over system"
+              imageClass="img-thumbnail"
+              gallery="about"
+              decoding="async"
+              loading="lazy"
+            />
+            <LightboxImage
+              src={coffeeNYCCounterCulture}
+              alt=`Brendon Smith and Kent Langston at the 2017 New York Coffee Festival
+                Counter Culture booth`
+              imageClass="img-thumbnail"
+              gallery="about"
+              decoding="async"
+              loading="lazy"
+            />
+          </div>
           <p>
             I like to start my days with <a
               href="https://en.wikipedia.org/wiki/Specialty_coffee"
@@ -234,22 +244,24 @@ import { ABOUT, PROJECTS, SITE, WORK } from "@consts"
             Cambridge. Let me know if you'd like to join me.
           </p>
           <h3>Fitness</h3>
-          <LightboxImage
-            src={fitnessTrackMeet}
-            alt="Brendon Smith competing in a track meet in 2002"
-            imageClass="img-thumbnail"
-            gallery="about"
-            decoding="async"
-            loading="lazy"
-          />
-          <LightboxImage
-            src={fitnessPullUps}
-            alt="Brendon Smith doing pull-ups"
-            imageClass="img-thumbnail"
-            gallery="about"
-            decoding="async"
-            loading="lazy"
-          />
+          <div class="image-grid image-grid-pair">
+            <LightboxImage
+              src={fitnessTrackMeet}
+              alt="Brendon Smith competing in a track meet in 2002"
+              imageClass="img-thumbnail"
+              gallery="about"
+              decoding="async"
+              loading="lazy"
+            />
+            <LightboxImage
+              src={fitnessPullUps}
+              alt="Brendon Smith doing pull-ups"
+              imageClass="img-thumbnail"
+              gallery="about"
+              decoding="async"
+              loading="lazy"
+            />
+          </div>
           <p>
             I got into fitness at the beginning of high school. I ran track, and
             got into swimming and strength training. My fitness pursuits taught
@@ -447,39 +459,43 @@ import { ABOUT, PROJECTS, SITE, WORK } from "@consts"
             "br3ndonland" because "brendonland" was taken (there are actually
             people named Brendon Land).
           </p>
-          <LightboxImage
-            src={jurassicParkNedry}
-            alt="Image from Jurassic Park (1993) of Dennis Nedry (Wayne Knight) squeezing a stress ball and saying, 'Thanks, Dad.'"
-            imageClass="img-thumbnail"
-            gallery="about"
-            decoding="async"
-            loading="lazy"
-          />
-          <LightboxImage
-            src={jurassicParkNEDRYLAND}
-            alt="Image from Jurassic Park (1993) of Dennis Nedry's desktop showing that his hard drive is named NEDRYLAND"
-            imageClass="img-thumbnail"
-            gallery="about"
-            decoding="async"
-            loading="lazy"
-          />
+          <div class="image-grid image-grid-pair">
+            <LightboxImage
+              src={jurassicParkNedry}
+              alt="Image from Jurassic Park (1993) of Dennis Nedry (Wayne Knight) squeezing a stress ball and saying, 'Thanks, Dad.'"
+              imageClass="img-thumbnail"
+              gallery="about"
+              decoding="async"
+              loading="lazy"
+            />
+            <LightboxImage
+              src={jurassicParkNEDRYLAND}
+              alt="Image from Jurassic Park (1993) of Dennis Nedry's desktop showing that his hard drive is named NEDRYLAND"
+              imageClass="img-thumbnail"
+              gallery="about"
+              decoding="async"
+              loading="lazy"
+            />
+          </div>
           <h3>Music</h3>
-          <LightboxImage
-            src={massiveAttack20101015}
-            alt="Massive Attack at the Riviera Theatre, Chicago, 2010-10-15"
-            imageClass="img-thumbnail"
-            gallery="about"
-            decoding="async"
-            loading="lazy"
-          />
-          <LightboxImage
-            src={rush20150612}
-            alt="Rush at the United Center, Chicago, 2015-06-12"
-            imageClass="img-thumbnail"
-            gallery="about"
-            decoding="async"
-            loading="lazy"
-          />
+          <div class="image-grid image-grid-pair">
+            <LightboxImage
+              src={massiveAttack20101015}
+              alt="Massive Attack at the Riviera Theatre, Chicago, 2010-10-15"
+              imageClass="img-thumbnail"
+              gallery="about"
+              decoding="async"
+              loading="lazy"
+            />
+            <LightboxImage
+              src={rush20150612}
+              alt="Rush at the United Center, Chicago, 2015-06-12"
+              imageClass="img-thumbnail"
+              gallery="about"
+              decoding="async"
+              loading="lazy"
+            />
+          </div>
           <p>
             I like listening to music and going to concerts. I also played
             classical guitar for several years in high school and college.

@@ -61,24 +61,29 @@ The engineering lab, the Bioacoustics Research Lab, has a long <a href="https://
 
 The nutrition lab was well-known for the study of <a href="https://en.wikipedia.org/wiki/Carotenoid" rel="external" target="_blank">carotenoids</a>. I studied <a href="https://en.wikipedia.org/wiki/Lycopene" rel="external" target="_blank">lycopene</a>, the carotenoid that gives tomatoes their red color. I used analytical chemistry techniques like HPLC (<a href="https://en.wikipedia.org/wiki/High-performance_liquid_chromatography" rel="external" target="_blank">high-performance liquid chromatography</a>) to analyze carotenoid levels in various tissues and research diets. Carotenoids are sensitive to light, so we had special yellow lights in the lab to prevent degradation of the carotenoids we were working with.
 
-{/* prettier-ignore */}
-<LightboxImage
-  src={elisa}
-  alt="Diagram of an ELISA method (enzyme-linked immunosorbent assay) from Brendon Smith's publication <em>Validated Sandwich ELISA for the Quantification of von Willebrand Factor in Rabbit Plasma</em> (10.4137/bmi.s6051)"
-  imageClass="img-thumbnail"
-  gallery="illinois"
-  description={`<a href="https://doi.org/10.4137/bmi.s6051" rel="external" target="_blank">Publication</a> licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/" rel="external" target="_blank">CC BY-NC 4.0</a>.`}
-  decoding="async"
-  loading="lazy"
-/><LightboxImage
-  src={endothelialDysfunction}
-  alt="Endothelial dysfunction diagram"
-  imageClass="img-thumbnail"
-  gallery="illinois"
-  decoding="async"
-  loading="lazy"
-/>
-<Icon icon="arrow-bend-left-up" size="1.2em" verticalAlign="top" /> _At left, a diagram of an ELISA method (enzyme-linked immunosorbent assay) from one of my publications (<a href="https://doi.org/10.4137/bmi.s6051" rel="external" target="_blank">10.4137/bmi.s6051</a>). At right, a diagram of a process called <a href="https://en.wikipedia.org/wiki/Endothelial_dysfunction" rel="external" target="_blank">endothelial dysfunction</a> for a fellowship proposal._
+<figure className="image-grid image-grid-pair">
+  <LightboxImage
+    src={elisa}
+    alt="Diagram of an ELISA method (enzyme-linked immunosorbent assay) from Brendon Smith's publication <em>Validated Sandwich ELISA for the Quantification of von Willebrand Factor in Rabbit Plasma</em> (10.4137/bmi.s6051)"
+    imageClass="img-thumbnail"
+    gallery="illinois"
+    description={`<a href="https://doi.org/10.4137/bmi.s6051" rel="external" target="_blank">Publication</a> licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/" rel="external" target="_blank">CC BY-NC 4.0</a>.`}
+    decoding="async"
+    loading="lazy"
+  />
+  <LightboxImage
+    src={endothelialDysfunction}
+    alt="Endothelial dysfunction diagram"
+    imageClass="img-thumbnail"
+    gallery="illinois"
+    decoding="async"
+    loading="lazy"
+  />
+  {/* prettier-ignore */}
+  <figcaption>
+    <Icon icon="arrow-bend-left-up" size="1.2em" verticalAlign="top" /> _At left, a diagram of an ELISA method (enzyme-linked immunosorbent assay) from one of my publications (<a href="https://doi.org/10.4137/bmi.s6051" rel="external" target="_blank">10.4137/bmi.s6051</a>). At right, a diagram of a process called <a href="https://en.wikipedia.org/wiki/Endothelial_dysfunction" rel="external" target="_blank">endothelial dysfunction</a> for a fellowship proposal._
+  </figcaption>
+</figure>
 
 I began to see the computing challenges involved in scientific research. I wrote VBA macros to automate experimental data analysis, used SAS for statistical programming _(I later switched from SAS to R -- see the [R guide page](/projects/r-guide) for more)_, and worked with Adobe Illustrator to design science illustrations.
 
@@ -105,30 +110,33 @@ These were a few of my favorite things about campus life.
 
 ### Red Herring
 
-{/* prettier-ignore */}
-<LightboxImage
-  src={gradSchoolRedHerringExterior}
-  alt="Exterior of the Channing-Murray Foundation on the campus of the University of Illinois at Urbana-Champaign"
-  description={`From <a href="https://commons.wikimedia.org/w/index.php?curid=29387723" rel="external" target="_blank">Wikimedia Commons by user Beyond My Ken</a>, licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="external" target="_blank">CC BY-SA 4.0</a>.`}
-  imageClass="img-thumbnail"
-  gallery="illinois"
-  decoding="async"
-  loading="lazy"
-/><span /><LightboxImage
-  src={gradSchoolRedHerringMenu}
-  alt="Menu of the Ethiopian meal from the vegan cultural dinners series at the Red Herring restaurant, 2014-02-19"
-  imageClass="img-thumbnail"
-  gallery="illinois"
-  decoding="async"
-  loading="lazy"
-/><LightboxImage
-  src={gradSchoolRedHerringFood}
-  alt="Ethiopian meal from the vegan cultural dinners series at the Red Herring restaurant, 2014-02-19"
-  imageClass="img-thumbnail"
-  gallery="illinois"
-  decoding="async"
-  loading="lazy"
-/>
+<div className="image-grid image-grid-featured-pair">
+  <LightboxImage
+    src={gradSchoolRedHerringExterior}
+    alt="Exterior of the Channing-Murray Foundation on the campus of the University of Illinois at Urbana-Champaign"
+    description={`From <a href="https://commons.wikimedia.org/w/index.php?curid=29387723" rel="external" target="_blank">Wikimedia Commons by user Beyond My Ken</a>, licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="external" target="_blank">CC BY-SA 4.0</a>.`}
+    imageClass="img-thumbnail"
+    gallery="illinois"
+    decoding="async"
+    loading="lazy"
+  />
+  <LightboxImage
+    src={gradSchoolRedHerringMenu}
+    alt="Menu of the Ethiopian meal from the vegan cultural dinners series at the Red Herring restaurant, 2014-02-19"
+    imageClass="img-thumbnail"
+    gallery="illinois"
+    decoding="async"
+    loading="lazy"
+  />
+  <LightboxImage
+    src={gradSchoolRedHerringFood}
+    alt="Ethiopian meal from the vegan cultural dinners series at the Red Herring restaurant, 2014-02-19"
+    imageClass="img-thumbnail"
+    gallery="illinois"
+    decoding="async"
+    loading="lazy"
+  />
+</div>
 
 One of the lesser-known corners of campus that I frequented was the Red Herring restaurant in the basement of the Unitarian-Universalist <a href="https://en.wikipedia.org/wiki/Channing-Murray_Foundation" rel="external" target="_blank">Channing-Murray Foundation</a>. They had a "vegan cultural dinners" series in which they featured recipes from different cultures each week. I learned that I liked Ethiopian food.
 
@@ -148,83 +156,94 @@ I spent much of my free time working out at the Activities and Recreation Center
 
 ### Alma Mater
 
-{/* prettier-ignore */}
-<LightboxImage
-  src={gradSchoolAlmaMaterBeforeRestoration}
-  alt="The Alma Mater statue at the University of Illinois at Urbana-Champaign before restoration"
-  imageClass="img-thumbnail"
-  gallery="illinois"
-  description={`From <a href="https://commons.wikimedia.org/w/index.php?curid=4440276" rel="external" target="_blank">Wikimedia Commons by user HalloweenHJB</a>, licensed under <a href="https://creativecommons.org/licenses/by/3.0/" rel="external" target="_blank">CC BY 3.0</a>.`}
-  decoding="async"
-  loading="lazy"
-/><LightboxImage
-  src={gradSchoolAlmaMaterRestored}
-  alt="The Alma Mater statue at the University of Illinois at Urbana-Champaign after restoration"
-  imageClass="img-thumbnail"
-  gallery="illinois"
-  decoding="async"
-  loading="lazy"
-/>
-<Icon icon="arrow-bend-left-up" size="1.2em" verticalAlign="top" /> _The Alma Mater before (left) and after (right) restoration._
+<figure className="image-grid image-grid-pair">
+  <LightboxImage
+    src={gradSchoolAlmaMaterBeforeRestoration}
+    alt="The Alma Mater statue at the University of Illinois at Urbana-Champaign before restoration"
+    imageClass="img-thumbnail"
+    gallery="illinois"
+    description={`From <a href="https://commons.wikimedia.org/w/index.php?curid=4440276" rel="external" target="_blank">Wikimedia Commons by user HalloweenHJB</a>, licensed under <a href="https://creativecommons.org/licenses/by/3.0/" rel="external" target="_blank">CC BY 3.0</a>.`}
+    decoding="async"
+    loading="lazy"
+  />
+  <LightboxImage
+    src={gradSchoolAlmaMaterRestored}
+    alt="The Alma Mater statue at the University of Illinois at Urbana-Champaign after restoration"
+    imageClass="img-thumbnail"
+    gallery="illinois"
+    decoding="async"
+    loading="lazy"
+  />
+  <figcaption>
+    <Icon icon="arrow-bend-left-up" size="1.2em" verticalAlign="top" />
+    <em>The Alma Mater before (left) and after (right) restoration.</em>
+  </figcaption>
+</figure>
 
 The campus has an iconic statue called the <a href="https://en.wikipedia.org/wiki/Alma_Mater_%28Illinois_sculpture%29" rel="external" target="_blank"><em>Alma Mater</em></a>. I walked by it frequently. For most of my time in grad school, the brass statue languished under a teal crust, but a few months before I graduated, the University restored the statue to its former glory.
 
 ### Blue Waters
 
-{/* prettier-ignore */}
-<LightboxImage
-  src={gradSchoolBlueWatersExterior}
-  alt="Exterior of the Blue Waters petascale supercomputing facility at the University of Illinois at Urbana-Champaign"
-  imageClass="img-thumbnail"
-  gallery="illinois"
-  description={`From <a href="https://commons.wikimedia.org/w/index.php?curid=9976340" rel="external" target="_blank">Wikimedia Commons by user HorsePunchKid</a>, licensed under <a href="https://creativecommons.org/licenses/by-sa/3.0/" rel="external" target="_blank">CC BY-SA 3.0</a>.`}
-  decoding="async"
-  loading="lazy"
-/><span /><LightboxImage
-  src={gradSchoolBlueWatersServerRoom}
-  alt="Blue Waters petascale supercomputer server room"
-  imageClass="img-thumbnail"
-  gallery="illinois"
-  decoding="async"
-  loading="lazy"
-/><LightboxImage
-  src={gradSchoolBlueWatersServerInternals}
-  alt="Blue Waters petascale supercomputer server internals"
-  imageClass="img-thumbnail"
-  gallery="illinois"
-  decoding="async"
-  loading="lazy"
-/>
+<div className="image-grid image-grid-featured-pair">
+  <LightboxImage
+    src={gradSchoolBlueWatersExterior}
+    alt="Exterior of the Blue Waters petascale supercomputing facility at the University of Illinois at Urbana-Champaign"
+    imageClass="img-thumbnail"
+    gallery="illinois"
+    description={`From <a href="https://commons.wikimedia.org/w/index.php?curid=9976340" rel="external" target="_blank">Wikimedia Commons by user HorsePunchKid</a>, licensed under <a href="https://creativecommons.org/licenses/by-sa/3.0/" rel="external" target="_blank">CC BY-SA 3.0</a>.`}
+    decoding="async"
+    loading="lazy"
+  />
+  <LightboxImage
+    src={gradSchoolBlueWatersServerRoom}
+    alt="Blue Waters petascale supercomputer server room"
+    imageClass="img-thumbnail"
+    gallery="illinois"
+    decoding="async"
+    loading="lazy"
+  />
+  <LightboxImage
+    src={gradSchoolBlueWatersServerInternals}
+    alt="Blue Waters petascale supercomputer server internals"
+    imageClass="img-thumbnail"
+    gallery="illinois"
+    decoding="async"
+    loading="lazy"
+  />
+</div>
 
 While I was in grad school, the National Center for Supercomputing Applications built a new facility to house the <a href="https://en.wikipedia.org/wiki/Blue_Waters" rel="external" target="_blank">Blue Waters</a> petascale supercomputer. I got to tour the facility before it opened.
 
 ### Beckman Institute
 
-{/* prettier-ignore */}
-<LightboxImage
-  src={gradSchoolBeckmanExterior}
-  alt="Brendon Smith outside the Beckman Institute for Advanced Science and Technology at the University of Illinois at Urbana-Champaign"
-  imageClass="img-thumbnail"
-  gallery="illinois"
-  decoding="async"
-  loading="lazy"
-/><span /><LightboxImage
-  src={gradSchoolEngineeringHall}
-  alt="Engineering Hall on the Engineering Quad at the University of Illinois at Urbana-Champaign"
-  description={`From <a href="https://commons.wikimedia.org/w/index.php?curid=145120484" rel="external" target="_blank">Wikimedia Commons by user Amphylite</a>, licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="external" target="_blank">CC BY-SA 4.0</a>.`}
-  imageClass="img-thumbnail"
-  gallery="illinois"
-  decoding="async"
-  loading="lazy"
-/><LightboxImage
-  src={gradSchoolBardeenQuadPlaque}
-  alt="A plaque on the Bardeen Engineering Quad at the University of Illinois at Urbana-Champaign honoring the achievements of John Bardeen"
-  description={`From <a href="https://upload.wikimedia.org/wikipedia/commons/6/60/Theory_of_Superconductivity_plaque%2C_UIUC_-_DSC09157.JPG" rel="external" target="_blank">Wikimedia Commons</a>, public domain.`}
-  imageClass="img-thumbnail"
-  gallery="illinois"
-  decoding="async"
-  loading="lazy"
-/>
+<div className="image-grid image-grid-featured-pair">
+  <LightboxImage
+    src={gradSchoolBeckmanExterior}
+    alt="Brendon Smith outside the Beckman Institute for Advanced Science and Technology at the University of Illinois at Urbana-Champaign"
+    imageClass="img-thumbnail"
+    gallery="illinois"
+    decoding="async"
+    loading="lazy"
+  />
+  <LightboxImage
+    src={gradSchoolEngineeringHall}
+    alt="Engineering Hall on the Engineering Quad at the University of Illinois at Urbana-Champaign"
+    description={`From <a href="https://commons.wikimedia.org/w/index.php?curid=145120484" rel="external" target="_blank">Wikimedia Commons by user Amphylite</a>, licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="external" target="_blank">CC BY-SA 4.0</a>.`}
+    imageClass="img-thumbnail"
+    gallery="illinois"
+    decoding="async"
+    loading="lazy"
+  />
+  <LightboxImage
+    src={gradSchoolBardeenQuadPlaque}
+    alt="A plaque on the Bardeen Engineering Quad at the University of Illinois at Urbana-Champaign honoring the achievements of John Bardeen"
+    description={`From <a href="https://upload.wikimedia.org/wikipedia/commons/6/60/Theory_of_Superconductivity_plaque%2C_UIUC_-_DSC09157.JPG" rel="external" target="_blank">Wikimedia Commons</a>, public domain.`}
+    imageClass="img-thumbnail"
+    gallery="illinois"
+    decoding="async"
+    loading="lazy"
+  />
+</div>
 
 I appreciated my daily walk through the Bardeen Engineering Quad and into the Beckman Institute.
 

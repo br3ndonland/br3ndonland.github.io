@@ -376,26 +376,50 @@ blockquote p {
   cursor: zoom-in;
 }
 
-/* Improve display of side-by-side images */
-.lightbox-image:has(.img-thumbnail):has(+ .lightbox-image .img-thumbnail),
-.lightbox-image:has(.img-thumbnail) + .lightbox-image:has(.img-thumbnail) {
-  max-width: calc((100% - 1rem) / 2);
-  vertical-align: top;
-}
-.lightbox-image:has(.img-thumbnail) + .lightbox-image:has(.img-thumbnail) {
-  margin-left: 0.5rem;
-}
-
 /* Reduce spacing between lightbox images and captions below */
 .content > .lightbox-image:has(.img-thumbnail) {
   margin-bottom: 0.25rem;
 }
-.content > .lightbox-image:has(.img-thumbnail) + p:has(> svg:first-child + em),
-.content
-  > .lightbox-image:has(.img-thumbnail)
-  + .lightbox-image:has(.img-thumbnail)
-  + p:has(> svg:first-child + em) {
+.content > .lightbox-image:has(.img-thumbnail) + p:has(> svg:first-child + em) {
   margin-top: 0.25rem;
+}
+
+/* Improve display of image groups */
+.image-grid {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+}
+.image-grid:has(> figcaption) {
+  row-gap: 0.25rem;
+}
+.image-grid-pair,
+.image-grid-featured-pair {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.image-grid-pair > .lightbox-image,
+.image-grid-featured-pair > .lightbox-image {
+  display: block;
+  max-width: none;
+  width: 100%;
+}
+.image-grid-featured-pair > .lightbox-image:first-child {
+  grid-column: 1 / -1;
+}
+.image-grid picture {
+  display: block;
+}
+.image-grid > figcaption {
+  grid-column: 1 / -1;
+  line-height: 1.5;
+}
+.image-grid > figcaption > p {
+  margin: 0;
+}
+.image-grid .img-thumbnail {
+  margin-top: 0;
+  max-height: none;
+  width: 100%;
 }
 
 .lightbox-image:has(.img-hero) {

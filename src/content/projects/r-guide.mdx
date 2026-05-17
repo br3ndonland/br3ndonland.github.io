@@ -96,23 +96,32 @@ When I was first learning R, I took notes in a Microsoft Word document, which wa
 
 When I started learning to code, I needed a way to take notes. I started working with <a href="https://www.markdownguide.org/" rel="external" target="_blank">Markdown</a>, a plain-text format based on <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" rel="external" target="_blank">HTML</a>, the language used to structure web pages. It has most of the functionality of HTML while being simpler to read and write. For someone learning to code, mastering Markdown is a great place to start.
 
-{/* prettier-ignore */}
-<LightboxImage
-  src={markdownExample}
-  alt="Screenshot of Markdown code containing the R code example from this page"
-  imageClass="img-thumbnail"
-  gallery="r-guide"
-  decoding="async"
-  loading="lazy"
-/><LightboxImage
-  src={HTMLExample}
-  alt="Screenshot of HTML code containing the R code example from this page"
-  imageClass="img-thumbnail"
-  gallery="r-guide"
-  decoding="async"
-  loading="lazy"
-/>
-<Icon icon="arrow-bend-left-up" size="1.2em" verticalAlign="top" /> _Comparison of Markdown and HTML code for the R example on this page. Which would you rather write?_
+<figure className="image-grid image-grid-pair">
+  <LightboxImage
+    src={markdownExample}
+    alt="Screenshot of Markdown code containing the R code example from this page"
+    imageClass="img-thumbnail"
+    gallery="r-guide"
+    decoding="async"
+    loading="lazy"
+  />
+  <LightboxImage
+    src={HTMLExample}
+    alt="Screenshot of HTML code containing the R code example from this page"
+    imageClass="img-thumbnail"
+    gallery="r-guide"
+    decoding="async"
+    loading="lazy"
+  />
+  <figcaption>
+    <Icon icon="arrow-bend-left-up" size="1.2em" verticalAlign="top" />
+    <em>
+      {
+        "Comparison of Markdown and HTML code for the R example on this page. Which would you rather write?"
+      }
+    </em>
+  </figcaption>
+</figure>
 
 Code blocks can be added to Markdown documents with triple backticks, as shown in the screenshot. But that code doesn't actually run. Wouldn't it be helpful to be able to run code from within a Markdown document? This is when I discovered computational notebooks. Computational notebook formats like <a href="https://rmarkdown.rstudio.com/" rel="external" target="_blank">R Markdown</a> and <a href="https://jupyter.org/" rel="external" target="_blank">Jupyter</a> combine sections of Markdown text with blocks of functional code. These notebooks enable creation of computational narratives that can walk the reader through the code, while also running the code and displaying output. The computational notebook approach really made sense to me. It was like a lab notebook!
 
