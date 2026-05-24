@@ -50,7 +50,7 @@
     "@astrojs/mdx": "^5.0.6",
     "@astrojs/sitemap": "^3.7.2",
     "@pagefind/default-ui": "~1.4.0",
-    "astro": "^6.3.3",
+    "astro": "^6.3.7",
     "glightbox": "^3.3.1",
     "pagefind": "~1.4.0",
     "plyr": "^3.8.4",
