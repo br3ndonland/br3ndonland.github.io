@@ -123,7 +123,9 @@ const logo = PROJECT_LOGOS[entry.id as keyof typeof PROJECT_LOGOS]
   .content {
     max-width: 80ch;
     margin-inline: auto;
+    min-width: 0;
     padding-bottom: 1.25rem;
+    width: 100%;
   }
 
   .content > :global(* + *) {

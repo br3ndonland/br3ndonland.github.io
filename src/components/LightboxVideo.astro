@@ -5,41 +5,48 @@ import { PICTURE_FORMATS } from "@consts"
 import LightboxInit from "./LightboxInit.astro"
 
 interface Props {
+  alt?: string | undefined
   decoding?: "async" | "auto" | "sync" | null | undefined
   description?: string | undefined
   formats?: ImageOutputFormat[] | undefined
   gallery?: string | undefined
   height?: number | string | undefined
+  imageClass?: string | undefined
   loading?: "eager" | "lazy" | null | undefined
-  poster?: ImageMetadata | string | undefined
-  posterAlt?: string | undefined
-  posterClass?: string | undefined
+  thumbnail?: ImageMetadata | string | undefined
+  thumbnailAlt?: string | undefined
+  thumbnailClass?: string | undefined
   src: string
   title?: string | undefined
   width?: number | string | undefined
 }
 
 const {
+  alt,
   decoding = "async",
   description,
   formats = PICTURE_FORMATS,
   gallery,
   height,
+  imageClass,
   loading = "lazy",
-  poster,
-  posterAlt,
-  posterClass,
+  thumbnail,
+  thumbnailAlt,
+  thumbnailClass,
   src,
   title,
   width,
 } = Astro.props
 
-const videoTitle = title ?? posterAlt
+const videoTitle = title ?? thumbnailAlt ?? alt
 const ariaLabel = videoTitle ? `Open video: ${videoTitle}` : "Open video"
-const posterAltText = posterAlt ?? title ?? ""
+const thumbnailAltText = thumbnailAlt ?? alt ?? title ?? ""
 const videoHeight = typeof height === "number" ? `${height}px` : height
 const videoWidth = typeof width === "number" ? `${width}px` : width
-const videoPosterClass = ["lightbox-video-poster", posterClass]
+const videoThumbnailClass = [
+  "lightbox-video-thumbnail",
+  thumbnailClass ?? imageClass,
+]
   .filter(Boolean)
   .join(" ")
 const hasDefaultSlot = Astro.slots.has("default")
@@ -58,21 +65,21 @@ const hasDefaultSlot = Astro.slots.has("default")
   aria-label={ariaLabel}
 >
   {
-    poster ? (
-      typeof poster === "string" ? (
+    thumbnail ? (
+      typeof thumbnail === "string" ? (
         <img
-          src={poster}
-          alt={posterAltText}
-          class={videoPosterClass}
+          src={thumbnail}
+          alt={thumbnailAltText}
+          class={videoThumbnailClass}
           decoding={decoding}
           loading={loading}
         />
       ) : (
         <Picture
-          src={poster}
-          alt={posterAltText}
+          src={thumbnail}
+          alt={thumbnailAltText}
           formats={formats}
-          class={videoPosterClass}
+          class={videoThumbnailClass}
           decoding={decoding}
           loading={loading}
         />
@@ -80,7 +87,7 @@ const hasDefaultSlot = Astro.slots.has("default")
     ) : hasDefaultSlot ? (
       <slot />
     ) : (
-      <span class={`${videoPosterClass} lightbox-video-fallback`}>
+      <span class={`${videoThumbnailClass} lightbox-video-fallback`}>
         {videoTitle ?? "Video"}
       </span>
     )

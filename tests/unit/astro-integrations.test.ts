@@ -8,6 +8,7 @@ import {
   astroAutolinkHeadings,
   astroSearch,
   rehypeAutolinkOptions,
+  rehypeTableCaptions,
 } from "../../astro.config"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
@@ -106,6 +107,70 @@ describe("astroAutolinkHeadings", () => {
     expect(output).toContain('class="anchor-icon"')
     expect(output).toContain('h1 id="this-is-an-html-h1-heading"')
     expect(output).not.toContain('href="#this-is-an-html-h1-heading"')
+  })
+})
+
+describe("rehypeTableCaptions", () => {
+  it("wraps tables and moves a caption into the table", () => {
+    const tree = {
+      children: [
+        {
+          children: [
+            {
+              type: "text",
+              value: "Table: Fixture caption.",
+            },
+          ],
+          name: "caption",
+          type: "mdxJsxFlowElement",
+        },
+        {
+          children: [
+            {
+              children: [],
+              tagName: "thead",
+              type: "element",
+            },
+          ],
+          tagName: "table",
+          type: "element",
+        },
+      ],
+      type: "root",
+    }
+
+    rehypeTableCaptions()(tree)
+
+    expect(tree.children).toEqual([
+      {
+        children: [
+          {
+            children: [
+              {
+                children: [
+                  {
+                    type: "text",
+                    value: "Table: Fixture caption.",
+                  },
+                ],
+                tagName: "caption",
+                type: "element",
+              },
+              {
+                children: [],
+                tagName: "thead",
+                type: "element",
+              },
+            ],
+            tagName: "table",
+            type: "element",
+          },
+        ],
+        properties: { className: ["table-scroll"] },
+        tagName: "div",
+        type: "element",
+      },
+    ])
   })
 })
 

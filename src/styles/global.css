@@ -317,6 +317,60 @@ blockquote p {
   margin-top: 1.1rem;
 }
 
+table {
+  -webkit-text-size-adjust: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+  line-height: 1.45;
+  text-size-adjust: 100%;
+  width: 100%;
+}
+
+.table-scroll {
+  display: block;
+  inline-size: 100%;
+  max-inline-size: 100%;
+  overscroll-behavior-inline: contain;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-scroll > table {
+  inline-size: max(80ch, 100%);
+  min-width: 0;
+}
+
+caption {
+  caption-side: top;
+  font-size: inherit;
+  font-style: italic;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+  text-align: left;
+}
+
+th,
+td {
+  font-size: inherit;
+  padding: 0.8rem 0.6rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+td br + br {
+  display: none;
+}
+
+thead th {
+  border-bottom: 1px solid var(--gray-700);
+  color: var(--gray-100);
+  font-weight: 600;
+}
+
+tbody tr + tr > :is(th, td) {
+  border-top: 1px solid var(--gray-800);
+}
+
 /* Utilities */
 .anchor-link {
   display: inline-block;
@@ -402,13 +456,13 @@ blockquote p {
 .image-grid-featured-pair {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
-.image-grid-pair > .lightbox-image,
-.image-grid-featured-pair > .lightbox-image {
+.image-grid-pair > :is(.lightbox-image, .lightbox-video),
+.image-grid-featured-pair > :is(.lightbox-image, .lightbox-video) {
   display: block;
   max-width: none;
   width: 100%;
 }
-.image-grid-featured-pair > .lightbox-image:first-child {
+.image-grid-featured-pair > :is(.lightbox-image, .lightbox-video):first-child {
   grid-column: 1 / -1;
 }
 .image-grid picture {
@@ -439,7 +493,7 @@ blockquote p {
 }
 
 .lightbox-image img,
-.lightbox-video-poster {
+.lightbox-video-thumbnail {
   transition:
     opacity var(--theme-transition),
     transform var(--theme-transition);
@@ -447,8 +501,8 @@ blockquote p {
 
 .lightbox-image:hover img,
 .lightbox-image:focus img,
-.lightbox-video:hover .lightbox-video-poster,
-.lightbox-video:focus .lightbox-video-poster {
+.lightbox-video:hover .lightbox-video-thumbnail,
+.lightbox-video:focus .lightbox-video-thumbnail {
   opacity: 0.92;
   transform: scale(1.01);
 }
@@ -459,7 +513,7 @@ blockquote p {
   outline-offset: 0.25rem;
 }
 
-.lightbox-video-poster {
+.lightbox-video-thumbnail {
   display: block;
   max-width: 100%;
 }
@@ -478,21 +532,27 @@ blockquote p {
 
 .lightbox-video-frame {
   align-items: center;
-  background: rgba(9, 11, 17, 0.72);
+  background: rgba(9, 11, 17, 0.78);
   border-radius: 999rem;
-  bottom: 1rem;
-  box-shadow: var(--shadow-md);
+  box-shadow:
+    var(--shadow-md),
+    0 0 0 1px rgba(255, 255, 255, 0.42);
+  color: #ffffff;
   display: flex;
   height: 3rem;
   justify-content: center;
+  left: 50%;
+  pointer-events: none;
   position: absolute;
-  right: 1rem;
+  top: 50%;
+  transform: translate(-50%, -50%);
   width: 3rem;
+  z-index: 1;
 }
 
 .lightbox-video-frame::before {
   border-bottom: 0.55rem solid transparent;
-  border-left: 0.85rem solid var(--gray-999);
+  border-left: 0.85rem solid currentColor;
   border-top: 0.55rem solid transparent;
   content: "";
   margin-left: 0.2rem;

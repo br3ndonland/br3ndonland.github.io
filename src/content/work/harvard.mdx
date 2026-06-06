@@ -3,8 +3,8 @@ title: Harvard
 dateStart: 2015-04-15
 dateEnd: 2017-10-31
 image:
-  src: "@images/brendon-smith-postdoc-lab-portrait.jpg"
-  alt: Brendon Smith at postdoc lab bench at Harvard
+  src: "@images/brendon-smith-postdoc-lab-hallway.jpg"
+  alt: Brendon Smith in front of display of postdoc lab papers at Harvard
 roles:
   - Postdoctoral Research Scientist
   - Postdoctoral Research Fellow
@@ -15,14 +15,250 @@ tags:
   - Statistics
 ---
 
-After I finished my PhD, I did a "postdoc" (postdoctoral research) at the Harvard School of Public Health in Boston.
+import Icon from "@components/Icon.astro"
+import LightboxImage from "@components/LightboxImage.astro"
+import LightboxVideo from "@components/LightboxVideo.astro"
+import nutritionalScreeningEB2017 from "@images/brendon-smith-postdoc-nutritional-screening-eb2017.png"
+import postdocLabBench from "@images/brendon-smith-postdoc-lab-bench.jpg"
+import postdocLabColdRoomAfter from "@images/brendon-smith-postdoc-lab-cold-room-after.jpg"
+import postdocLabColdRoomBefore from "@images/brendon-smith-postdoc-lab-cold-room-before.jpg"
+import postdocLabHands from "@images/brendon-smith-postdoc-lab-hands.jpg"
+import postdocDigitalMicrofluidicDeviceSetup from "@images/brendon-smith-postdoc-mit-digital-microfluidic-device-setup.jpg"
+import postdocDigitalMicrofluidicDeviceVideo from "@videos/brendon-smith-postdoc-mit-digital-microfluidic-device.mp4"
+import postdocDigitalMicrofluidicDeviceVideoThumbnail from "@images/brendon-smith-postdoc-mit-digital-microfluidic-device-video-thumbnail.jpg"
 
-I dived deeper into molecular nutrition during this time. Even a cup of coffee can contain a thousand molecular compounds with potential effects on physiology and health, but few have been studied. I did some work to help illuminate the links between food molecules and physiology. I won a year of grant funding and collaborated with researchers at MIT and in pharma. You can see one of my conference posters <a href="https://drive.proton.me/urls/DAFEJ040XC#ACAK8EalHS1y" rel="external" target="_blank">here</a>.
+## Research
 
-I learned the importance of **reproducibility**. In science, reproducibility occurs when different scientists do the same experiment and get results that agree. The science career system does not incentivize reproducibility. As a result, the scientific community is experiencing what has been called a "reproducibility crisis" or "<a href="https://en.wikipedia.org/wiki/Replication_crisis" rel="external" target="_blank">replication crisis</a>," in which published research can't be reproduced by multiple labs, or oftentimes even repeated within the same lab by the same person. The book "<a href="https://www.amazon.com/dp/154164414X" rel="external" target="_blank">Rigor Mortis</a>" by Richard Harris provides a useful summary of the crisis.
+<figure class="image-grid image-grid-pair">
+  <LightboxImage
+    src={postdocLabBench}
+    alt="Brendon Smith at postdoc lab bench at Harvard"
+    imageClass="img-thumbnail"
+    gallery="harvard"
+    decoding="async"
+    loading="eager"
+  />
+  <LightboxImage
+    src={postdocLabHands}
+    alt="Brendon Smith's hands at postdoc lab bench at Harvard"
+    imageClass="img-thumbnail"
+    gallery="harvard"
+    decoding="async"
+    loading="eager"
+  />
+</figure>
 
-I started thinking about how software, lab automation, and other technology tools could help with reproducibility. For example, documentation certainly seems important for reproducibility. Molecular biologists perform complicated experimental protocols with many steps, and each step can affect the outcome. It's difficult to document experiments in enough detail so that other scientists can learn from, and reproduce, our work. I could see the importance of documentation in other fields as well. For example, the surgeon Atul Gawande wrote a book called "<a href="https://www.amazon.com/dp/0312430000" rel="external" target="_blank">The Checklist Manifesto</a>" describing their <a href="https://doi.org/10.1056/NEJMsa0810119" rel="external" target="_blank">research</a> about surgical checklists, a form of protocol or documentation. Distributing a checklist to surgical team members reduced patient deaths by half. Couldn't software help us document and reproduce our work?
+### Introduction
 
-I started using an electronic lab notebook (ELN) to replace the antiquated paper lab notebooks my lab at Harvard was still using. It wasn't a smooth transition. On a Saturday afternoon on which our ELN was experiencing an extended cloud outage, I had an **epiphany**. I realized software skills would empower me to alleviate problems like this and improve productivity for other scientists in the future. I decided to learn software engineering and **start a career in tech**.
+After I finished my PhD, I did postdoctoral research at the Harvard School of Public Health in Boston.
 
-During this transition period into tech, I offered to coordinate the operational logistics of the lab as lab manager. I worked with the other lab members to achieve numerous improvements to lab infrastructure and culture. I also encountered a new set of lab management pain points that could be addressed with better tech.
+I researched the molecular biology of nutrition and metabolism during this time. I did some work to help illuminate the links between food molecules and physiology. I won grant funding and collaborated with researchers in academia and pharma.
+
+### Nutritional screening
+
+<LightboxImage
+  src={nutritionalScreeningEB2017}
+  alt="Brendon Smith's nutritional screening poster from the Experimental Biology (EB) conference in 2017"
+  imageClass="img-thumbnail"
+  gallery="harvard"
+  decoding="async"
+  loading="lazy"
+/>
+
+#### Overview
+
+Chronic diseases with established nutritional risk components, including obesity, diabetes, heart disease, stroke, and cancer, are responsible for millions of deaths each year and constitute an enormous global health burden[^nvss]. While diseases are strongly connected to food choices, the human diet remains poorly characterized.
+
+Past study of the molecular components of foods led to the discovery of the essential nutrients, and has had significant positive impact on public health. In addition to essential nutrients like vitamins and minerals, foods, plants, and dietary supplements contain thousands of biologically active compounds ("dietary bioactives") that act at the cellular level to impact health. **The overall objective of this work was to develop novel tools to identify the cellular effects of dietary bioactives**, with the long-term goal of harnessing the power of dietary bioactives to improve human health.
+
+#### Past advances in molecular nutrition had a positive impact on public health
+
+A connection between diet and health has been postulated for thousands of years. In Greece during the fifth century BCE, Hippocrates recommended that "food be thy medicine," and hypothesized salutary properties of foods such as garlic[^rahman]. Seaweed was first used as a folk remedy for goiter (enlargement and impaired function of the thyroid gland), but the reason for its effectiveness was not known.
+
+Many years later, advances in medicine and physiology led to renewed interest in the physiological effects of foods. In his famous 1746 trial, British naval surgeon James Lind successfully treated scurvy in sailors with citrus fruits[^manchester]. Thomas Percival wrote on the ability of cod liver oil to treat the bone condition known as rickets in 1789[^jones]. While these early discoveries were important advances for nutrition and medicine, knowledge remained anecdotal, fragmented and incomplete, and the scientific tools available to researchers at the time did not allow them to derive causal insight from their experiments. Lind incorrectly hypothesized that sea air caused scurvy[^carpenter2003part1].
+
+Advances in the field of biochemistry allowed scientists to study foods at a molecular level of detail, leading to rapid discovery of the essential nutrients. The antiscorbutic factor in citrus fruits was isolated, characterized, and named vitamin C. Vitamin D was identified as the necessary factor for prevention of rickets. The chemist Bernard Courtois isolated iodine from seaweed, enabling the physician David Marine to conduct clinical trials showing that iodine was the essential molecule needed to treat goiter[^carpenter2005]. Numerous other discoveries were made in this time period, with at least fifteen Nobel Prizes awarded for the study of essential nutrients[^carpenter2004] _(also see table)_. Biochemistry gave scientists the tools to advance nutrition research, and this knowledge had a major impact on public health through prevention of deficiency diseases. It was only after we began to understand the biochemical composition of foods that we could determine dietary nutrient requirements to prevent deficiencies and promote optimal physiological function.
+
+<caption>Table: Nobel Prizes related to nutrition.</caption>
+
+| Year                                                                                                        | Category               | Recipients                                                       | Description                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| :---------------------------------------------------------------------------------------------------------- | :--------------------- | :--------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| <a href="https://www.nobelprize.org/prizes/medicine/1904/summary/" rel="external" target="_blank">1904</a>  | Physiology or Medicine | Ivan Pavlov                                                      | "in recognition of his work on the physiology of digestion, through which knowledge on vital aspects of the subject has been transformed and enlarged."                                                                                                                                                                                                                                                                                           |
+| <a href="https://www.nobelprize.org/prizes/chemistry/1915/summary/" rel="external" target="_blank">1915</a> | Chemistry              | Richard Willstätter                                              | "for his researches on plant pigments, especially chlorophyll."                                                                                                                                                                                                                                                                                                                                                                                   |
+| <a href="https://www.nobelprize.org/prizes/chemistry/1927/summary/" rel="external" target="_blank">1927</a> | Chemistry              | Heinrich Wieland                                                 | "for his investigations of the constitution of the bile acids and related substances." Demonstrated that bile acids are synthesized from cholesterol.                                                                                                                                                                                                                                                                                             |
+| <a href="https://www.nobelprize.org/prizes/chemistry/1928/summary/" rel="external" target="_blank">1928</a> | Chemistry              | Adolf Windaus                                                    | "for the services rendered through his research into the constitution of the sterols and their connection with the vitamins." Demonstrated that vitamin D is a sterol.                                                                                                                                                                                                                                                                            |
+| <a href="https://www.nobelprize.org/prizes/medicine/1929/summary/" rel="external" target="_blank">1929</a>  | Physiology or Medicine | Christiaan Eijkman, Sir Frederick Gowland Hopkins                | The Nobel Prize in Physiology or Medicine 1929 was divided equally between Christiaan Eijkman "for his discovery of the antineuritic vitamin" and Sir Frederick Gowland Hopkins "for his discovery of the growth-stimulating vitamins." Eijkman's discoveries related to vitamin B1 and the deficiency disease beriberi. Hopkins's discoveries related to growth-promoting vitamins and their essentiality.                                       |
+| <a href="https://www.nobelprize.org/prizes/medicine/1934/summary/" rel="external" target="_blank">1934</a>  | Physiology or Medicine | George Hoyt Whipple, George Richards Minot, William Parry Murphy | "for their discoveries concerning liver therapy in cases of anaemia." Related to vitamin B12 and the deficiency disease pernicious anemia.                                                                                                                                                                                                                                                                                                        |
+| <a href="https://www.nobelprize.org/prizes/medicine/1937/summary/" rel="external" target="_blank">1937</a>  | Physiology or Medicine | Albert von Szent-Györgyi Nagyrapolt                              | "for his discoveries in connection with the biological combustion processes, with special reference to vitamin C and the catalysis of fumaric acid."                                                                                                                                                                                                                                                                                              |
+| <a href="https://www.nobelprize.org/prizes/chemistry/1937/summary/" rel="external" target="_blank">1937</a> | Chemistry              | Walter Norman Haworth, Paul Karrer                               | The Nobel Prize in Chemistry 1937 was divided equally between Walter Norman Haworth "for his investigations on carbohydrates and vitamin C" and Paul Karrer "for his investigations on carotenoids, flavins and vitamins A and B2."                                                                                                                                                                                                               |
+| <a href="https://www.nobelprize.org/prizes/chemistry/1938/summary/" rel="external" target="_blank">1938</a> | Chemistry              | Richard Kuhn                                                     | "for his work on carotenoids and vitamins." Kuhn's work related to vitamins B2 and B6.                                                                                                                                                                                                                                                                                                                                                            |
+| <a href="https://www.nobelprize.org/prizes/medicine/1943/summary/" rel="external" target="_blank">1943</a>  | Physiology or Medicine | Henrik Carl Peter Dam, Edward Adelbert Doisy                     | The Nobel Prize in Physiology or Medicine 1943 was divided equally between Henrik Carl Peter Dam "for his discovery of vitamin K" and Edward Adelbert Doisy "for his discovery of the chemical nature of vitamin K." "It was named "vitamin K," the first letter of the alphabet not to have been used by others (and also, by chance, the initial letter for "koagulation" the Danish equivalent of the English "coagulation")."[^carpenter2004] |
+| <a href="https://www.nobelprize.org/prizes/chemistry/1945/summary/" rel="external" target="_blank">1945</a> | Chemistry              | Artturi Ilmari Virtanen                                          | "for his research and inventions in agricultural and nutrition chemistry, especially for his fodder preservation method." Virtanen discovered that HCl or H2SO4 could be added to cattle feeds for preservation.                                                                                                                                                                                                                                  |
+| <a href="https://www.nobelprize.org/prizes/chemistry/1957/summary/" rel="external" target="_blank">1957</a> | Chemistry              | Lord Alexander Todd                                              | "for his work on nucleotides and nucleotide co-enzymes." Lord Todd researched the chemical structures of vitamin B12 and nucleotides.                                                                                                                                                                                                                                                                                                             |
+| <a href="https://www.nobelprize.org/prizes/chemistry/1964/summary/" rel="external" target="_blank">1964</a> | Chemistry              | Dorothy Crowfoot Hodgkin                                         | "for her determinations by X-ray techniques of the structures of important biochemical substances." Hodgkin solved the structures of vitamin B12 and penicillin.                                                                                                                                                                                                                                                                                  |
+| <a href="https://www.nobelprize.org/prizes/chemistry/1965/summary/" rel="external" target="_blank">1965</a> | Chemistry              | Robert B. Woodward                                               | "for his outstanding achievements in the art of organic synthesis." Woodward worked on synthesis of cholesterol, chlorophyll, and vitamin B12.                                                                                                                                                                                                                                                                                                    |
+| <a href="https://www.nobelprize.org/prizes/medicine/1967/summary/" rel="external" target="_blank">1967</a>  | Physiology or Medicine | Ragnar Granit, Haldan Keffer Hartline, George Wald               | "for their discoveries concerning the primary physiological and chemical visual processes in the eye." Wald discovered the presence of vitamin A in the retina.                                                                                                                                                                                                                                                                                   |
+
+#### New methods are needed to identify the molecular targets of nutrients and dietary bioactives
+
+The American Society for Nutrition has identified several priority areas, including an enhanced understanding of food composition, incorporation of this information into more comprehensive nutrition databases, and use of high-throughput omics techniques[^ohlhorst]. New methods are needed in order to make progress on these priority areas. It is not enough to rely on borrowed techniques from molecular biology and analytical chemistry.
+
+As one example, vitamin D status is determined by measuring circulating 25-hydroxy vitamin D, which is inadequate for three reasons. First, measurement methods are inconsistent[^sempos]. Second, the circulation is not the major site of action of vitamin D. Third, 25-hydroxy vitamin D is not the functional form of the vitamin. Measurements of nutritional status are thus several steps removed from a functional mechanism.
+
+And foods are more than just essential nutrients. In addition to essential nutrients like vitamins and minerals, foods and dietary supplements contain thousands of biologically active compounds ("dietary bioactives") that act at the cellular level to impact health. Even a seemingly simple cup of coffee can contain a thousand such dietary bioactives[^demejia]. Evidence for the health impact of dietary bioactives has accumulated to the point that they can now be incorporated into dietary guidelines. The first dietary bioactive guideline was published for flavan-3-ols (flavonoids)[^crowe-white].
+
+#### Aims
+
+{/* prettier-ignore */}
+<a href="https://en.wikipedia.org/wiki/Lipid" rel="external" target="_blank">Lipids</a> are a class of compounds that includes fatty acids and bile acids. The <a href="https://en.wikipedia.org/wiki/Endoplasmic_reticulum" rel="external" target="_blank">endoplasmic reticulum</a> (ER) is a cellular organelle that is particularly important for the metabolism of lipids and is involved in the pathogenesis of chronic metabolic diseases. While lipid synthesis at the ER has been widely studied, little is known about how the ER handles the many lipids from the diet, and how the response of the ER to dietary lipids impacts health.
+
+The aims were to:
+
+1. **Express ER reporters in new cell types**. In order to detect the cellular effects of lipids, this work focused on indicators of ER function. We developed reporters that enabled real-time monitoring of ER function in live cells and aimed to introduce these reporters into liver, adipose, pancreatic, and immune cells.
+2. **Create and utilize a novel cellular screening system to detect the effects of lipids on the ER**. We aimed to create a microfluidic device to improve on standard cell culture screens. This device, approximately the size of a microscope slide, was envisioned with chambers for cells expressing the ER reporters and channels to flow culture medium and treatments to the cells. We aimed to use this microfluidic device for high-throughput screening of lipids and continuous sampling of the cell culture medium for evaluation of the dynamic response of the ER.
+
+#### Conferences and collaborations
+
+Conferences are helpful for finding research collaborators. I pursued some collaborations in order to advance the second aim of creating a novel cellular screening system. Through a meeting at the SelectBio Organ-on-a-Chip World Congress in 2016, I established one collaboration with an MIT lab that was working on digital microfluidics[^wheeler2012], also called electrowetting[^wheeler2008]. This technology uses electricity to move liquid droplets around. Digital microfluidic systems have some notable advantages over other <a href="https://en.wikipedia.org/wiki/Microfluidics" rel="external" target="_blank">microfluidic</a> approaches. One advantage is reusability. Unlike microfluidic systems made of disposable PDMS (<a href="https://en.wikipedia.org/wiki/Polydimethylsiloxane" rel="external" target="_blank">polydimethylsiloxane</a>), the device can be reused an unlimited number of times. Another advantage is directional independence. Unlike microfluidic systems that flow liquids in one direction, digital microfluidic devices can be set up to move droplets in any direction. This directional independence means that we could potentially move cells around on the device to study physiological processes. For example, a colony of <a href="https://en.wikipedia.org/wiki/Adipocyte" rel="external" target="_blank">adipocytes</a> (fat cells) could be cultured in droplets, and the device could induce influx and efflux of immune cells like <a href="https://en.wikipedia.org/wiki/Macrophage" rel="external" target="_blank">macrophages</a> to and from the adipocytes. Interactions between fat cells and immune cells are important in the development of obesity, diabetes, and other metabolic disorders[^rosen2014].
+
+<figure class="image-grid image-grid-pair">
+  <LightboxImage
+    src={postdocDigitalMicrofluidicDeviceSetup}
+    alt="Image of digital microfluidic electrowetting device setup from postdoc MIT collaboration"
+    imageClass="img-thumbnail"
+    gallery="harvard"
+    decoding="async"
+    loading="lazy"
+  />
+  <LightboxVideo
+    src={postdocDigitalMicrofluidicDeviceVideo}
+    thumbnail={postdocDigitalMicrofluidicDeviceVideoThumbnail}
+    alt="Video of digital microfluidic electrowetting device from postdoc MIT collaboration"
+    imageClass="img-thumbnail"
+    gallery="harvard"
+    decoding="async"
+    loading="lazy"
+  />
+  {/* prettier-ignore */}
+  <figcaption>
+    <Icon icon="arrow-bend-left-up" size="1.2em" verticalAlign="top" /> _Check out the digital microfluidic device in action._
+  </figcaption>
+</figure>
+
+We did some preliminary experiments with the digital microfluidic device and had fun working on it together. The collaboration paid off later in my career as well -- through this collaboration, I met another friend who ended up getting me [one of my tech jobs](/work/matterworks).
+
+I also presented some preliminary plans for the nutritional screening project at the Experimental Biology (EB) 2017 conference in Chicago. You can see my conference poster [above](#nutritional-screening).
+
+## Lab management
+
+The lab was frequently in disarray and needed a competent lab manager. I volunteered to serve as interim lab manager and served in this capacity for about eight months. I worked with the other lab members to achieve numerous improvements to lab infrastructure and culture. I also encountered a set of lab management pain points that could be addressed with better tech.
+
+### Inventory management
+
+<figure className="image-grid image-grid-pair">
+  <LightboxImage
+    src={postdocLabColdRoomBefore}
+    alt="The lab cold room before clean-out and decontamination"
+    imageClass="img-thumbnail"
+    gallery="harvard"
+    decoding="async"
+    loading="lazy"
+  />
+  <LightboxImage
+    src={postdocLabColdRoomAfter}
+    alt="The lab cold room after clean-out and decontamination"
+    imageClass="img-thumbnail"
+    gallery="harvard"
+    decoding="async"
+    loading="lazy"
+  />
+  {/* prettier-ignore */}
+  <figcaption>
+    <Icon icon="arrow-bend-left-up" size="1.2em" verticalAlign="top" /> _The lab cold room before (left) and after (right) clean-out and decontamination._
+  </figcaption>
+</figure>
+
+- Led a clean-out and decontamination of the lab cold room (walk-in refrigerator): The cold room had not been properly maintained and was full of mold and expired products. I worked with lab members to review inventory, discard or disinfect materials, and move materials to temporary storage. I had the room professionally decontaminated. I then moved materials back in, and established guidelines to keep the cold room cleaner.
+- Consolidated and simplified the distribution of common supplies in the lab
+- Created and curated a database of essential lab supplies and kept them stocked
+- Coordinated shipment of biological materials around the world
+- Prepared a shipping protocol to assist others in the department
+
+### Procurement
+
+- Performed ordering, receiving and organization of all lab supplies
+- Saved thousands of dollars with strategic procurement
+- Established a budget tracking system for lab members
+- Coordinated educational seminars and product demos
+
+### Safety
+
+- Oversaw chemical, radioactive, and biological safety, including adherence to regulatory guidelines and disposal of waste
+- Successfully passed a chemical safety inspection and addressed its recommendations
+- Advocated for improved lab climate control: Harvard had been turning off the air (both circulation and cooling) to our lab outside of business hours, resulting in oppressively hot and stuffy conditions for the lab members. I brought together administrators to change the climate control policy.
+
+## Transition into tech
+
+During my postdoc, I began to see that the science career system does not incentivize reproducibility. In science, reproducibility occurs when different scientists do the same experiment and get results that agree. The scientific community is experiencing what has been called a "reproducibility crisis" or "<a href="https://en.wikipedia.org/wiki/Replication_crisis" rel="external" target="_blank">replication crisis</a>," in which published research can't be reproduced by multiple labs, or oftentimes even repeated within the same lab by the same person. _Cell Reports_ published an instructive anecdote on the topic[^hines], and the book "Rigor Mortis" by Richard Harris[^harris] provides a useful summary of the crisis.
+
+I started thinking about how software, lab automation, and other technology tools could help with reproducibility. Effective lab data capture certainly seems important for reproducibility. Molecular biologists perform complicated experimental protocols with many steps, and each step can affect the outcome. It's difficult to document experiments in enough detail so that other scientists can learn from, and reproduce, our work. I could see the importance of reproducible protocols in other fields as well. For example, the surgeon Atul Gawande wrote a book called "The Checklist Manifesto"[^gawande] describing their research[^haynes] about surgical checklists, a form of protocol or documentation. Distributing a checklist to surgical team members reduced patient deaths by half. Couldn't software help us document and reproduce our work?
+
+I started using an electronic lab notebook (ELN) to replace the antiquated paper lab notebooks my lab at Harvard was still using. I used an iPad to capture data in the ELN during my experiments. It was better than paper, but it wasn't a smooth transition. On a Saturday afternoon on which our ELN was experiencing an extended cloud outage, I had an **epiphany**. I realized software skills would empower me to alleviate problems like this and improve productivity for other scientists in the future. I decided to learn software engineering and **start a career in tech**.
+
+---
+
+[^carpenter2003part1]: Carpenter KJ. [A short history of nutritional science: part 1 (1785-1885)](https://doi.org/10.1093/jn/133.3.638). _Journal of Nutrition_ 2003.
+
+[^carpenter2004]: Carpenter KJ. [The Nobel Prize and the discovery of vitamins](https://www.nobelprize.org/prizes/themes/the-nobel-prize-and-the-discovery-of-vitamins/). _NobelPrize.org_ 2004.
+
+[^carpenter2005]: Carpenter KJ. [David Marine and the problem of goiter](https://doi.org/10.1093/jn/135.4.675). _Journal of Nutrition_ 2005.
+
+[^crowe-white]: Crowe-White KM _et al_. [Flavan-3-ols and cardiometabolic health: first ever dietary bioactive guideline](https://doi.org/10.1093/advances/nmac105). _Advances in Nutrition_ 2022.
+
+[^demejia]: de Mejia EG, Ramirez-Mares MV. [Impact of caffeine and coffee on our health](https://doi.org/10.1016/j.tem.2014.07.003). _Trends in Endocrinology & Metabolism_ 2014.
+
+[^endo]: Endo A. [The discovery and development of HMG-CoA reductase inhibitors](https://doi.org/10.1016/S0022-2275%2820%2941379-3). _Journal of Lipid Research_ 1992.
+
+[^fuster]: Fuster V, Sweeny JM. [Aspirin: a historical and contemporary therapeutic overview](https://doi.org/10.1161/CIRCULATIONAHA.110.963843). _Circulation_ 2011.
+
+[^gawande]: Gawande A. [The Checklist Manifesto](https://en.wikipedia.org/wiki/The_Checklist_Manifesto) (1st edition). _Metropolitan Books_ 2009.
+
+[^grosberg]: Grosberg A _et al_. [Ensembles of engineered cardiac tissues for physiological and pharmacological study: heart on a chip](https://doi.org/10.1039/c1lc20557a). _Lab on a Chip_ 2011.
+
+[^harris]: Harris R. [Rigor Mortis](https://openlibrary.org/books/OL30797322M/Rigor_Mortis) (1st edition). _Basic Books_ 2017.
+
+[^haynes]: Haynes AB _et al_. [A surgical safety checklist to reduce morbidity and mortality in a global population](https://doi.org/10.1056/NEJMsa0810119). _New England Journal of Medicine_ 2009.
+
+[^hines]: Hines WC _et al_. [Sorting out the FACS: A devil in the details](https://doi.org/10.1016/j.celrep.2014.02.021). _Cell Reports_ 2014.
+
+[^huh2010]: Huh D _et al_. [Reconstituting organ-level lung functions on a chip](https://doi.org/10.1126/science.1188302). _Science_ 2010.
+
+[^huh2012]: Huh D _et al_. [A human disease model of drug toxicity-induced pulmonary edema in a lung-on-a-chip microdevice](https://doi.org/10.1126/scitranslmed.3004249). _Science Translational Medicine_ 2012.
+
+[^jones]: Jones G. Chapter 18: Vitamin D (pp.278-292). In: [Modern Nutrition in Health and Disease](https://openlibrary.org/isbn/9781605474618) (11th edition). _Lippincott Williams & Wilkins_ 2012.
+
+[^kim2012]: Kim HJ _et al_. [Human gut-on-a-chip inhabited by microbial flora that experiences intestinal peristalsis-like motions and flow](https://doi.org/10.1039/c2lc40074j). _Lab on a Chip_ 2012.
+
+[^kim2013]: Kim HJ, Ingber DE. [Gut-on-a-Chip microenvironment induces human intestinal cells to undergo villus differentiation](https://doi.org/10.1039/c3ib40126j). _Integrative Biology_ 2013.
+
+[^manchester]: Manchester KL. [An orange a day keeps the scurvy away](https://doi.org/10.1016/S0165-6147%2898%2901204-8). _Trends in Pharmacological Sciences_ 1998.
+
+[^nvss]: [National Vital Statistics Reports](https://www.cdc.gov/nchs/products/nvsr.htm).
+
+[^ohlhorst]: Ohlhorst SD _et al_. [Nutrition research to affect food and a healthy life span](https://doi.org/10.3945/jn.113.180638). _Journal of Nutrition_ 2013.
+
+[^okeefe]: O'Keefe JH _et al_. [Effects of habitual coffee consumption on cardiometabolic disease, cardiovascular health, and all-cause mortality](https://doi.org/10.1016/j.jacc.2013.06.035). _Journal of the American College of Cardiology_ 2013.
+
+[^rahman]: Rahman K. [Historical perspective on garlic and cardiovascular disease](https://doi.org/10.1093/jn/131.3.977s). _Journal of Nutrition_ 2001.
+
+[^ramadan]: Ramadan Q _et al_. [NutriChip: nutrition analysis meets microfluidics](https://doi.org/10.1039/c2lc40845g). _Lab on a Chip_ 2013.
+
+[^rosen2014]: Rosen ED, Spiegelman BM. [What we talk about when we talk about fat](https://doi.org/10.1016/j.cell.2013.12.012). _Cell_ 2014.
+
+[^sempos]: Sempos CT _et al_. [Vitamin D status as an international issue: national surveys and the problem of standardization](https://doi.org/10.3109/00365513.2012.681935). _Scandinavian Journal of Clinical and Laboratory Investigation_ 2012.
+
+[^torisawa]: Torisawa Y-S _et al_. [Bone marrow-on-a-chip replicates hematopoietic niche physiology in vitro](https://doi.org/10.1038/nmeth.2938). _Nature Methods_ 2014.
+
+[^wheeler2008]: Wheeler AR. [Putting electrowetting to work](https://doi.org/10.1126/science.1165719). _Science_ 2008.
+
+[^wheeler2012]: Choi K _et al_. [Digital Microfluidics](https://doi.org/10.1146/annurev-anchem-062011-143028). _Annual Review of Analytical Chemistry_ 2012.

@@ -70,6 +70,81 @@ const astroAutolinkOptions: AstroAutolinkOptions = {
   rehypeAutolinkOptions: rehypeAutolinkOptions,
 }
 
+interface HastNode {
+  children?: HastNode[]
+  name?: string
+  properties?: Record<string, unknown>
+  tagName?: string
+  type: string
+  value?: string
+}
+
+interface HastElement extends HastNode {
+  children: HastNode[]
+  tagName: string
+  type: "element"
+}
+
+const isElement = (
+  node: HastNode | undefined,
+  tagName?: string,
+): node is HastElement =>
+  node?.type === "element" && (!tagName || node.tagName === tagName)
+
+const isWhitespaceText = (node: HastNode | undefined) =>
+  node?.type === "text" && !node.value?.trim()
+
+const isCaption = (node: HastNode | undefined): node is HastNode =>
+  isElement(node, "caption") ||
+  (node?.name === "caption" &&
+    (node.type === "mdxJsxFlowElement" || node.type === "mdxJsxTextElement"))
+
+const toCaptionElement = (node: HastNode): HastElement => {
+  if (isElement(node, "caption")) return node
+  return {
+    children: node.children ?? [],
+    tagName: "caption",
+    type: "element",
+  }
+}
+
+export const rehypeTableCaptions = () => (tree: HastNode) => {
+  const visit = (node: HastNode) => {
+    const { children } = node
+    if (!children) return
+
+    for (let index = 0; index < children.length; index += 1) {
+      const child = children[index]
+      if (!child) continue
+
+      visit(child)
+
+      if (!isElement(child, "table")) continue
+
+      let captionIndex = index - 1
+      while (captionIndex >= 0 && isWhitespaceText(children[captionIndex])) {
+        captionIndex -= 1
+      }
+
+      const captionNode = children[captionIndex]
+      if (isCaption(captionNode)) {
+        child.children.unshift(toCaptionElement(captionNode))
+        children.splice(captionIndex, 1)
+        index -= 1
+      }
+
+      children[index] = {
+        children: [child],
+        properties: { className: ["table-scroll"] },
+        tagName: "div",
+        type: "element",
+      }
+    }
+  }
+
+  visit(tree)
+}
+
 export const astroSearch = (): AstroIntegration => {
   const integrationName = "astro-search"
   return {
@@ -102,8 +177,9 @@ export default defineConfig({
   markdown: {
     processor: unified({
       rehypePlugins: [
-        rehypeHeadingIds,
         [rehypeAutolinkHeadings, rehypeAutolinkOptions],
+        rehypeHeadingIds,
+        rehypeTableCaptions,
       ],
       smartypants: false,
     }),
