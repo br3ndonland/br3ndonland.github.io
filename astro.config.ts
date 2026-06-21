@@ -2,7 +2,7 @@ import { type AstroIntegration, type HookParameters } from "astro"
 import { defineConfig } from "astro/config"
 import mdx from "@astrojs/mdx"
 import sitemap from "@astrojs/sitemap"
-import { rehypeHeadingIds } from "@astrojs/markdown-remark"
+import { rehypeHeadingIds, unified } from "@astrojs/markdown-remark"
 import { spawn } from "node:child_process"
 import { readFile, writeFile } from "node:fs/promises"
 import { dirname, relative } from "node:path"
@@ -100,14 +100,16 @@ export default defineConfig({
     sitemap(),
   ],
   markdown: {
-    rehypePlugins: [
-      rehypeHeadingIds,
-      [rehypeAutolinkHeadings, rehypeAutolinkOptions],
-    ],
+    processor: unified({
+      rehypePlugins: [
+        rehypeHeadingIds,
+        [rehypeAutolinkHeadings, rehypeAutolinkOptions],
+      ],
+      smartypants: false,
+    }),
     shikiConfig: {
       theme: "dracula",
     },
-    smartypants: false,
   },
   prefetch: true,
   site: "https://www.bws.bio",
