@@ -2,6 +2,7 @@ import { type AstroIntegration, type HookParameters } from "astro"
 import { defineConfig } from "astro/config"
 import mdx from "@astrojs/mdx"
 import sitemap from "@astrojs/sitemap"
+import astroExpressiveCode from "astro-expressive-code"
 import {
   rehypeHeadingIds,
   type RehypePlugins,
@@ -183,6 +184,16 @@ export const astroSearch = (): AstroIntegration => {
 export default defineConfig({
   integrations: [
     astroAutolinkHeadings(astroAutolinkOptions),
+    astroExpressiveCode({
+      frames: {
+        showCopyToClipboardButton: true,
+      },
+      styleOverrides: {
+        codeFontFamily: "var(--font-mono)",
+        codeFontSize: "var(--text-sm)",
+      },
+      themes: ["dracula"],
+    }),
     astroOpenGraph(),
     astroSearch(),
     mdx(),
@@ -193,9 +204,6 @@ export default defineConfig({
       rehypePlugins: markdownRehypePlugins,
       smartypants: false,
     }),
-    shikiConfig: {
-      theme: "dracula",
-    },
   },
   prefetch: true,
   site: "https://www.bws.bio",
