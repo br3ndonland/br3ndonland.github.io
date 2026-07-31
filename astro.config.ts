@@ -2,7 +2,11 @@ import { type AstroIntegration, type HookParameters } from "astro"
 import { defineConfig } from "astro/config"
 import mdx from "@astrojs/mdx"
 import sitemap from "@astrojs/sitemap"
-import { rehypeHeadingIds, unified } from "@astrojs/markdown-remark"
+import {
+  rehypeHeadingIds,
+  type RehypePlugins,
+  unified,
+} from "@astrojs/markdown-remark"
 import { spawn } from "node:child_process"
 import { readFile, writeFile } from "node:fs/promises"
 import { dirname, relative } from "node:path"
@@ -145,6 +149,16 @@ export const rehypeTableCaptions = () => (tree: HastNode) => {
   visit(tree)
 }
 
+export const markdownRehypePlugins: RehypePlugins = [
+  /*
+    rehypeHeadingIds must occur before rehypeAutolinkHeadings
+    or headings will not be properly linked.
+  */
+  rehypeHeadingIds,
+  [rehypeAutolinkHeadings, rehypeAutolinkOptions],
+  rehypeTableCaptions,
+]
+
 export const astroSearch = (): AstroIntegration => {
   const integrationName = "astro-search"
   return {
@@ -176,11 +190,7 @@ export default defineConfig({
   ],
   markdown: {
     processor: unified({
-      rehypePlugins: [
-        [rehypeAutolinkHeadings, rehypeAutolinkOptions],
-        rehypeHeadingIds,
-        rehypeTableCaptions,
-      ],
+      rehypePlugins: markdownRehypePlugins,
       smartypants: false,
     }),
     shikiConfig: {

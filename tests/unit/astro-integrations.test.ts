@@ -1,4 +1,5 @@
 import type { HookParameters } from "astro"
+import { createMarkdownProcessor } from "@astrojs/markdown-remark"
 import fs from "node:fs/promises"
 import os from "node:os"
 import path from "node:path"
@@ -7,6 +8,7 @@ import {
   astroOpenGraph,
   astroAutolinkHeadings,
   astroSearch,
+  markdownRehypePlugins,
   rehypeAutolinkOptions,
   rehypeTableCaptions,
 } from "../../astro.config"
@@ -107,6 +109,24 @@ describe("astroAutolinkHeadings", () => {
     expect(output).toContain('class="anchor-icon"')
     expect(output).toContain('h1 id="this-is-an-html-h1-heading"')
     expect(output).not.toContain('href="#this-is-an-html-h1-heading"')
+  })
+})
+
+describe("markdownRehypePlugins", () => {
+  it("adds anchor links after adding heading ids", async () => {
+    const processor = await createMarkdownProcessor({
+      rehypePlugins: markdownRehypePlugins,
+      syntaxHighlight: false,
+    })
+
+    const { code } = await processor.render("## Research")
+
+    expect(code).toContain(
+      '<h2 id="research" tabindex="-1" class="heading-element">',
+    )
+    expect(code).toContain(
+      '<a aria-label="Link to self" class="anchor-link" href="#research">',
+    )
   })
 })
 
