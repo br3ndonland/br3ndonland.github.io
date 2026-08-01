@@ -44,9 +44,9 @@ const logo = PROJECT_LOGOS[entry.id as keyof typeof PROJECT_LOGOS]
             {
               logo ? (
                 <SVGLogo context="hero" {...logo} />
-              ) : typeof image === "string" && isSVG ? (
+              ) : isSVG ? (
                 <img
-                  src={image}
+                  src={imageSrc}
                   alt={entry.data.image.alt}
                   decoding="async"
                   loading="eager"

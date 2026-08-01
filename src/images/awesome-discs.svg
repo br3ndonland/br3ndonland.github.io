@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title description">
+  <title id="title">Awesome discs</title>
+  <desc id="description">Pink sunglasses with optical discs as reflective lenses</desc>
+  <defs>
+    <linearGradient id="background" x1="120" y1="70" x2="1080" y2="605" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#17102f" />
+      <stop offset="0.52" stop-color="#29164d" />
+      <stop offset="1" stop-color="#111b3d" />
+    </linearGradient>
+    <radialGradient id="disc-left" cx="0.3" cy="0.25" r="0.9">
+      <stop offset="0" stop-color="#fff7fc" />
+      <stop offset="0.2" stop-color="#f6c5ff" />
+      <stop offset="0.43" stop-color="#9eeaff" />
+      <stop offset="0.62" stop-color="#fff1a8" />
+      <stop offset="0.82" stop-color="#d977ff" />
+      <stop offset="1" stop-color="#7157c9" />
+    </radialGradient>
+    <radialGradient id="disc-right" cx="0.68" cy="0.24" r="0.92">
+      <stop offset="0" stop-color="#fff7fc" />
+      <stop offset="0.2" stop-color="#ffd0e8" />
+      <stop offset="0.42" stop-color="#9df5d3" />
+      <stop offset="0.63" stop-color="#a7c6ff" />
+      <stop offset="0.82" stop-color="#ff8bc6" />
+      <stop offset="1" stop-color="#6550bd" />
+    </radialGradient>
+    <linearGradient id="frame" x1="210" y1="140" x2="1000" y2="510" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ff4fba" />
+      <stop offset="0.5" stop-color="#ff7bd5" />
+      <stop offset="1" stop-color="#a96cff" />
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="22" stdDeviation="24" flood-color="#090617" flood-opacity="0.7" />
+    </filter>
+    <clipPath id="left-lens">
+      <circle cx="390" cy="345" r="178" />
+    </clipPath>
+    <clipPath id="right-lens">
+      <circle cx="810" cy="345" r="178" />
+    </clipPath>
+  </defs>
+
+  <rect width="1200" height="675" rx="48" fill="url(#background)" />
+  <g fill="#fff" opacity="0.65">
+    <circle cx="107" cy="127" r="4" />
+    <circle cx="169" cy="537" r="6" />
+    <circle cx="1048" cy="147" r="5" />
+    <circle cx="1097" cy="518" r="4" />
+    <circle cx="594" cy="84" r="3" />
+  </g>
+  <g stroke="#ff7bd5" stroke-linecap="round" opacity="0.6">
+    <path d="M107 172v-28m-14 14h28" />
+    <path d="M1080 226v-32m-16 16h32" />
+    <path d="M1007 548v-24m-12 12h24" />
+  </g>
+
+  <g filter="url(#shadow)">
+    <circle cx="390" cy="345" r="178" fill="url(#disc-left)" />
+    <circle cx="810" cy="345" r="178" fill="url(#disc-right)" />
+
+    <g clip-path="url(#left-lens)" fill="none" stroke-linecap="round">
+      <circle cx="390" cy="345" r="138" stroke="#fff" stroke-opacity="0.32" stroke-width="6" stroke-dasharray="210 80" />
+      <circle cx="390" cy="345" r="108" stroke="#28164c" stroke-opacity="0.2" stroke-width="9" />
+      <path d="M235 330c85-68 183-106 302-78" stroke="#fff" stroke-opacity="0.55" stroke-width="20" />
+      <path d="M264 448c73-3 150 17 218 59" stroke="#f7feff" stroke-opacity="0.3" stroke-width="12" />
+    </g>
+    <g clip-path="url(#right-lens)" fill="none" stroke-linecap="round">
+      <circle cx="810" cy="345" r="138" stroke="#fff" stroke-opacity="0.32" stroke-width="6" stroke-dasharray="130 60" />
+      <circle cx="810" cy="345" r="108" stroke="#28164c" stroke-opacity="0.2" stroke-width="9" />
+      <path d="M650 296c92-60 190-76 298-32" stroke="#fff" stroke-opacity="0.55" stroke-width="20" />
+      <path d="M696 491c83-36 168-40 253-12" stroke="#f7feff" stroke-opacity="0.3" stroke-width="12" />
+    </g>
+
+    <g fill="#1c143c" stroke="#fcecff" stroke-opacity="0.7">
+      <circle cx="390" cy="345" r="55" stroke-width="10" />
+      <circle cx="810" cy="345" r="55" stroke-width="10" />
+      <circle cx="390" cy="345" r="19" fill="#f7d8ff" stroke="none" />
+      <circle cx="810" cy="345" r="19" fill="#f7d8ff" stroke="none" />
+    </g>
+
+    <g fill="none" stroke="url(#frame)" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="390" cy="345" r="196" stroke-width="28" />
+      <circle cx="810" cy="345" r="196" stroke-width="28" />
+      <path d="M585 324c10-38 66-38 30 0" stroke-width="32" />
+      <path d="M197 270 93 214" stroke-width="30" />
+      <path d="m1003 270 104-56" stroke-width="30" />
+    </g>
+  </g>
+</svg>

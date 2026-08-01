@@ -1,0 +1,158 @@
+---
+import type { CollectionEntry } from "astro:content"
+
+type AwesomeDisc = CollectionEntry<"awesomeDiscs">
+type AwesomeDiscRelease = AwesomeDisc["data"]["releases"][number]
+type AwesomeDiscSet = NonNullable<AwesomeDiscRelease["collection"]>
+
+interface Props {
+  films: AwesomeDisc[]
+}
+
+interface DiscGroup {
+  id: string
+  collection?: AwesomeDiscSet
+  films: Map<string, AwesomeDisc>
+  releases: Map<string, AwesomeDiscRelease>
+}
+
+interface DiscListItem {
+  id: string
+  collection?: AwesomeDiscSet
+  films: AwesomeDisc[]
+  primaryFilm: AwesomeDisc
+  releases: AwesomeDiscRelease[]
+  sortDate: string
+}
+
+const { films } = Astro.props
+const groupsByYear = new Map<number, Map<string, DiscGroup>>()
+
+for (const film of films) {
+  for (const release of film.data.releases) {
+    const year = Number(release.date.slice(0, 4))
+    const groupId = release.collection
+      ? `collection:${release.collection.id}`
+      : `film:${film.data.id}`
+    const yearGroups = groupsByYear.get(year) ?? new Map<string, DiscGroup>()
+    const group =
+      yearGroups.get(groupId) ??
+      ({
+        id: groupId,
+        ...(release.collection ? { collection: release.collection } : {}),
+        films: new Map<string, AwesomeDisc>(),
+        releases: new Map<string, AwesomeDiscRelease>(),
+      } satisfies DiscGroup)
+    const releaseId = [
+      release.date,
+      release.distributor,
+      release.subLabel,
+      release.url,
+    ].join(":")
+
+    group.films.set(film.data.id, film)
+    group.releases.set(releaseId, release)
+    yearGroups.set(groupId, group)
+    groupsByYear.set(year, yearGroups)
+  }
+}
+
+const discYears = [...groupsByYear.entries()]
+  .sort(([yearA], [yearB]) => yearB - yearA)
+  .map(([year, yearGroups]) => ({
+    year,
+    items: [...yearGroups.values()]
+      .map((group): DiscListItem => {
+        const groupFilms = [...group.films.values()].sort((filmA, filmB) =>
+          filmA.data.originalReleaseDate.localeCompare(
+            filmB.data.originalReleaseDate,
+          ),
+        )
+        const primaryFilm = groupFilms[0]
+        if (!primaryFilm) throw new Error(`No films found for ${group.id}`)
+
+        return {
+          id: group.id,
+          ...(group.collection ? { collection: group.collection } : {}),
+          films: groupFilms,
+          primaryFilm,
+          releases: [...group.releases.values()].sort(
+            (releaseA, releaseB) =>
+              releaseA.date.localeCompare(releaseB.date) ||
+              releaseA.distributor.localeCompare(releaseB.distributor),
+          ),
+          sortDate: primaryFilm.data.originalReleaseDate,
+        }
+      })
+      .sort(
+        (itemA, itemB) =>
+          itemA.sortDate.localeCompare(itemB.sortDate) ||
+          itemA.id.localeCompare(itemB.id),
+      ),
+  }))
+
+function filmUrl(film: AwesomeDisc) {
+  const url =
+    film.data.urls.find(({ type }) => type === "Wikipedia")?.url ??
+    film.data.urls.find(({ type }) => type === "TMDB")?.url
+  if (!url) throw new Error(`No preferred URL found for ${film.data.id}`)
+  return url
+}
+
+function releaseLabel(release: AwesomeDiscRelease) {
+  return release.subLabel
+    ? `${release.distributor} ${release.subLabel}`
+    : release.distributor
+}
+---
+
+{
+  discYears.map(({ year, items }) => (
+    <>
+      <h3>{year}</h3>
+      <ol>
+        {items.map((item) => (
+          <li>
+            {item.collection ? (
+              <>
+                <a href={item.collection.url} rel="external" target="_blank">
+                  {item.collection.title}
+                </a>{" "}
+                boxset (
+                {item.films.map((film, index) => (
+                  <>
+                    {index > 0 && " / "}
+                    <a href={filmUrl(film)} rel="external" target="_blank">
+                      {film.data.title}
+                    </a>
+                  </>
+                ))}
+                )
+              </>
+            ) : (
+              <a
+                href={filmUrl(item.primaryFilm)}
+                rel="external"
+                target="_blank"
+              >
+                {item.primaryFilm.data.title}
+              </a>
+            )}{" "}
+            {[...new Set(item.releases.map(({ format }) => format))].join("/")}{" "}
+            (
+            {item.releases.map((release, index) => (
+              <>
+                {index > 0 && ", "}
+                <a href={release.url} rel="external" target="_blank">
+                  {releaseLabel(release)}
+                </a>{" "}
+                {release.date}
+              </>
+            ))}
+            )
+          </li>
+        ))}
+      </ol>
+    </>
+  ))
+}
