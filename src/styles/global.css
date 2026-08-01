@@ -292,6 +292,7 @@ p > code {
   /* inline code elements */
   background-color: var(--gray-800);
   border-radius: 0.2rem;
+  overflow-wrap: anywhere;
   padding: 0 0.2rem;
 }
 
