@@ -15,6 +15,7 @@ import { fileURLToPath } from "node:url"
 import { rehype } from "rehype"
 import type { Options as RehypeAutolinkOptions } from "rehype-autolink-headings"
 import rehypeAutolinkHeadings from "rehype-autolink-headings"
+import { ICON_PATHS } from "./src/consts"
 import { astroOpenGraph } from "./src/integrations/astro-open-graph/index"
 
 export { astroOpenGraph } from "./src/integrations/astro-open-graph/index"
@@ -90,6 +91,27 @@ interface HastElement extends HastNode {
   type: "element"
 }
 
+const calloutLabels = {
+  caution: "Caution",
+  important: "Important",
+  note: "Note",
+  tip: "Tip",
+  warning: "Warning",
+} as const
+
+type CalloutType = keyof typeof calloutLabels
+
+export const calloutIcons = {
+  caution: "warning-octagon",
+  important: "star",
+  note: "info",
+  tip: "lightbulb",
+  warning: "warning",
+} as const satisfies Record<CalloutType, keyof typeof ICON_PATHS>
+
+const calloutMarkerPattern =
+  /^\[!(CAUTION|IMPORTANT|NOTE|TIP|WARNING)\](?:[\t ]+|(?=\r?\n|$))/i
+
 const isElement = (
   node: HastNode | undefined,
   tagName?: string,
@@ -98,6 +120,141 @@ const isElement = (
 
 const isWhitespaceText = (node: HastNode | undefined) =>
   node?.type === "text" && !node.value?.trim()
+
+const getTextContent = (nodes: HastNode[]): string =>
+  nodes
+    .map((node) => node.value ?? getTextContent(node.children ?? []))
+    .join("")
+
+const createCalloutIcon = (type: CalloutType): HastElement => {
+  const icon = calloutIcons[type]
+  return {
+    children: [{ type: "raw", value: ICON_PATHS[icon] }],
+    properties: {
+      ariaHidden: "true",
+      className: ["callout-icon", `callout-icon-${icon}`],
+      fill: "currentColor",
+      viewBox: "0 0 256 256",
+      xmlns: "http://www.w3.org/2000/svg",
+    },
+    tagName: "svg",
+    type: "element",
+  }
+}
+
+const splitCalloutParagraph = (paragraph: HastElement) => {
+  const firstChild = paragraph.children[0]
+  if (firstChild?.type !== "text" || !firstChild.value) return
+
+  const markerMatch = firstChild.value.match(calloutMarkerPattern)
+  if (!markerMatch?.[1]) return
+
+  const type = markerMatch[1].toLowerCase() as CalloutType
+  const inlineChildren: HastNode[] = [
+    {
+      ...firstChild,
+      value: firstChild.value.slice(markerMatch[0].length),
+    },
+    ...paragraph.children.slice(1),
+  ]
+  const bodyChildren: HastNode[] = []
+  const titleChildren: HastNode[] = []
+  let isBody = false
+
+  for (const child of inlineChildren) {
+    if (isBody) {
+      bodyChildren.push(child)
+      continue
+    }
+
+    if (isElement(child, "br")) {
+      isBody = true
+      continue
+    }
+
+    if (child.type !== "text" || !child.value?.includes("\n")) {
+      titleChildren.push(child)
+      continue
+    }
+
+    const lineBreakIndex = child.value.indexOf("\n")
+    const titleValue = child.value.slice(0, lineBreakIndex).replace(/\r$/, "")
+    const bodyValue = child.value.slice(lineBreakIndex + 1)
+
+    if (titleValue) titleChildren.push({ ...child, value: titleValue })
+    if (bodyValue) bodyChildren.push({ ...child, value: bodyValue })
+    isBody = true
+  }
+
+  const title = getTextContent(titleChildren).trim()
+  return {
+    bodyChildren,
+    title: title || calloutLabels[type],
+    titleChildren: title
+      ? titleChildren
+      : [{ type: "text", value: calloutLabels[type] }],
+    type,
+  }
+}
+
+export const rehypeCallouts = () => (tree: HastNode) => {
+  const visit = (node: HastNode) => {
+    const { children } = node
+    if (!children) return
+
+    for (let index = 0; index < children.length; index += 1) {
+      const child = children[index]
+      if (!child) continue
+
+      visit(child)
+
+      if (!isElement(child, "blockquote")) continue
+
+      let paragraphIndex = 0
+      while (isWhitespaceText(child.children[paragraphIndex])) {
+        paragraphIndex += 1
+      }
+
+      const firstChild = child.children[paragraphIndex]
+      if (!isElement(firstChild, "p")) continue
+
+      const callout = splitCalloutParagraph(firstChild)
+      if (!callout) continue
+
+      const remainingChildren = child.children.slice(paragraphIndex + 1)
+
+      const bodyChildren = callout.bodyChildren.length
+        ? [
+            { ...firstChild, children: callout.bodyChildren },
+            ...remainingChildren,
+          ]
+        : remainingChildren
+
+      children[index] = {
+        children: [
+          {
+            children: [
+              createCalloutIcon(callout.type),
+              ...callout.titleChildren,
+            ],
+            properties: { className: ["callout-title"] },
+            tagName: "p",
+            type: "element",
+          },
+          ...bodyChildren,
+        ],
+        properties: {
+          ariaLabel: callout.title,
+          className: ["callout", `callout-${callout.type}`],
+        },
+        tagName: "aside",
+        type: "element",
+      }
+    }
+  }
+
+  visit(tree)
+}
 
 const isCaption = (node: HastNode | undefined): node is HastNode =>
   isElement(node, "caption") ||
@@ -151,6 +308,7 @@ export const rehypeTableCaptions = () => (tree: HastNode) => {
 }
 
 export const markdownRehypePlugins: RehypePlugins = [
+  rehypeCallouts,
   /*
     rehypeHeadingIds must occur before rehypeAutolinkHeadings
     or headings will not be properly linked.

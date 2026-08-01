@@ -107,6 +107,17 @@
 
   --link-color: var(--accent-regular);
 
+  --callout-caution-background: rgba(207, 34, 46, 0.1);
+  --callout-caution-color: #cf222e;
+  --callout-important-background: rgba(130, 80, 223, 0.1);
+  --callout-important-color: #8250df;
+  --callout-note-background: rgba(9, 105, 218, 0.1);
+  --callout-note-color: #0969da;
+  --callout-tip-background: rgba(26, 127, 55, 0.1);
+  --callout-tip-color: #1a7f37;
+  --callout-warning-background: rgba(154, 103, 0, 0.12);
+  --callout-warning-color: #9a6700;
+
   /* Gradients */
   --gradient-stop-1: var(--accent-light);
   --gradient-stop-2: var(--accent-regular);
@@ -201,6 +212,17 @@
   --accent-text-over: var(--gray-0);
 
   --link-color: var(--accent-dark);
+
+  --callout-caution-background: rgba(248, 81, 73, 0.12);
+  --callout-caution-color: #f85149;
+  --callout-important-background: rgba(163, 113, 247, 0.12);
+  --callout-important-color: #a371f7;
+  --callout-note-background: rgba(68, 147, 248, 0.12);
+  --callout-note-color: #4493f8;
+  --callout-tip-background: rgba(63, 185, 80, 0.12);
+  --callout-tip-color: #3fb950;
+  --callout-warning-background: rgba(210, 153, 34, 0.12);
+  --callout-warning-color: #d29922;
 
   --gradient-stop-1: #4c11c6;
   --gradient-subtle: linear-gradient(
@@ -315,6 +337,58 @@ blockquote {
 
 blockquote p {
   margin-top: 1.1rem;
+}
+
+.callout {
+  background-color: var(--callout-background);
+  border: 1px solid var(--callout-color);
+  border-left-width: 0.25rem;
+  border-radius: 0.5rem;
+  color: var(--gray-200);
+  padding: 1rem;
+}
+
+.callout-caution {
+  --callout-background: var(--callout-caution-background);
+  --callout-color: var(--callout-caution-color);
+}
+
+.callout-important {
+  --callout-background: var(--callout-important-background);
+  --callout-color: var(--callout-important-color);
+}
+
+.callout-note {
+  --callout-background: var(--callout-note-background);
+  --callout-color: var(--callout-note-color);
+}
+
+.callout-tip {
+  --callout-background: var(--callout-tip-background);
+  --callout-color: var(--callout-tip-color);
+}
+
+.callout-warning {
+  --callout-background: var(--callout-warning-background);
+  --callout-color: var(--callout-warning-color);
+}
+
+.callout-title {
+  align-items: center;
+  color: var(--callout-color);
+  display: flex;
+  font-weight: bold;
+  gap: 0.5rem;
+}
+
+.callout-icon {
+  flex: 0 0 auto;
+  height: 1em;
+  width: 1em;
+}
+
+.callout > * + * {
+  margin-top: 0.75rem;
 }
 
 table {

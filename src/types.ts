@@ -34,7 +34,9 @@ export type IconNames =
   | "flask"
   | "gear"
   | "github-logo"
+  | "info"
   | "linkedin-logo"
+  | "lightbulb"
   | "magnifying-glass"
   | "microphone-stage"
   | "moon-stars"
@@ -43,6 +45,7 @@ export type IconNames =
   | "pencil-line"
   | "read-cv-logo"
   | "rocket-launch"
+  | "star"
   | "terminal-window"
   | "atom"
   | "cloud"
@@ -53,6 +56,8 @@ export type IconNames =
   | "sun"
   | "test-tube"
   | "trophy"
+  | "warning"
+  | "warning-octagon"
 
 export type IconPaths = Record<IconNames, string>
 

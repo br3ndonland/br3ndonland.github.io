@@ -8,6 +8,7 @@ import {
   astroOpenGraph,
   astroAutolinkHeadings,
   astroSearch,
+  calloutIcons,
   markdownRehypePlugins,
   rehypeAutolinkOptions,
   rehypeTableCaptions,
@@ -127,6 +128,73 @@ describe("markdownRehypePlugins", () => {
     expect(code).toContain(
       '<a aria-label="Link to self" class="anchor-link" href="#research">',
     )
+  })
+
+  it.each([
+    ["CAUTION", "Caution", calloutIcons.caution],
+    ["IMPORTANT", "Important", calloutIcons.important],
+    ["NOTE", "Note", calloutIcons.note],
+    ["TIP", "Tip", calloutIcons.tip],
+    ["WARNING", "Warning", calloutIcons.warning],
+  ])("renders %s callouts with a default title", async (type, title, icon) => {
+    const processor = await createMarkdownProcessor({
+      rehypePlugins: markdownRehypePlugins,
+      syntaxHighlight: false,
+    })
+
+    const { code } = await processor.render(`> [!${type}]\n> Callout content`)
+
+    expect(code).toContain(`class="callout callout-${type.toLowerCase()}"`)
+    expect(code).toContain(`aria-label="${title}"`)
+    expect(code).toContain(
+      `class="callout-icon callout-icon-${icon}" fill="currentColor"`,
+    )
+    expect(code).toContain(`</svg>${title}</p>`)
+    expect(code).toContain("<p>Callout content</p>")
+  })
+
+  it("renders a custom callout title and rich body content", async () => {
+    const processor = await createMarkdownProcessor({
+      rehypePlugins: markdownRehypePlugins,
+      syntaxHighlight: false,
+    })
+
+    const { code } = await processor.render(`> [!TIP] Optional **callout title**
+> Callout content
+>
+> - First item
+> - Second item`)
+
+    expect(code).toContain('aria-label="Optional callout title"')
+    expect(code).toContain('class="callout callout-tip"')
+    expect(code).toContain("</svg>Optional <strong>callout title</strong></p>")
+    expect(code).toContain("<p>Callout content</p>")
+    expect(code).toContain("<li>First item</li>")
+    expect(code).toContain("<li>Second item</li>")
+  })
+
+  it("preserves ordinary and unsupported blockquotes", async () => {
+    const processor = await createMarkdownProcessor({
+      rehypePlugins: markdownRehypePlugins,
+      syntaxHighlight: false,
+    })
+
+    const { code } = await processor.render(`> Ordinary quotation
+
+> [!INFO]
+> Unsupported callout
+
+> [!TIP]not a callout
+> Missing required whitespace`)
+
+    expect(code).toContain(
+      "<blockquote>\n<p>Ordinary quotation</p>\n</blockquote>",
+    )
+    expect(code).toContain("<p>[!INFO]\nUnsupported callout</p>")
+    expect(code).toContain(
+      "<p>[!TIP]not a callout\nMissing required whitespace</p>",
+    )
+    expect(code).not.toContain('class="callout')
   })
 })
 
