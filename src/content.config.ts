@@ -1,6 +1,37 @@
 import { defineCollection } from "astro:content"
-import { glob } from "astro/loaders"
+import { file, glob } from "astro/loaders"
 import { z } from "astro/zod"
+
+const awesomeDiscCollection = z.object({
+  id: z.string(),
+  title: z.string(),
+  url: z.url(),
+})
+
+const awesomeDiscRelease = z.object({
+  format: z.enum(["Blu-ray", "UHD"]),
+  distributor: z.string(),
+  subLabel: z.string().optional(),
+  date: z.iso.date(),
+  url: z.url(),
+  collection: awesomeDiscCollection.optional(),
+})
+
+const awesomeDiscUrl = z.object({
+  type: z.enum(["IMDb", "TMDB", "Wikipedia"]),
+  url: z.url(),
+})
+
+const awesomeDiscs = defineCollection({
+  loader: file("./src/content/awesome-discs/awesome-discs.json"),
+  schema: z.object({
+    id: z.string(),
+    title: z.string(),
+    originalReleaseDate: z.iso.date(),
+    urls: z.array(awesomeDiscUrl).length(3),
+    releases: z.array(awesomeDiscRelease).min(1),
+  }),
+})
 
 const publicImage = z.string().regex(/^\/images\/.+/)
 
@@ -47,4 +78,4 @@ const work = defineCollection({
     }),
 })
 
-export const collections = { projects, work }
+export const collections = { awesomeDiscs, projects, work }
