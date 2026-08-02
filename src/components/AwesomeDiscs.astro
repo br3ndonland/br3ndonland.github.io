@@ -99,6 +99,10 @@ function filmUrl(film: AwesomeDisc) {
   return url
 }
 
+function filmLabel(film: AwesomeDisc) {
+  return `${film.data.title} (${film.data.originalReleaseDate.slice(0, 4)})`
+}
+
 function releaseLabel(release: AwesomeDiscRelease) {
   return release.subLabel
     ? `${release.distributor} ${release.subLabel}`
@@ -123,7 +127,7 @@ function releaseLabel(release: AwesomeDiscRelease) {
                   <>
                     {index > 0 && " / "}
                     <a href={filmUrl(film)} rel="external" target="_blank">
-                      {film.data.title}
+                      {filmLabel(film)}
                     </a>
                   </>
                 ))}
@@ -135,7 +139,7 @@ function releaseLabel(release: AwesomeDiscRelease) {
                 rel="external"
                 target="_blank"
               >
-                {item.primaryFilm.data.title}
+                {filmLabel(item.primaryFilm)}
               </a>
             )}{" "}
             {[...new Set(item.releases.map(({ format }) => format))].join("/")}{" "}
