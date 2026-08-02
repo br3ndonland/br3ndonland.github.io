@@ -34,7 +34,7 @@
 
   <rect width="1200" height="675" rx="48" fill="#494368" />
 
-  <g aria-hidden="true">
+  <g aria-hidden="true" transform="translate(600 337.5) scale(.8) translate(-600 -337.5)">
     <g fill="none" stroke="#fc60a8" stroke-linecap="round" stroke-linejoin="round">
       <path d="M172 326h-42V125c0-41 34-75 75-75h45" stroke-width="24" />
       <path d="M1028 326h42V125c0-41-34-75-75-75h-45" stroke-width="24" />
