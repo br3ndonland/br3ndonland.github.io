@@ -113,7 +113,12 @@ function releaseLabel(release: AwesomeDiscRelease) {
 {
   discYears.map(({ year, items }) => (
     <>
-      <h3>{year}</h3>
+      <h3 id={String(year)} tabindex="-1" class="heading-element">
+        <a aria-label="Link to self" class="anchor-link" href={`#${year}`}>
+          <span class="anchor-icon" />
+        </a>
+        {year}
+      </h3>
       <ol>
         {items.map((item) => (
           <li>
