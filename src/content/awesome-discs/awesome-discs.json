@@ -2402,6 +2402,33 @@
     ]
   },
   {
+    "id": "the-hourglass-sanatorium-1973",
+    "title": "The Hourglass Sanatorium",
+    "originalReleaseDate": "1973-05-24",
+    "urls": [
+      {
+        "type": "IMDb",
+        "url": "https://www.imdb.com/title/tt0070628/"
+      },
+      {
+        "type": "TMDB",
+        "url": "https://www.themoviedb.org/movie/45698"
+      },
+      {
+        "type": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/The_Hourglass_Sanatorium"
+      }
+    ],
+    "releases": [
+      {
+        "format": "UHD",
+        "distributor": "Radiance",
+        "date": "2026-08-03",
+        "url": "https://www.blu-ray.com/movies/The-Hourglass-Sanatorium-4K-Blu-ray/410511/"
+      }
+    ]
+  },
+  {
     "id": "enter-the-dragon-1973",
     "title": "Enter the Dragon",
     "originalReleaseDate": "1973-07-26",
