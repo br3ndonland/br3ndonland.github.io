@@ -31,9 +31,9 @@ jobs:
         with:
           path: node_modules/.astro/assets
           key: >-
-            astro-assets-v1-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('astro.config.ts', 'package.json', 'pnpm-lock.yaml') }}-${{ hashFiles('src/**') }}
+            astro-assets-${{ runner.os }}-${{ hashFiles('src/**') }}
           restore-keys: |
-            astro-assets-v1-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('astro.config.ts', 'package.json', 'pnpm-lock.yaml') }}-
+            astro-assets-${{ runner.os }}-
       - run: pnpm run build --site "https://${GITHUB_REPOSITORY##*/}"
       - name: Save Astro image cache
         if: steps.astro-image-cache.outputs.cache-hit != 'true'
