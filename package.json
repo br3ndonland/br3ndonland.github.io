@@ -34,6 +34,14 @@
       },
       {
         "files": [
+          "AGENTS.md"
+        ],
+        "options": {
+          "proseWrap": "never"
+        }
+      },
+      {
+        "files": [
           "COMMIT_EDITMSG"
         ],
         "options": {
