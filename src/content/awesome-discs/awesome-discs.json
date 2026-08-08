@@ -613,6 +613,34 @@
     ]
   },
   {
+    "id": "crime-wave-1953",
+    "title": "Crime Wave",
+    "originalReleaseDate": "1953-10-22",
+    "urls": [
+      {
+        "type": "IMDb",
+        "url": "https://www.imdb.com/title/tt0046878/"
+      },
+      {
+        "type": "TMDB",
+        "url": "https://www.themoviedb.org/movie/19618"
+      },
+      {
+        "type": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Crime_Wave_%281954_film%29"
+      }
+    ],
+    "releases": [
+      {
+        "format": "Blu-ray",
+        "distributor": "Warner Bros.",
+        "subLabel": "Warner Archive Collection",
+        "date": "2026-07-28",
+        "url": "https://www.blu-ray.com/movies/Crime-Wave-Blu-ray/414345/"
+      }
+    ]
+  },
+  {
     "id": "seven-samurai-1954",
     "title": "Seven Samurai",
     "originalReleaseDate": "1954-04-26",
