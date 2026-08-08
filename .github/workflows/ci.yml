@@ -25,7 +25,22 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm run check
       - run: pnpm run test
+      - name: Restore Astro image cache
+        id: astro-image-cache
+        uses: actions/cache/restore@v6
+        with:
+          path: node_modules/.astro/assets
+          key: >-
+            astro-assets-v1-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('astro.config.ts', 'package.json', 'pnpm-lock.yaml') }}-${{ hashFiles('src/**') }}
+          restore-keys: |
+            astro-assets-v1-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('astro.config.ts', 'package.json', 'pnpm-lock.yaml') }}-
       - run: pnpm run build --site "https://${GITHUB_REPOSITORY##*/}"
+      - name: Save Astro image cache
+        if: steps.astro-image-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v6
+        with:
+          path: node_modules/.astro/assets
+          key: ${{ steps.astro-image-cache.outputs.cache-primary-key }}
       - name: Upload build artifact
         if: github.ref == 'refs/heads/main' || github.ref_type == 'tag'
         uses: actions/upload-pages-artifact@v5
