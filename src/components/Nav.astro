@@ -11,7 +11,7 @@ const socialsInNav: Social[] = SOCIALS.filter(
 )
 ---
 
-<nav>
+<nav data-site-navigation>
   <div class="menu-header">
     <a href="/" class="site-title">
       <Icon
@@ -133,15 +133,31 @@ const socialsInNav: Social[] = SOCIALS.filter(
   */
   const menu = document.getElementById("menu-content")!
   menu.classList.add("menu-content")
+
+  const navigation = document.querySelector<HTMLElement>(
+    "[data-site-navigation]",
+  )!
+  const updateNavigationHeight = () => {
+    document.documentElement.style.setProperty(
+      "--site-nav-height",
+      `${navigation.getBoundingClientRect().height}px`,
+    )
+  }
+  const navigationObserver = new ResizeObserver(updateNavigationHeight)
+  navigationObserver.observe(navigation)
+  updateNavigationHeight()
 </script>
 
 <style>
   nav {
-    position: relative;
-    z-index: 9999;
-    margin-bottom: 3.5rem;
+    background: var(--bg-surface);
+    background-blend-mode: var(--bg-svg-blend-mode), normal, normal;
     font-family: var(--font-brand);
     font-weight: 500;
+    margin-bottom: 3.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 200;
   }
 
   .menu-header {

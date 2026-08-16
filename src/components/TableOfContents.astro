@@ -1,0 +1,331 @@
+---
+import type { MarkdownHeading } from "astro"
+import TableOfContentsList from "@components/TableOfContentsList.astro"
+import Icon from "@components/Icon.astro"
+import {
+  createTableOfContents,
+  type TableOfContentsItem,
+} from "../utils/table-of-contents"
+
+interface Props {
+  headings: MarkdownHeading[]
+  title: string
+  variant: "desktop" | "mobile"
+}
+
+const { headings, title, variant } = Astro.props
+const items = createTableOfContents(headings)
+const tableOfContentsItems: TableOfContentsItem[] = [
+  { children: [], depth: 1, slug: "page-top", text: title },
+  ...items,
+]
+const headingIds = tableOfContentsItems.flatMap(function flatten(
+  item: TableOfContentsItem,
+): string[] {
+  return [item.slug, ...item.children.flatMap(flatten)]
+})
+---
+
+{
+  items.length > 0 && (
+    <page-table-of-contents
+      class={variant}
+      data-heading-ids={JSON.stringify(headingIds)}
+    >
+      {variant === "mobile" ? (
+        <nav class="mobile-toc" aria-label="Table of contents">
+          <details>
+            <summary>
+              <span class="toggle">
+                <span class="summary-title">On this page</span>
+                <Icon icon="arrow-right" size="0.9em" />
+              </span>
+              <span class="current-section" />
+            </summary>
+            <div class="dropdown">
+              <TableOfContentsList items={tableOfContentsItems} isMobile />
+            </div>
+          </details>
+        </nav>
+      ) : (
+        <aside class="desktop-toc">
+          <nav aria-labelledby="page-toc__on-this-page">
+            <h2 id="page-toc__on-this-page">On this page</h2>
+            <TableOfContentsList items={tableOfContentsItems} />
+          </nav>
+        </aside>
+      )}
+    </page-table-of-contents>
+  )
+}
+
+<script>
+  import { findCurrentHeadingIndex } from "../utils/table-of-contents"
+
+  const getLinkTargetId = (link: HTMLAnchorElement) => {
+    const href = link.getAttribute("href")
+    if (!href?.startsWith("#")) return ""
+
+    try {
+      return decodeURIComponent(href.slice(1))
+    } catch {
+      return href.slice(1)
+    }
+  }
+
+  class PageTableOfContents extends HTMLElement {
+    private currentSection: HTMLElement | null = null
+    private details: HTMLDetailsElement | null = null
+    private frame: number | undefined
+    private headings: HTMLElement[] = []
+    private links: HTMLAnchorElement[] = []
+
+    private readonly closeMobileTableOfContents = () => {
+      if (this.details) this.details.open = false
+    }
+
+    private readonly handleKeydown = (event: KeyboardEvent) => {
+      if (event.key !== "Escape" || !this.details?.open) return
+
+      const restoreFocus = this.details.contains(document.activeElement)
+      this.closeMobileTableOfContents()
+      if (restoreFocus) this.details.querySelector("summary")?.focus()
+    }
+
+    private readonly handleWindowClick = (event: MouseEvent) => {
+      if (
+        this.details?.open &&
+        event.target instanceof Node &&
+        !this.details.contains(event.target)
+      ) {
+        this.closeMobileTableOfContents()
+      }
+    }
+
+    private readonly queueUpdate = () => {
+      if (this.frame !== undefined) return
+      this.frame = requestAnimationFrame(() => {
+        this.frame = undefined
+        this.updateCurrentSection()
+      })
+    }
+
+    private updateCurrentSection() {
+      if (this.headings.length === 0) return
+
+      const summaryHeight =
+        this.querySelector("summary")?.getBoundingClientRect().height ?? 0
+      const stickyTop = Number.parseFloat(getComputedStyle(this).top) || 0
+      const threshold = stickyTop + summaryHeight + 16
+      const documentBottom =
+        document.documentElement.scrollHeight - window.innerHeight
+      const currentHeadingIndex = findCurrentHeadingIndex(
+        this.headings.map((heading) => heading.getBoundingClientRect().top),
+        threshold,
+        documentBottom > 0 && window.scrollY >= documentBottom - 2,
+      )
+      const currentHeading = this.headings[currentHeadingIndex]!
+
+      const currentId = currentHeading.id
+      let currentLink: HTMLAnchorElement | undefined
+
+      for (const link of this.links) {
+        const isCurrent = getLinkTargetId(link) === currentId
+        link.toggleAttribute("aria-current", isCurrent)
+        if (isCurrent) {
+          link.setAttribute("aria-current", "location")
+          currentLink ??= link
+        }
+      }
+
+      if (this.currentSection && currentLink) {
+        this.currentSection.textContent = currentLink.textContent
+      }
+    }
+
+    connectedCallback() {
+      let headingIds: unknown
+      try {
+        headingIds = JSON.parse(this.dataset.headingIds ?? "[]")
+      } catch {
+        headingIds = []
+      }
+
+      if (!Array.isArray(headingIds)) return
+
+      this.headings = headingIds
+        .filter((id): id is string => typeof id === "string")
+        .map((id) => document.getElementById(id))
+        .filter((heading): heading is HTMLElement => heading !== null)
+      this.links = [...this.querySelectorAll<HTMLAnchorElement>("a[href^='#']")]
+      this.details = this.querySelector("details")
+      this.currentSection = this.querySelector(".current-section")
+
+      this.links.forEach((link) =>
+        link.addEventListener("click", this.closeMobileTableOfContents),
+      )
+      window.addEventListener("click", this.handleWindowClick)
+      window.addEventListener("hashchange", this.queueUpdate)
+      window.addEventListener("keydown", this.handleKeydown)
+      window.addEventListener("resize", this.queueUpdate)
+      window.addEventListener("scroll", this.queueUpdate, { passive: true })
+      this.queueUpdate()
+    }
+
+    disconnectedCallback() {
+      this.links.forEach((link) =>
+        link.removeEventListener("click", this.closeMobileTableOfContents),
+      )
+      window.removeEventListener("click", this.handleWindowClick)
+      window.removeEventListener("hashchange", this.queueUpdate)
+      window.removeEventListener("keydown", this.handleKeydown)
+      window.removeEventListener("resize", this.queueUpdate)
+      window.removeEventListener("scroll", this.queueUpdate)
+      if (this.frame !== undefined) cancelAnimationFrame(this.frame)
+    }
+  }
+
+  if (!customElements.get("page-table-of-contents")) {
+    customElements.define("page-table-of-contents", PageTableOfContents)
+  }
+</script>
+
+<style>
+  page-table-of-contents {
+    min-width: 0;
+  }
+
+  page-table-of-contents.mobile {
+    background: var(--bg-surface-below-nav);
+    background-blend-mode: var(--bg-svg-blend-mode), normal, normal;
+    display: block;
+    margin: -3.5rem auto 0;
+    max-width: 80ch;
+    position: sticky;
+    top: calc(
+      var(--site-nav-height, 4.75rem) - var(--sticky-stack-overlap, 1px)
+    );
+    width: 100%;
+    z-index: 100;
+  }
+
+  page-table-of-contents.desktop {
+    display: none;
+  }
+
+  .mobile-toc {
+    position: relative;
+  }
+
+  summary {
+    align-items: center;
+    color: var(--gray-100);
+    cursor: pointer;
+    display: flex;
+    gap: 0.75rem;
+    list-style: none;
+    padding: 0.75rem 1rem;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .toggle {
+    align-items: center;
+    background-color: var(--gray-900);
+    border: 1px solid var(--gray-700);
+    border-radius: 0.5rem;
+    display: flex;
+    flex: 0 0 auto;
+    gap: 0.75rem;
+    justify-content: space-between;
+    padding: 0.6rem 0.75rem;
+    transition:
+      border-color var(--theme-transition),
+      color var(--theme-transition);
+  }
+
+  summary:hover .toggle,
+  summary:focus-visible .toggle {
+    border-color: var(--gray-400);
+    color: var(--gray-0);
+  }
+
+  details[open] .toggle {
+    border-color: var(--link-color);
+  }
+
+  .toggle :global(svg) {
+    flex: 0 0 auto;
+    transition: transform var(--theme-transition);
+  }
+
+  details[open] .toggle :global(svg) {
+    transform: rotate(90deg);
+  }
+
+  .summary-title {
+    flex: 0 0 auto;
+    font-weight: 600;
+  }
+
+  .current-section {
+    color: var(--gray-100);
+    flex: 1 1 auto;
+    font-size: var(--text-sm);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .dropdown {
+    background-color: var(--gray-999);
+    border: 1px solid var(--gray-800);
+    box-shadow: var(--shadow-md);
+    inset-inline: 0;
+    max-height: min(60vh, 24rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-block: 0.35rem;
+    position: absolute;
+    top: 100%;
+  }
+
+  :global(.content :is(h2, h3)[id]) {
+    scroll-margin-top: calc(var(--site-nav-height, 4.75rem) + 5.25rem);
+  }
+
+  @media (min-width: 75em) {
+    page-table-of-contents.mobile {
+      display: none;
+    }
+
+    page-table-of-contents.desktop {
+      display: block;
+      grid-column: 2;
+      grid-row: 1;
+      margin: 0;
+      max-height: calc(100vh - var(--site-nav-height, 6.5rem) - 3rem);
+      max-width: none;
+      overflow-y: auto;
+      position: sticky;
+      top: calc(var(--site-nav-height, 6.5rem) + 1.5rem);
+      z-index: auto;
+    }
+
+    .desktop-toc nav {
+      border-left: 1px solid var(--gray-800);
+      padding-left: 1rem;
+    }
+
+    .desktop-toc h2 {
+      font-size: var(--text-md);
+      margin: 0 0 0.5rem 0.5rem;
+    }
+
+    :global(.content :is(h2, h3)[id]) {
+      scroll-margin-top: calc(var(--site-nav-height, 6.5rem) + 2.5rem);
+    }
+  }
+</style>

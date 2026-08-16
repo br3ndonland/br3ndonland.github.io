@@ -1,0 +1,79 @@
+---
+import type { TableOfContentsItem } from "../utils/table-of-contents"
+
+interface Props {
+  depth?: number
+  isMobile?: boolean
+  items: TableOfContentsItem[]
+}
+
+const { depth = 0, isMobile = false, items } = Astro.props
+---
+
+<ul class:list={["toc-list", { mobile: isMobile }]}>
+  {
+    items.map((item) => (
+      <li>
+        <a href={`#${item.slug}`} style={`--toc-depth: ${depth}`}>
+          {item.text}
+        </a>
+        {item.children.length > 0 && (
+          <Astro.self
+            depth={depth + 1}
+            isMobile={isMobile}
+            items={item.children}
+          />
+        )}
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .toc-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  a {
+    border-radius: 0.25rem;
+    color: var(--gray-300);
+    display: block;
+    font-size: var(--text-sm);
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+    padding: 0.35rem 0.5rem 0.35rem calc(0.75rem * var(--toc-depth) + 0.5rem);
+    text-decoration: none;
+    transition:
+      background-color var(--theme-transition),
+      color var(--theme-transition);
+  }
+
+  a:hover,
+  a:focus {
+    background-color: var(--accent-subtle-overlay);
+    color: var(--gray-0);
+  }
+
+  a[aria-current="location"] {
+    color: var(--link-color);
+    font-weight: 600;
+  }
+
+  .mobile a {
+    border-radius: 0;
+    padding-block: 0.65rem;
+  }
+
+  @media (min-width: 50em) {
+    a {
+      font-size: var(--text-base);
+    }
+  }
+
+  @media (min-width: 75em) {
+    a {
+      font-size: var(--text-sm);
+    }
+  }
+</style>

@@ -17,7 +17,7 @@ const { title, description } = Astro.props
     <MainHead title={title} description={description} />
   </head>
   <body>
-    <div class="stack backgrounds">
+    <div id="page-top" class="stack backgrounds">
       <Nav />
       <slot />
       <Footer />
@@ -40,7 +40,25 @@ const { title, description } = Astro.props
         --bg-image-main-curves: url("/images/backgrounds/bg-main-light.svg");
         --bg-image-main: url("/images/backgrounds/bg-main-light-800w.jpg");
         --bg-scale: 1.68;
+        --bg-surface:
+          var(--bg-image-main-curves) top center / var(--bg-gradient-size)
+            no-repeat,
+          var(--bg-image-main) top center / var(--bg-gradient-size) no-repeat,
+          var(--gray-999);
+        --bg-surface-below-nav:
+          var(--bg-image-main-curves) center
+            calc(
+              var(--sticky-stack-overlap) - var(--site-nav-height, 4.75rem)
+            ) /
+            var(--bg-gradient-size) no-repeat,
+          var(--bg-image-main) center
+            calc(
+              var(--sticky-stack-overlap) - var(--site-nav-height, 4.75rem)
+            ) /
+            var(--bg-gradient-size) no-repeat,
+          var(--gray-999);
         --bg-svg-blend-mode: overlay;
+        --sticky-stack-overlap: 1px;
       }
 
       :root.theme-dark {
@@ -61,17 +79,18 @@ const { title, description } = Astro.props
       }
 
       .backgrounds {
-        min-height: 100%;
-        isolation: isolate;
-        background:
-          var(--bg-image-main-curves) top center/var(--bg-gradient-size)
-            no-repeat,
-          var(--bg-image-main) top center/var(--bg-gradient-size) no-repeat,
-          var(--gray-999);
+        background: var(--bg-surface);
         background-blend-mode: var(--bg-svg-blend-mode), normal, normal;
+        isolation: isolate;
+        min-height: 100%;
       }
       @media (forced-colors: active) {
         /* Deactivate custom backgrounds for high contrast users. */
+        :root {
+          --bg-surface: none;
+          --bg-surface-below-nav: none;
+        }
+
         .backgrounds {
           background: none;
           background-blend-mode: none;

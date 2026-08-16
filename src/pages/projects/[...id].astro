@@ -6,6 +6,7 @@ import Hero from "@components/Hero.astro"
 import Icon from "@components/Icon.astro"
 import LightboxImage from "@components/LightboxImage.astro"
 import SVGLogo from "@components/SVGLogo.astro"
+import TableOfContents from "@components/TableOfContents.astro"
 import { PROJECT_LOGOS, PROJECTS, SITE } from "@consts"
 
 interface Props {
@@ -21,7 +22,30 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props
-const { Content } = await render(entry)
+const { Content, headings } = await render(entry)
+const tableOfContentsHeadings = [...headings]
+
+if (entry.id === "awesome-discs") {
+  const films = await getCollection("awesomeDiscs")
+  const years = [
+    ...new Set(
+      films.flatMap(({ data: film }) =>
+        film.releases.map(({ date }) => date.slice(0, 4)),
+      ),
+    ),
+  ].sort((yearA, yearB) => yearB.localeCompare(yearA))
+  const discsHeadingIndex = tableOfContentsHeadings.findIndex(
+    ({ slug }) => slug === "discs",
+  )
+
+  if (discsHeadingIndex !== -1) {
+    tableOfContentsHeadings.splice(
+      discsHeadingIndex + 1,
+      0,
+      ...years.map((year) => ({ depth: 3, slug: year, text: year })),
+    )
+  }
+}
 
 const image = entry.data.image.src
 const imageSrc = typeof image === "string" ? image : image.src
@@ -35,6 +59,11 @@ const logo = PROJECT_LOGOS[entry.id as keyof typeof PROJECT_LOGOS]
 >
   <div class="stack gap-10">
     <div class="stack gap-4">
+      <TableOfContents
+        headings={tableOfContentsHeadings}
+        title={entry.data.title}
+        variant="mobile"
+      />
       <header>
         <div class="wrapper stack gap-2">
           <a class="back-link" href={PROJECTS.HREF}
@@ -104,7 +133,12 @@ const logo = PROJECT_LOGOS[entry.id as keyof typeof PROJECT_LOGOS]
           </Hero>
         </div>
       </header>
-      <main class="wrapper">
+      <main class="wrapper content-layout">
+        <TableOfContents
+          headings={tableOfContentsHeadings}
+          title={entry.data.title}
+          variant="desktop"
+        />
         <div class="content">
           <Content />
         </div>
@@ -126,6 +160,10 @@ const logo = PROJECT_LOGOS[entry.id as keyof typeof PROJECT_LOGOS]
     min-width: 0;
     padding-bottom: 1.25rem;
     width: 100%;
+  }
+
+  .content-layout {
+    display: grid;
   }
 
   .content > :global(* + *) {
@@ -168,6 +206,21 @@ const logo = PROJECT_LOGOS[entry.id as keyof typeof PROJECT_LOGOS]
     .back-link {
       align-self: flex-start;
       display: block;
+    }
+  }
+
+  @media (min-width: 75em) {
+    .content-layout:has(> page-table-of-contents) {
+      align-items: start;
+      gap: 3rem;
+      grid-template-columns: minmax(0, 80ch) minmax(12rem, 16rem);
+      justify-content: center;
+    }
+
+    .content-layout:has(> page-table-of-contents) > .content {
+      grid-column: 1;
+      grid-row: 1;
+      margin-inline: 0;
     }
   }
 </style>
