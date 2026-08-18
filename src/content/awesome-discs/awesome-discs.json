@@ -6804,6 +6804,33 @@
     ]
   },
   {
+    "id": "the-hot-spot-1990",
+    "title": "The Hot Spot",
+    "originalReleaseDate": "1990-09-08",
+    "urls": [
+      {
+        "type": "IMDb",
+        "url": "https://www.imdb.com/title/tt0099797/"
+      },
+      {
+        "type": "TMDB",
+        "url": "https://www.themoviedb.org/movie/14864"
+      },
+      {
+        "type": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/The_Hot_Spot"
+      }
+    ],
+    "releases": [
+      {
+        "format": "UHD",
+        "distributor": "Radiance",
+        "date": "2026-08-17",
+        "url": "https://www.blu-ray.com/movies/The-Hot-Spot-4K-Blu-ray/412182/"
+      }
+    ]
+  },
+  {
     "id": "flatliners-1990",
     "title": "Flatliners",
     "originalReleaseDate": "1990-11-22",
