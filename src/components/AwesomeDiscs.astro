@@ -1,39 +1,31 @@
 ---
 import type { CollectionEntry } from "astro:content"
+import type {
+  AwesomeDisc,
+  AwesomeDiscCollection,
+  AwesomeDiscRelease,
+} from "../content.config"
 
-type AwesomeDisc = CollectionEntry<"awesomeDiscs">
-type AwesomeDiscRelease = AwesomeDisc["data"]["releases"][number]
-type AwesomeDiscSet = NonNullable<AwesomeDiscRelease["collection"]>
-
-interface Props {
-  films: AwesomeDisc[]
-}
-
-interface DiscGroup {
+type DiscGroup = {
   id: string
-  collection?: AwesomeDiscSet
+  collection?: AwesomeDiscCollection
   films: Map<string, AwesomeDisc>
   releases: Map<string, AwesomeDiscRelease>
 }
 
-interface DiscListItem {
-  id: string
-  collection?: AwesomeDiscSet
-  films: AwesomeDisc[]
-  primaryFilm: AwesomeDisc
-  releases: AwesomeDiscRelease[]
-  sortDate: string
+interface Props {
+  films: CollectionEntry<"awesomeDiscs">[]
 }
 
 const { films } = Astro.props
 const groupsByYear = new Map<number, Map<string, DiscGroup>>()
 
-for (const film of films) {
-  for (const release of film.data.releases) {
+for (const { data: film } of films) {
+  for (const release of film.releases) {
     const year = Number(release.date.slice(0, 4))
     const groupId = release.collection
       ? `collection:${release.collection.id}`
-      : `film:${film.data.id}`
+      : `film:${film.id}`
     const yearGroups = groupsByYear.get(year) ?? new Map<string, DiscGroup>()
     const group =
       yearGroups.get(groupId) ??
@@ -50,7 +42,7 @@ for (const film of films) {
       release.url,
     ].join(":")
 
-    group.films.set(film.data.id, film)
+    group.films.set(film.id, film)
     group.releases.set(releaseId, release)
     yearGroups.set(groupId, group)
     groupsByYear.set(year, yearGroups)
@@ -62,11 +54,9 @@ const discYears = [...groupsByYear.entries()]
   .map(([year, yearGroups]) => ({
     year,
     items: [...yearGroups.values()]
-      .map((group): DiscListItem => {
+      .map((group) => {
         const groupFilms = [...group.films.values()].sort((filmA, filmB) =>
-          filmA.data.originalReleaseDate.localeCompare(
-            filmB.data.originalReleaseDate,
-          ),
+          filmA.originalReleaseDate.localeCompare(filmB.originalReleaseDate),
         )
         const primaryFilm = groupFilms[0]
         if (!primaryFilm) throw new Error(`No films found for ${group.id}`)
@@ -81,7 +71,7 @@ const discYears = [...groupsByYear.entries()]
               releaseA.date.localeCompare(releaseB.date) ||
               releaseA.distributor.localeCompare(releaseB.distributor),
           ),
-          sortDate: primaryFilm.data.originalReleaseDate,
+          sortDate: primaryFilm.originalReleaseDate,
         }
       })
       .sort(
@@ -93,14 +83,14 @@ const discYears = [...groupsByYear.entries()]
 
 function filmUrl(film: AwesomeDisc) {
   const url =
-    film.data.urls.find(({ type }) => type === "Wikipedia")?.url ??
-    film.data.urls.find(({ type }) => type === "TMDB")?.url
-  if (!url) throw new Error(`No preferred URL found for ${film.data.id}`)
+    film.urls.find(({ type }) => type === "Wikipedia")?.url ??
+    film.urls.find(({ type }) => type === "TMDB")?.url
+  if (!url) throw new Error(`No preferred URL found for ${film.id}`)
   return url
 }
 
 function filmLabel(film: AwesomeDisc) {
-  return `${film.data.title} (${film.data.originalReleaseDate.slice(0, 4)})`
+  return `${film.title} (${film.originalReleaseDate.slice(0, 4)})`
 }
 
 function releaseLabel(release: AwesomeDiscRelease) {

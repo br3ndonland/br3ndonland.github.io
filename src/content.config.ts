@@ -22,15 +22,21 @@ const awesomeDiscUrl = z.object({
   url: z.url(),
 })
 
+const awesomeDisc = z.object({
+  id: z.string(),
+  title: z.string(),
+  originalReleaseDate: z.iso.date(),
+  urls: z.array(awesomeDiscUrl).length(3),
+  releases: z.array(awesomeDiscRelease).min(1),
+})
+
+export type AwesomeDisc = z.infer<typeof awesomeDisc>
+export type AwesomeDiscCollection = z.infer<typeof awesomeDiscCollection>
+export type AwesomeDiscRelease = z.infer<typeof awesomeDiscRelease>
+
 const awesomeDiscs = defineCollection({
   loader: file("./src/content/awesome-discs/awesome-discs.json"),
-  schema: z.object({
-    id: z.string(),
-    title: z.string(),
-    originalReleaseDate: z.iso.date(),
-    urls: z.array(awesomeDiscUrl).length(3),
-    releases: z.array(awesomeDiscRelease).min(1),
-  }),
+  schema: awesomeDisc,
 })
 
 const publicImage = z.string().regex(/^\/images\/.+/)
