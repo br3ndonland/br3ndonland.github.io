@@ -14,7 +14,7 @@ interface Props {
 }
 
 const { headings, title, variant } = Astro.props
-const items = createTableOfContents(headings)
+const items = createTableOfContents(headings, 2, 4)
 const tableOfContentsItems: TableOfContentsItem[] = [
   { children: [], depth: 1, slug: "page-top", text: title },
   ...items,
@@ -292,7 +292,7 @@ const headingIds = tableOfContentsItems.flatMap(function flatten(
     top: 100%;
   }
 
-  :global(.content :is(h2, h3)[id]) {
+  :global(.content :is(h2, h3, h4, h5, h6)[id]) {
     scroll-margin-top: calc(var(--site-nav-height, 4.75rem) + 5.25rem);
   }
 
@@ -324,7 +324,7 @@ const headingIds = tableOfContentsItems.flatMap(function flatten(
       margin: 0 0 0.5rem 0.5rem;
     }
 
-    :global(.content :is(h2, h3)[id]) {
+    :global(.content :is(h2, h3, h4, h5, h6)[id]) {
       scroll-margin-top: calc(var(--site-nav-height, 6.5rem) + 2.5rem);
     }
   }

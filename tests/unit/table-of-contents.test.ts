@@ -39,6 +39,54 @@ describe("createTableOfContents", () => {
     ])
   })
 
+  it("supports nested h2 through h6 headings", () => {
+    const headings = [
+      { depth: 1, slug: "title", text: "Title" },
+      { depth: 2, slug: "section", text: "Section" },
+      { depth: 3, slug: "detail", text: "Detail" },
+      { depth: 4, slug: "note", text: "Note" },
+      { depth: 5, slug: "subnote", text: "Subnote" },
+      { depth: 6, slug: "aside", text: "Aside" },
+    ]
+
+    expect(createTableOfContents(headings, 2, 6)).toEqual([
+      {
+        children: [
+          {
+            children: [
+              {
+                children: [
+                  {
+                    children: [
+                      {
+                        children: [],
+                        depth: 6,
+                        slug: "aside",
+                        text: "Aside",
+                      },
+                    ],
+                    depth: 5,
+                    slug: "subnote",
+                    text: "Subnote",
+                  },
+                ],
+                depth: 4,
+                slug: "note",
+                text: "Note",
+              },
+            ],
+            depth: 3,
+            slug: "detail",
+            text: "Detail",
+          },
+        ],
+        depth: 2,
+        slug: "section",
+        text: "Section",
+      },
+    ])
+  })
+
   it("supports a custom heading depth range", () => {
     const headings = [
       { depth: 2, slug: "section", text: "Section" },
