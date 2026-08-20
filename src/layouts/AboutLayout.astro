@@ -1,0 +1,151 @@
+---
+import type { MarkdownHeading } from "astro"
+import BaseLayout from "@layouts/BaseLayout.astro"
+import Contact from "@components/Contact.astro"
+import Hero from "@components/Hero.astro"
+import LightboxImage from "@components/LightboxImage.astro"
+import TableOfContents from "@components/TableOfContents.astro"
+import atWork from "@images/brendon-smith-at-work.jpg"
+import { SITE } from "@consts"
+
+interface Frontmatter {
+  description: string
+  tagline: string
+  title: string
+}
+
+interface Props {
+  frontmatter: Frontmatter
+  headings: MarkdownHeading[]
+}
+
+const { frontmatter, headings } = Astro.props
+---
+
+<BaseLayout
+  title={`${SITE.TITLE}: ${frontmatter.title}`}
+  description={frontmatter.description}
+>
+  <div class="stack gap-10 lg:gap-20">
+    <div class="stack gap-4">
+      <TableOfContents
+        headings={headings}
+        title={frontmatter.title}
+        variant="mobile"
+      />
+      <main class="wrapper about">
+        <header class="about-header">
+          <Hero title={frontmatter.title} tagline={frontmatter.tagline}>
+            <LightboxImage
+              src={atWork}
+              alt="Brendon Smith at desk at work"
+              imageClass="img-hero"
+              gallery="about"
+              decoding="async"
+              loading="eager"
+            />
+          </Hero>
+        </header>
+        <div class="about-grid">
+          <div class="about-sections">
+            <slot />
+          </div>
+          <TableOfContents
+            headings={headings}
+            title={frontmatter.title}
+            variant="desktop"
+          />
+        </div>
+      </main>
+    </div>
+
+    <Contact />
+  </div>
+</BaseLayout>
+
+<style>
+  .about,
+  .about-grid {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .about-sections,
+  .about-grid :global(section) {
+    display: contents;
+  }
+
+  .about-grid :global(.content aside),
+  .about-grid :global(.content p) {
+    margin-top: 1rem;
+  }
+
+  .about-grid :global(.content a) {
+    text-decoration: solid underline transparent;
+    text-underline-offset: 0.25em;
+    transition: text-decoration-color var(--theme-transition);
+  }
+
+  .about-grid :global(.content a:hover),
+  .about-grid :global(.content a:focus) {
+    text-decoration-color: currentColor;
+  }
+
+  .about-grid :global(section > h2[id]) {
+    scroll-margin-top: calc(var(--site-nav-height, 4.75rem) + 5.25rem);
+  }
+
+  @media (min-width: 50em) {
+    .about {
+      gap: 3.5rem;
+    }
+
+    .about-header {
+      margin-inline: auto;
+      width: 60%;
+    }
+
+    .about-grid {
+      column-gap: 3.5rem;
+      display: grid;
+      grid-template-columns: 1fr 60% 1fr;
+      row-gap: 3.5rem;
+    }
+
+    .about-grid :global(section > h2) {
+      align-self: start;
+      grid-column: 1;
+    }
+
+    .about-grid :global(section > .content) {
+      grid-column: 2 / 4;
+    }
+  }
+
+  @media (min-width: 75em) {
+    .about-header {
+      max-width: 50rem;
+      width: 100%;
+    }
+
+    .about-grid {
+      column-gap: 3rem;
+      grid-template-columns:
+        minmax(8rem, 1fr) minmax(0, 50rem)
+        minmax(12rem, 16rem);
+    }
+
+    .about-grid :global(section > .content) {
+      grid-column: 2;
+    }
+
+    .about-grid > :global(page-table-of-contents.desktop) {
+      grid-column: 3;
+      grid-row: 1;
+    }
+
+    .about-grid :global(section > h2[id]) {
+      scroll-margin-top: calc(var(--site-nav-height, 6.5rem) + 2.5rem);
+    }
+  }
+</style>

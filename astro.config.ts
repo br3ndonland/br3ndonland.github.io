@@ -9,52 +9,14 @@ import {
   unified,
 } from "@astrojs/markdown-remark"
 import { spawn } from "node:child_process"
-import { readFile, writeFile } from "node:fs/promises"
 import { dirname, relative } from "node:path"
 import { fileURLToPath } from "node:url"
-import { rehype } from "rehype"
 import type { Options as RehypeAutolinkOptions } from "rehype-autolink-headings"
 import rehypeAutolinkHeadings from "rehype-autolink-headings"
 import { ICON_PATHS } from "./src/consts"
 import { astroOpenGraph } from "./src/integrations/astro-open-graph/index"
 
 export { astroOpenGraph } from "./src/integrations/astro-open-graph/index"
-
-export interface AstroAutolinkOptions {
-  /** Paths are resolved relative to Astro's build output directory. */
-  paths: string[]
-  rehypeAutolinkOptions?: Readonly<RehypeAutolinkOptions> | null | undefined
-}
-
-export const astroAutolinkHeadings = (
-  astroAutolinkOptions: AstroAutolinkOptions,
-): AstroIntegration => {
-  const { paths, rehypeAutolinkOptions } = astroAutolinkOptions
-  const integrationName = "astro-autolink-headings"
-  return {
-    name: integrationName,
-    hooks: {
-      "astro:build:done": async ({
-        dir,
-        logger,
-      }: HookParameters<"astro:build:done">) => {
-        const integrationLogger = logger.fork(`${integrationName}/build`)
-        await Promise.all(
-          paths.map(async (path) => {
-            const filePath = fileURLToPath(new URL(path, dir))
-            integrationLogger.info(`Processing ${filePath}`)
-            const fileContents = await readFile(filePath, { encoding: "utf-8" })
-            const processedFileContents = await rehype()
-              .use(rehypeHeadingIds)
-              .use(rehypeAutolinkHeadings, rehypeAutolinkOptions)
-              .process(fileContents)
-            await writeFile(filePath, String(processedFileContents))
-          }),
-        )
-      },
-    },
-  }
-}
 
 export const rehypeAutolinkOptions: RehypeAutolinkOptions = {
   behavior: "prepend",
@@ -69,11 +31,6 @@ export const rehypeAutolinkOptions: RehypeAutolinkOptions = {
   headingProperties: { tabIndex: "-1", className: ["heading-element"] },
   properties: { ariaLabel: "Link to self", className: ["anchor-link"] },
   test: ["h2", "h3", "h4", "h5", "h6"],
-}
-
-const astroAutolinkOptions: AstroAutolinkOptions = {
-  paths: ["about/index.html"],
-  rehypeAutolinkOptions: rehypeAutolinkOptions,
 }
 
 interface HastNode {
@@ -341,7 +298,6 @@ export const astroSearch = (): AstroIntegration => {
 
 export default defineConfig({
   integrations: [
-    astroAutolinkHeadings(astroAutolinkOptions),
     astroExpressiveCode({
       frames: {
         showCopyToClipboardButton: true,
