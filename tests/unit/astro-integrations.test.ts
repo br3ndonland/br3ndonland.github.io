@@ -362,9 +362,17 @@ describe("astroSearch", () => {
 
     await hook?.(hookOptions)
 
-    const entryFile = await fs.stat(
-      path.join(pagefindSitePath, "pagefind", "pagefind-entry.json"),
-    )
-    expect(entryFile.isFile()).toBe(true)
+    const outputFiles = [
+      "pagefind-component-ui.css",
+      "pagefind-component-ui.js",
+      "pagefind-entry.json",
+    ]
+
+    for (const outputFile of outputFiles) {
+      const file = await fs.stat(
+        path.join(pagefindSitePath, "pagefind", outputFile),
+      )
+      expect(file.isFile()).toBe(true)
+    }
   })
 })
