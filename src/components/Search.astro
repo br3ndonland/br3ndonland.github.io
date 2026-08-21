@@ -142,7 +142,7 @@ const labels = {
     --pf-hover: var(--gray-900);
     --pf-input-font-size: var(--text-base);
     --pf-input-height: 2.5rem;
-    --pf-mark: var(--gray-0);
+    --pf-mark: var(--accent-dark);
     --pf-modal-backdrop: var(--accent-subtle-overlay);
     --pf-modal-max-height: calc(100dvh - 8rem);
     --pf-modal-max-width: 40rem;
@@ -286,5 +286,11 @@ const labels = {
 <style is:global>
   body:has(site-search dialog[open]) {
     overflow: hidden;
+  }
+
+  @media (hover: none) {
+    site-search pagefind-modal-footer {
+      display: none !important;
+    }
   }
 </style>
