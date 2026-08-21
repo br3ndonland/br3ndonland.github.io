@@ -1,489 +1,290 @@
 ---
 import Icon from "./Icon.astro"
 
+const baseUrl = import.meta.env.BASE_URL
+const pagefindBundlePath = `${baseUrl.replace(/\/$/, "")}/pagefind/`
+const pagefindComponentScript = `${pagefindBundlePath}pagefind-component-ui.js`
+const pagefindComponentStyles = `${pagefindBundlePath}pagefind-component-ui.css`
+
 const labels = {
-  "search.cancelLabel": "Cancel",
-  "search.ctrlKey": "Ctrl",
-  "search.devWarning": "Search has only been implemented for production builds",
-  "search.label": "Search",
+  cancel: "Cancel",
+  devWarning: "Search has only been implemented for production builds",
+  search: "Search",
 }
 ---
 
 <site-search>
-  <template>
-    <button
-      data-open-modal
-      disabled
-      aria-label={labels["search.label"]}
-      aria-keyshortcuts="Control+K"
-    >
-      <Icon icon="magnifying-glass" gradient={false} size="var(--icon-size)" />
-      <span class="d-none xl:d-block" aria-hidden="true"
-        >{labels["search.label"]}</span
-      >
-      <kbd class="d-none xl:d-flex">
-        <kbd>{labels["search.ctrlKey"]}</kbd><kbd>K</kbd>
-      </kbd>
-    </button>
-    <dialog style="padding:0" aria-label={labels["search.label"]}>
-      <div class="dialog-frame d-flex">
-        <button data-close-modal class="d-flex lg:d-none">
-          {labels["search.cancelLabel"]}
+  {
+    import.meta.env.DEV ? (
+      <template>
+        <button
+          data-dev-open-modal
+          disabled
+          aria-label={labels.search}
+          aria-keyshortcuts="Control+K Meta+K"
+        >
+          <Icon
+            icon="magnifying-glass"
+            gradient={false}
+            size="var(--icon-size)"
+          />
+          <span class="d-none xl:d-block" aria-hidden="true">
+            {labels.search}
+          </span>
+          <kbd class="d-none xl:d-flex" aria-hidden="true">
+            <>
+              <kbd>Ctrl</kbd>
+              <kbd>K</kbd>
+            </>
+          </kbd>
         </button>
-        {
-          import.meta.env.DEV ? (
-            <p id="search-dev-warning">{labels["search.devWarning"]}</p>
-          ) : (
-            <div id="search" />
-          )
-        }
-      </div>
-    </dialog>
-  </template>
+        <dialog data-dev-modal aria-label={labels.search}>
+          <div class="dev-dialog-frame">
+            <button data-dev-close-modal>{labels.cancel}</button>
+            <p>{labels.devWarning}</p>
+          </div>
+        </dialog>
+      </template>
+    ) : (
+      <>
+        <link rel="stylesheet" href={pagefindComponentStyles} />
+        <pagefind-config base-url={baseUrl} bundle-path={pagefindBundlePath} />
+        <pagefind-modal-trigger
+          compact
+          hide-shortcut
+          placeholder={labels.search}
+        />
+        <pagefind-modal />
+        <script is:inline type="module" src={pagefindComponentScript} />
+      </>
+    )
+  }
 </site-search>
 
 <script>
   class SiteSearch extends HTMLElement {
     constructor() {
       super()
-      // Inject HTML elements when JS runs
-      this.appendChild(this.querySelector("template")!.content.cloneNode(true))
-      const openBtn = this.querySelector<HTMLButtonElement>(
-        "button[data-open-modal]",
-      )!
-      const closeBtn = this.querySelector<HTMLButtonElement>(
-        "button[data-close-modal]",
-      )!
-      const dialog = this.querySelector("dialog")!
-      const dialogFrame = this.querySelector(".dialog-frame")!
-      const shortcut = openBtn.querySelector("kbd")!
-      const platformKey = shortcut.querySelector("kbd")
-      /* Deprecated `navigator.platform` property used to detect Apple devices
-        because the user agent may be changed when using browser dev tools.
-      */
-      // @ts-ignore
-      if (platformKey && /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)) {
-        platformKey.textContent = "⌘"
-        openBtn.setAttribute("aria-keyshortcuts", "Meta+K")
-      }
-      shortcut.style.display = ""
 
-      // Close modal if user clicks on a link or clicks outside modal
-      const onClick = (event: MouseEvent) => {
-        const isLink = "href" in (event.target || {})
-        if (
-          isLink ||
-          (document.body.contains(event.target as Node) &&
-            !dialogFrame.contains(event.target as Node))
-        ) {
-          closeModal()
-        }
+      const template = this.querySelector("template")
+      if (template) {
+        this.appendChild(template.content.cloneNode(true))
+        this.initDevSearch()
+        return
       }
 
-      const openModal = (event?: MouseEvent) => {
+      const trigger = this.querySelector("pagefind-modal-trigger")
+      if (!trigger) return
+
+      const expandedTrigger = window.matchMedia("(min-width: 75em)")
+      const updateTrigger = ({
+        matches,
+      }: MediaQueryList | MediaQueryListEvent) => {
+        trigger.toggleAttribute("compact", !matches)
+        trigger.toggleAttribute("hide-shortcut", !matches)
+      }
+
+      updateTrigger(expandedTrigger)
+      expandedTrigger.addEventListener("change", updateTrigger)
+    }
+
+    private initDevSearch() {
+      const openButton = this.querySelector<HTMLButtonElement>(
+        "button[data-dev-open-modal]",
+      )
+      const closeButton = this.querySelector<HTMLButtonElement>(
+        "button[data-dev-close-modal]",
+      )
+      const dialog = this.querySelector<HTMLDialogElement>(
+        "dialog[data-dev-modal]",
+      )
+      if (!openButton || !closeButton || !dialog) return
+
+      const openModal = () => {
         dialog.showModal()
-        document.body.toggleAttribute("data-search-modal-open", true)
-        this.querySelector("input")?.focus()
-        event?.stopPropagation()
-        window.addEventListener("click", onClick)
+        closeButton.focus()
       }
-
       const closeModal = () => dialog.close()
 
-      openBtn.addEventListener("click", openModal)
-      openBtn.disabled = false
-      closeBtn.addEventListener("click", closeModal)
-
-      dialog.addEventListener("close", () => {
-        document.body.toggleAttribute("data-search-modal-open", false)
-        window.removeEventListener("click", onClick)
+      openButton.disabled = false
+      openButton.addEventListener("click", openModal)
+      closeButton.addEventListener("click", closeModal)
+      dialog.addEventListener("click", (event) => {
+        if (event.target === dialog) closeModal()
       })
+      dialog.addEventListener("close", () => openButton.focus())
 
-      // Listen for `ctrl + k` and `cmd + k` keyboard shortcuts.
-      window.addEventListener("keydown", (e) => {
-        if ((e.metaKey === true || e.ctrlKey === true) && e.key === "k") {
+      window.addEventListener("keydown", (event) => {
+        if (
+          (event.metaKey || event.ctrlKey) &&
+          event.key.toLowerCase() === "k"
+        ) {
           dialog.open ? closeModal() : openModal()
-          e.preventDefault()
+          event.preventDefault()
         }
-      })
-
-      let translations = {}
-      try {
-        translations = JSON.parse(this.dataset.translations || "{}")
-      } catch {}
-
-      const shouldStrip = this.dataset.stripTrailingSlash !== undefined
-      const stripTrailingSlash = (path: string) =>
-        path.replace(/(.)\/(#.*)?$/, "$1$2")
-      const formatURL = shouldStrip
-        ? stripTrailingSlash
-        : (path: string) => path
-
-      window.addEventListener("DOMContentLoaded", () => {
-        if (import.meta.env.DEV) return
-        const onIdle = window.requestIdleCallback || ((cb) => setTimeout(cb, 1))
-        onIdle(async () => {
-          await import("@pagefind/default-ui/css/ui.css")
-          // @ts-expect-error - @pagefind/default-ui does not provide types
-          const { PagefindUI } = await import("@pagefind/default-ui")
-          new PagefindUI({
-            element: "#search",
-            baseUrl: import.meta.env.BASE_URL,
-            bundlePath:
-              import.meta.env.BASE_URL.replace(/\/$/, "") + "/pagefind/",
-            showImages: false,
-            translations,
-            showSubResults: true,
-            processResult: (result: {
-              url: string
-              sub_results: Array<{ url: string }>
-            }) => {
-              result.url = formatURL(result.url)
-              result.sub_results = result.sub_results.map((sub_result) => {
-                sub_result.url = formatURL(sub_result.url)
-                return sub_result
-              })
-            },
-          })
-        })
       })
     }
   }
-  customElements.define("site-search", SiteSearch)
+
+  if (!customElements.get("site-search")) {
+    customElements.define("site-search", SiteSearch)
+  }
 </script>
 
 <style>
   site-search {
     --icon-size: 0.75em;
+    --pf-background: var(--gray-999);
+    --pf-border: var(--gray-700);
+    --pf-border-focus: var(--gray-300);
+    --pf-border-radius: 0.5rem;
+    --pf-font: var(--font-body);
+    --pf-hover: var(--gray-900);
+    --pf-input-font-size: var(--text-base);
+    --pf-input-height: 2.5rem;
+    --pf-mark: var(--gray-0);
+    --pf-modal-backdrop: var(--accent-subtle-overlay);
+    --pf-modal-max-height: calc(100dvh - 8rem);
+    --pf-modal-max-width: 40rem;
+    --pf-modal-top: 4rem;
+    --pf-outline-focus: var(--accent-regular);
+    --pf-outline-offset: 2px;
+    --pf-outline-width: 2px;
+    --pf-scroll-shadow: var(--gray-999_40);
+    --pf-shadow-lg: var(--shadow-lg);
+    --pf-shadow-md: var(--shadow-md);
+    --pf-shadow-sm: var(--shadow-sm);
+    --pf-skeleton: var(--gray-800);
+    --pf-skeleton-shine: var(--gray-900);
+    --pf-text: var(--gray-0);
+    --pf-text-muted: var(--gray-400);
+    --pf-text-secondary: var(--gray-200);
     display: contents;
+  }
+
+  pagefind-modal-trigger {
+    align-self: center;
+    margin: 0 0.5rem;
   }
 
   button {
     font-family: var(--font-body);
-    margin: 0 0.5rem;
   }
 
-  button[data-open-modal] {
+  button[data-dev-open-modal] {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    height: 2.5rem;
+    margin: 0 0.5rem;
     border: 0;
     background-color: transparent;
     color: var(--gray-100);
     cursor: pointer;
-    height: 2.5rem;
     font-size: var(--text-xl);
   }
 
-  @media (min-width: 50rem) {
-    site-search {
-      --icon-size: 1.2em;
-    }
-    button[data-open-modal] {
-      border: 1px solid var(--gray-600);
-      border-radius: 0.5rem;
-      padding-inline: 0.5rem;
-      background-color: var(--gray-999);
-      color: var(--gray-200);
-      font-size: var(--text-base);
-      width: 100%;
-      max-width: 22rem;
-    }
-    button[data-open-modal]:hover {
-      border-color: var(--gray-200);
-      color: var(--gray-0);
-    }
-
-    button[data-open-modal] > :last-child {
-      margin-inline-start: auto;
-    }
+  button[data-dev-open-modal] > :last-child {
+    margin-inline-start: auto;
   }
 
   button > kbd {
-    border-radius: 0.25rem;
-    font-size: var(--text-sm);
+    display: flex;
     gap: 0.25em;
     padding-inline: 0.375rem;
+    border-radius: 0.25rem;
     background-color: var(--gray-800);
+    font-size: var(--text-sm);
   }
 
   kbd {
     font-family: var(--font-body);
   }
 
-  dialog {
-    margin: 0;
-    font-family: var(--font-body);
-    background-color: var(--gray-800);
-    border: 1px solid var(--gray-700);
+  dialog[data-dev-modal] {
     width: 100%;
     max-width: 100%;
     height: 100%;
     max-height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 1px solid var(--gray-700);
+    background-color: var(--gray-800);
     box-shadow: var(--shadow-lg);
-  }
-  dialog[open] {
-    display: flex;
+    color: var(--gray-200);
   }
 
-  dialog::backdrop {
+  dialog[data-dev-modal]::backdrop {
     background-color: var(--accent-subtle-overlay);
     -webkit-backdrop-filter: blur(0.25rem);
     backdrop-filter: blur(0.25rem);
   }
 
-  .dialog-frame {
+  .dev-dialog-frame {
+    display: flex;
+    min-height: 100%;
     flex-direction: column;
-    flex-grow: 1;
-    gap: 1rem;
     padding: 1rem;
   }
 
-  button[data-close-modal] {
-    position: absolute;
-    z-index: 1;
-    align-items: center;
+  .dev-dialog-frame button {
     align-self: flex-end;
-    height: calc(64px * var(--pagefind-ui-scale));
-    padding: 0.25rem;
     border: 0;
     background: transparent;
-    cursor: pointer;
     color: var(--accent-dark);
+    cursor: pointer;
   }
 
-  #search-dev-warning {
-    color: var(--gray-200);
-    direction: ltr;
+  .dev-dialog-frame p {
     margin: auto;
+    direction: ltr;
     text-align: center;
   }
 
   @media (min-width: 50rem) {
-    dialog {
-      margin: 4rem auto auto;
+    site-search {
+      --icon-size: 1.2em;
+    }
+
+    pagefind-modal-trigger {
+      width: 100%;
+      max-width: 22rem;
+    }
+
+    button[data-dev-open-modal] {
+      width: 100%;
+      max-width: 22rem;
+      padding-inline: 0.5rem;
+      border: 1px solid var(--gray-600);
       border-radius: 0.5rem;
+      background-color: var(--gray-999);
+      color: var(--gray-200);
+      font-size: var(--text-base);
+    }
+
+    button[data-dev-open-modal]:hover {
+      border-color: var(--gray-200);
+      color: var(--gray-0);
+    }
+
+    dialog[data-dev-modal] {
       width: 90%;
       max-width: 40rem;
       height: max-content;
       min-height: 15rem;
-      max-height: calc(100% - 8rem);
+      margin: 4rem auto auto;
+      border-radius: 0.5rem;
     }
 
-    .dialog-frame {
+    .dev-dialog-frame {
+      min-height: 15rem;
       padding: 1.5rem;
     }
   }
 </style>
 
 <style is:global>
-  [data-search-modal-open] {
+  body:has(site-search dialog[open]) {
     overflow: hidden;
-  }
-
-  #search {
-    --pagefind-ui-primary: var(--gray-0);
-    --pagefind-ui-text: var(--gray-200);
-    --pagefind-ui-font: var(--font-body);
-    --pagefind-ui-background: var(--gray-999);
-    --pagefind-ui-border: var(--gray-700);
-    --pagefind-ui-border-width: 1px;
-    --search-cancel-space: 5rem;
-    --search-result-spacing: calc(0.5rem * var(--pagefind-ui-scale));
-    --search-result-pad-inline-start: calc(3.75rem * var(--pagefind-ui-scale));
-    --search-result-pad-inline-end: calc(1.25rem * var(--pagefind-ui-scale));
-    --search-result-pad-block: calc(0.9375rem * var(--pagefind-ui-scale));
-    --search-result-nested-pad-block: calc(0.625rem * var(--pagefind-ui-scale));
-    --search-corners: calc(0.3125rem * var(--pagefind-ui-scale));
-    --search-page-icon-size: calc(1.875rem * var(--pagefind-ui-scale));
-    --search-page-icon-inline-start: calc(
-      (var(--search-result-pad-inline-start) - var(--search-page-icon-size)) / 2
-    );
-    --search-tree-diagram-size: calc(2.5rem * var(--pagefind-ui-scale));
-    --search-tree-diagram-inline-start: calc(
-      (
-          var(--search-result-pad-inline-start) -
-            var(--search-tree-diagram-size)
-        ) /
-        2
-    );
-  }
-
-  #search .pagefind-ui__form::before {
-    --pagefind-ui-text: var(--gray-100);
-    opacity: 1;
-  }
-
-  #search .pagefind-ui__search-input {
-    background-color: var(--pagefind-ui-background);
-    color: var(--pagefind-ui-text);
-    width: calc(100% - var(--search-cancel-space));
-  }
-
-  #search input:focus {
-    --pagefind-ui-border: var(--accent-regular);
-  }
-
-  #search .pagefind-ui__search-clear {
-    inset-inline-end: var(--search-cancel-space);
-    width: calc(60px * var(--pagefind-ui-scale));
-    padding: 0;
-    background-color: transparent;
-    overflow: hidden;
-  }
-  #search .pagefind-ui__search-clear:focus {
-    outline: 1px solid var(--accent-dark);
-  }
-  #search .pagefind-ui__search-clear::before {
-    content: "";
-    -webkit-mask: url("/images/x.svg") center / 50% no-repeat;
-    mask: url("/images/x.svg") center / 50% no-repeat;
-    background-color: var(--accent-dark);
-    display: block;
-    width: 100%;
-    height: 100%;
-  }
-
-  #search .pagefind-ui__result {
-    border: 0;
-    padding: 0;
-  }
-
-  #search .pagefind-ui__result-nested {
-    position: relative;
-    padding: var(--search-result-nested-pad-block)
-      var(--search-result-pad-inline-end);
-    padding-inline-start: var(--search-result-pad-inline-start);
-  }
-
-  #search .pagefind-ui__result-title:not(:where(.pagefind-ui__result-nested *)),
-  #search .pagefind-ui__result-nested {
-    position: relative;
-    background-color: var(--gray-999);
-  }
-
-  #search
-    .pagefind-ui__result-title:not(:where(.pagefind-ui__result-nested *)):hover,
-  #search
-    .pagefind-ui__result-title:not(
-      :where(.pagefind-ui__result-nested *)
-    ):focus-within,
-  #search .pagefind-ui__result-nested:hover,
-  #search .pagefind-ui__result-nested:focus-within {
-    outline: 1px solid var(--accent-dark);
-  }
-
-  #search
-    .pagefind-ui__result-title:not(
-      :where(.pagefind-ui__result-nested *)
-    ):focus-within,
-  #search .pagefind-ui__result-nested:focus-within {
-    background-color: var(--accent-dark);
-  }
-
-  #search .pagefind-ui__result-thumb,
-  #search .pagefind-ui__result-inner {
-    margin-top: 0;
-  }
-
-  #search .pagefind-ui__result-inner > :first-child {
-    border-radius: var(--search-corners) var(--search-corners) 0 0;
-  }
-  #search .pagefind-ui__result-inner > :last-child {
-    border-radius: 0 0 var(--search-corners) var(--search-corners);
-    margin-bottom: var(--search-result-pad-inline-end);
-  }
-
-  #search .pagefind-ui__result-inner > * {
-    background-color: var(--pagefind-ui-background);
-    margin-top: 0;
-    padding: var(--search-result-pad-block) var(--search-result-pad-inline-end);
-    padding-inline-start: var(--search-result-pad-inline-start);
-  }
-  #search .pagefind-ui__result-inner > .pagefind-ui__result-title::before {
-    content: "";
-    position: absolute;
-    inset-block: 0;
-    inset-inline-start: var(--search-page-icon-inline-start);
-    width: var(--search-page-icon-size);
-    background: var(--gray-500);
-    -webkit-mask: url("/images/file-text.svg") center no-repeat;
-    mask: url("/images/file-text.svg") center no-repeat;
-  }
-
-  #search .pagefind-ui__result-inner {
-    align-items: stretch;
-    gap: 1px;
-  }
-
-  #search .pagefind-ui__result-link {
-    --pagefind-ui-text: var(--gray-0);
-    position: unset;
-    font-weight: 600;
-  }
-
-  #search .pagefind-ui__result-link:hover {
-    text-decoration: none;
-  }
-
-  #search .pagefind-ui__result-nested .pagefind-ui__result-link::before {
-    content: unset;
-  }
-
-  #search .pagefind-ui__result-nested::before {
-    content: "";
-    position: absolute;
-    inset-block: 0;
-    inset-inline-start: var(--search-tree-diagram-inline-start);
-    width: var(--search-tree-diagram-size);
-    background: var(--gray-600);
-    -webkit-mask: url("/images/line-vertical.svg") 0% 0% / 100% no-repeat;
-    mask: url("/images/line-vertical.svg") 0% 0% / 100% no-repeat;
-  }
-  #search .pagefind-ui__result-nested:last-child::before {
-    -webkit-mask-image: url("/images/line-vertical-down-right.svg");
-    mask-image: url("/images/line-vertical-down-right.svg");
-  }
-
-  #search .pagefind-ui__result-link::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-  }
-
-  #search .pagefind-ui__result-excerpt {
-    font-size: calc(1rem * var(--pagefind-ui-scale));
-    overflow-wrap: anywhere;
-  }
-
-  #search .pagefind-ui__button {
-    margin-bottom: var(--search-result-pad-inline-end);
-    margin-top: auto;
-  }
-
-  #search mark {
-    color: var(--gray-200);
-    background-color: transparent;
-    font-weight: 600;
-  }
-
-  @media (min-width: 50rem) {
-    #search {
-      --search-cancel-space: 0px;
-      --search-result-spacing: calc(1.5rem * var(--pagefind-ui-scale));
-    }
-
-    #search .pagefind-ui__results > * + * {
-      margin-top: var(--search-result-spacing);
-    }
-
-    #search .pagefind-ui__result-inner > :last-child {
-      margin-bottom: auto;
-    }
-
-    #search .pagefind-ui__button {
-      margin-bottom: auto;
-      margin-top: var(--search-result-spacing);
-    }
   }
 </style>
