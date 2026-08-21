@@ -62,6 +62,8 @@ const labels = {
 </site-search>
 
 <script>
+  import { bindSearchResultNavigation } from "../utils/search"
+
   class SiteSearch extends HTMLElement {
     constructor() {
       super()
@@ -79,14 +81,7 @@ const labels = {
       )
       if (!trigger || !modal) return
 
-      this.addEventListener("click", (event) => {
-        if (
-          event.target instanceof Element &&
-          event.target.closest("pagefind-results a")
-        ) {
-          modal.close?.()
-        }
-      })
+      bindSearchResultNavigation(this, modal)
 
       const expandedTrigger = window.matchMedia("(min-width: 75em)")
       const updateTrigger = ({
