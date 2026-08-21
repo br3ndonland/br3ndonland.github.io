@@ -74,7 +74,19 @@ const labels = {
       }
 
       const trigger = this.querySelector("pagefind-modal-trigger")
-      if (!trigger) return
+      const modal = this.querySelector<HTMLElement & { close?: () => void }>(
+        "pagefind-modal",
+      )
+      if (!trigger || !modal) return
+
+      this.addEventListener("click", (event) => {
+        if (
+          event.target instanceof Element &&
+          event.target.closest("pagefind-results a")
+        ) {
+          modal.close?.()
+        }
+      })
 
       const expandedTrigger = window.matchMedia("(min-width: 75em)")
       const updateTrigger = ({
