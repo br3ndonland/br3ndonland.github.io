@@ -153,6 +153,7 @@ Awesome Disc metadata lives in `src/content/awesome-discs/awesome-discs.json` an
      - `Powerhouse` / `Indicator`
      - `Shout! Factory` / `Scream Factory`
      - `Warner Bros.` / `Warner Archive Collection`
+   - Search existing release metadata before introducing a new `distributor` or `subLabel` spelling. Reuse the established canonical value, such as `Criterion Collection` rather than `Criterion`.
    - Store the exact street date for that edition in ISO `YYYY-MM-DD` format.
    - Keep distinct regional editions or distributors as distinct release objects, even when they concern the same film and year.
 8. For a box set, create or update one film object for every included film. Give each corresponding release the same `collection` ID and title so the component groups them into one list item. Use a lowercase kebab-case collection ID ending in the release year. Reuse existing film objects and collection IDs where applicable.
