@@ -1,53 +1,31 @@
 import { type AstroIntegration, type HookParameters } from "astro"
 import { defineConfig } from "astro/config"
+import { satteri, satteriHeadingIdsPlugin } from "@astrojs/markdown-satteri"
 import mdx from "@astrojs/mdx"
 import sitemap from "@astrojs/sitemap"
 import astroExpressiveCode from "astro-expressive-code"
-import {
-  rehypeHeadingIds,
-  type RehypePlugins,
-  unified,
-} from "@astrojs/markdown-remark"
 import { spawn } from "node:child_process"
 import { dirname, relative } from "node:path"
 import { fileURLToPath } from "node:url"
-import type { Options as RehypeAutolinkOptions } from "rehype-autolink-headings"
-import rehypeAutolinkHeadings from "rehype-autolink-headings"
+import {
+  defineHastPlugin,
+  type HastNode,
+  type HastPluginEntry,
+  type HastVisitorContext,
+} from "satteri"
 import { ICON_PATHS } from "./src/consts"
 import { astroMarkdownEndpoints } from "./src/integrations/astro-markdown-endpoints/index"
 import { astroOpenGraph } from "./src/integrations/astro-open-graph/index"
 
 export { astroOpenGraph } from "./src/integrations/astro-open-graph/index"
 
-export const rehypeAutolinkOptions: RehypeAutolinkOptions = {
-  behavior: "prepend",
-  content: {
-    type: "element",
-    tagName: "span",
-    properties: {
-      className: ["anchor-icon"],
-    },
-    children: [],
-  },
-  headingProperties: { tabIndex: "-1", className: ["heading-element"] },
-  properties: { ariaLabel: "Link to self", className: ["anchor-link"] },
-  test: ["h2", "h3", "h4", "h5", "h6"],
-}
-
-interface HastNode {
-  children?: HastNode[]
-  name?: string
-  properties?: Record<string, unknown>
-  tagName?: string
-  type: string
-  value?: string
-}
-
-interface HastElement extends HastNode {
-  children: HastNode[]
-  tagName: string
-  type: "element"
-}
+type HastElement = Extract<HastNode, { type: "element" }>
+type HastElementContent = HastElement["children"][number]
+type HastElementParent = Extract<HastElementContent, { children: unknown[] }>
+type HastMdxElement = Extract<
+  HastNode,
+  { type: "mdxJsxFlowElement" | "mdxJsxTextElement" }
+>
 
 const calloutLabels = {
   caution: "Caution",
@@ -76,12 +54,19 @@ const isElement = (
 ): node is HastElement =>
   node?.type === "element" && (!tagName || node.tagName === tagName)
 
+const isElementParent = (node: HastElementContent): node is HastElementParent =>
+  "children" in node
+
 const isWhitespaceText = (node: HastNode | undefined) =>
   node?.type === "text" && !node.value?.trim()
 
-const getTextContent = (nodes: HastNode[]): string =>
+const getTextContent = (nodes: readonly HastElementContent[]): string =>
   nodes
-    .map((node) => node.value ?? getTextContent(node.children ?? []))
+    .map((node) =>
+      "value" in node && node.value
+        ? node.value
+        : getTextContent(isElementParent(node) ? node.children : []),
+    )
     .join("")
 
 const createCalloutIcon = (type: CalloutType): HastElement => {
@@ -108,15 +93,15 @@ const splitCalloutParagraph = (paragraph: HastElement) => {
   if (!markerMatch?.[1]) return
 
   const type = markerMatch[1].toLowerCase() as CalloutType
-  const inlineChildren: HastNode[] = [
+  const inlineChildren: HastElementContent[] = [
     {
       ...firstChild,
       value: firstChild.value.slice(markerMatch[0].length),
     },
     ...paragraph.children.slice(1),
   ]
-  const bodyChildren: HastNode[] = []
-  const titleChildren: HastNode[] = []
+  const bodyChildren: HastElementContent[] = []
+  const titleChildren: HastElementContent[] = []
   let isBody = false
 
   for (const child of inlineChildren) {
@@ -145,136 +130,203 @@ const splitCalloutParagraph = (paragraph: HastElement) => {
   }
 
   const title = getTextContent(titleChildren).trim()
+  const resolvedTitleChildren: HastElementContent[] = title
+    ? titleChildren
+    : [{ type: "text", value: calloutLabels[type] }]
   return {
     bodyChildren,
     title: title || calloutLabels[type],
-    titleChildren: title
-      ? titleChildren
-      : [{ type: "text", value: calloutLabels[type] }],
+    titleChildren: resolvedTitleChildren,
     type,
   }
 }
 
-export const rehypeCallouts = () => (tree: HastNode) => {
-  const visit = (node: HastNode) => {
-    const { children } = node
-    if (!children) return
-
-    for (let index = 0; index < children.length; index += 1) {
-      const child = children[index]
-      if (!child) continue
-
-      visit(child)
-
-      if (!isElement(child, "blockquote")) continue
-
-      let paragraphIndex = 0
-      while (isWhitespaceText(child.children[paragraphIndex])) {
-        paragraphIndex += 1
-      }
-
-      const firstChild = child.children[paragraphIndex]
-      if (!isElement(firstChild, "p")) continue
-
-      const callout = splitCalloutParagraph(firstChild)
-      if (!callout) continue
-
-      const remainingChildren = child.children.slice(paragraphIndex + 1)
-
-      const bodyChildren = callout.bodyChildren.length
-        ? [
-            { ...firstChild, children: callout.bodyChildren },
-            ...remainingChildren,
-          ]
-        : remainingChildren
-
-      children[index] = {
-        children: [
-          {
-            children: [
-              createCalloutIcon(callout.type),
-              ...callout.titleChildren,
-            ],
-            properties: { className: ["callout-title"] },
-            tagName: "p",
-            type: "element",
-          },
-          ...bodyChildren,
-        ],
-        properties: {
-          ariaLabel: callout.title,
-          className: ["callout", `callout-${callout.type}`],
-        },
-        tagName: "aside",
-        type: "element",
-      }
-    }
+const getCallout = (blockquote: HastElement) => {
+  let paragraphIndex = 0
+  while (isWhitespaceText(blockquote.children[paragraphIndex])) {
+    paragraphIndex += 1
   }
 
-  visit(tree)
+  const paragraph = blockquote.children[paragraphIndex]
+  if (!isElement(paragraph, "p")) return
+
+  const callout = splitCalloutParagraph(paragraph)
+  if (!callout) return
+
+  return { callout, paragraph, paragraphIndex }
 }
 
-const isCaption = (node: HastNode | undefined): node is HastNode =>
-  isElement(node, "caption") ||
-  (node?.name === "caption" &&
-    (node.type === "mdxJsxFlowElement" || node.type === "mdxJsxTextElement"))
+const transformNestedCallouts = (
+  node: HastElementContent,
+): HastElementContent => {
+  if (isElement(node, "blockquote")) {
+    const transformed = createCalloutElement(node)
+    if (transformed) return transformed
+  }
 
-const toCaptionElement = (node: HastNode): HastElement => {
+  if (!isElementParent(node)) return node
+  return {
+    ...node,
+    children: node.children.map(transformNestedCallouts),
+  } as HastElementContent
+}
+
+const createCalloutElement = (
+  blockquote: HastElement,
+): HastElement | undefined => {
+  const parsed = getCallout(blockquote)
+  if (!parsed) return
+
+  const { callout, paragraph, paragraphIndex } = parsed
+  const remainingChildren = blockquote.children
+    .slice(paragraphIndex + 1)
+    .map(transformNestedCallouts)
+  const bodyChildren: HastElementContent[] = callout.bodyChildren.length
+    ? [
+        {
+          ...paragraph,
+          children: callout.bodyChildren.map(transformNestedCallouts),
+        },
+        ...remainingChildren,
+      ]
+    : remainingChildren
+
+  return {
+    children: [
+      {
+        children: [createCalloutIcon(callout.type), ...callout.titleChildren],
+        properties: { className: ["callout-title"] },
+        tagName: "p",
+        type: "element",
+      },
+      ...bodyChildren,
+    ],
+    properties: {
+      ariaLabel: callout.title,
+      className: ["callout", `callout-${callout.type}`],
+    },
+    tagName: "aside",
+    type: "element",
+  }
+}
+
+const hasCalloutAncestor = (node: HastNode, context: HastVisitorContext) => {
+  let parent = context.parent(node)
+  while (parent) {
+    if (isElement(parent, "blockquote") && getCallout(parent)) return true
+    parent = context.parent(parent)
+  }
+  return false
+}
+
+export const satteriCallouts = defineHastPlugin({
+  name: "callouts",
+  element: {
+    filter: ["blockquote"],
+    visit(node, context) {
+      if (hasCalloutAncestor(node, context)) return
+      return createCalloutElement(node)
+    },
+  },
+})
+
+export const satteriAutolinkHeadings = defineHastPlugin({
+  name: "autolink-headings",
+  element: {
+    filter: ["h2", "h3", "h4", "h5", "h6"],
+    visit(node, context) {
+      const id = node.properties?.id
+      if (typeof id !== "string") return
+
+      context.setProperty(node, "className", ["heading-element"])
+      context.setProperty(node, "tabIndex", "-1")
+      context.prependChild(node, {
+        children: [
+          {
+            children: [],
+            properties: { className: ["anchor-icon"] },
+            tagName: "span",
+            type: "element",
+          },
+        ],
+        properties: {
+          ariaLabel: "Link to self",
+          className: ["anchor-link"],
+          href: `#${id}`,
+        },
+        tagName: "a",
+        type: "element",
+      })
+    },
+  },
+})
+
+const isCaption = (
+  node: HastNode | undefined,
+): node is HastElement | HastMdxElement =>
+  isElement(node, "caption") ||
+  ((node?.type === "mdxJsxFlowElement" || node?.type === "mdxJsxTextElement") &&
+    node.name === "caption")
+
+const toCaptionElement = (node: HastElement | HastMdxElement): HastElement => {
   if (isElement(node, "caption")) return node
   return {
-    children: node.children ?? [],
+    children: node.children,
+    properties: {},
     tagName: "caption",
     type: "element",
   }
 }
 
-export const rehypeTableCaptions = () => (tree: HastNode) => {
-  const visit = (node: HastNode) => {
-    const { children } = node
-    if (!children) return
+export const satteriTableCaptions = defineHastPlugin({
+  name: "table-captions",
+  element: {
+    filter: ["table"],
+    visit(node, context) {
+      const parent = context.parent(node)
+      const tableIndex = context.indexOf(node)
+      let captionNode: HastElement | HastMdxElement | undefined
 
-    for (let index = 0; index < children.length; index += 1) {
-      const child = children[index]
-      if (!child) continue
+      if (parent && tableIndex !== undefined) {
+        let captionIndex = tableIndex - 1
+        while (
+          captionIndex >= 0 &&
+          isWhitespaceText(parent.children[captionIndex])
+        ) {
+          captionIndex -= 1
+        }
 
-      visit(child)
-
-      if (!isElement(child, "table")) continue
-
-      let captionIndex = index - 1
-      while (captionIndex >= 0 && isWhitespaceText(children[captionIndex])) {
-        captionIndex -= 1
+        const candidate = parent.children[captionIndex]
+        if (isCaption(candidate)) captionNode = candidate
       }
 
-      const captionNode = children[captionIndex]
-      if (isCaption(captionNode)) {
-        child.children.unshift(toCaptionElement(captionNode))
-        children.splice(captionIndex, 1)
-        index -= 1
+      if (captionNode) context.removeNode(captionNode)
+
+      const table: HastElement = {
+        ...node,
+        children: [
+          ...(captionNode ? [toCaptionElement(captionNode)] : []),
+          ...node.children,
+        ],
       }
 
-      children[index] = {
-        children: [child],
+      return {
+        children: [table],
         properties: { className: ["table-scroll"] },
         tagName: "div",
         type: "element",
       }
-    }
-  }
+    },
+  },
+})
 
-  visit(tree)
-}
-
-export const markdownRehypePlugins: RehypePlugins = [
-  rehypeCallouts,
-  /*
-    rehypeHeadingIds must occur before rehypeAutolinkHeadings
-    or headings will not be properly linked.
-  */
-  rehypeHeadingIds,
-  [rehypeAutolinkHeadings, rehypeAutolinkOptions],
-  rehypeTableCaptions,
-]
+export const markdownHastPlugins = [
+  satteriCallouts,
+  // Keep this factory before autolinking so IDs and slug state are document-scoped.
+  satteriHeadingIdsPlugin,
+  satteriAutolinkHeadings,
+  satteriTableCaptions,
+] satisfies HastPluginEntry[]
 
 export const astroSearch = (): AstroIntegration => {
   const integrationName = "astro-search"
@@ -316,9 +368,9 @@ export default defineConfig({
     astroMarkdownEndpoints(),
   ],
   markdown: {
-    processor: unified({
-      rehypePlugins: markdownRehypePlugins,
-      smartypants: false,
+    processor: satteri({
+      features: { smartPunctuation: false },
+      hastPlugins: markdownHastPlugins,
     }),
   },
   prefetch: true,
