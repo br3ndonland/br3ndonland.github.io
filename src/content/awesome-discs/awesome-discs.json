@@ -2724,6 +2724,39 @@
     ]
   },
   {
+    "id": "phase-iv-1974",
+    "title": "Phase IV",
+    "originalReleaseDate": "1974-09-13",
+    "urls": [
+      {
+        "type": "IMDb",
+        "url": "https://www.imdb.com/title/tt0070531/"
+      },
+      {
+        "type": "TMDB",
+        "url": "https://www.themoviedb.org/movie/59189"
+      },
+      {
+        "type": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Phase_IV_%281974_film%29"
+      }
+    ],
+    "releases": [
+      {
+        "format": "UHD",
+        "distributor": "Vinegar Syndrome",
+        "date": "2024-02-27",
+        "url": "https://www.blu-ray.com/movies/Phase-IV-4K-Blu-ray/352175/"
+      },
+      {
+        "format": "UHD",
+        "distributor": "88 Films",
+        "date": "2026-04-20",
+        "url": "https://www.blu-ray.com/movies/Phase-IV-4K-Blu-ray/405897/"
+      }
+    ]
+  },
+  {
     "id": "the-gambler-1974",
     "title": "The Gambler",
     "originalReleaseDate": "1974-10-02",
