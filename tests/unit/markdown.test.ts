@@ -177,6 +177,18 @@ describe("createMarkdownPage", () => {
     expect(markdown.endsWith("\n\n")).toBe(false)
   })
 
+  it("uses the document title for homepage metadata", () => {
+    const markdown = createMarkdownPage({
+      ...options,
+      canonicalUrl: new URL("/", site),
+      html: `<!doctype html><html><head><title>Brendon Smith</title></head><body><h1>Hi, I'm Brendon.</h1></body></html>`,
+      markdownUrl: new URL("/index.md", site),
+    })
+
+    expect(markdown).toContain('title: "Brendon Smith"')
+    expect(markdown).toContain("# Hi, I'm Brendon.")
+  })
+
   it("is deterministic", () => {
     expect(createMarkdownPage(options)).toBe(createMarkdownPage(options))
   })

@@ -225,10 +225,12 @@ export const createMarkdownPage = ({
   for (const element of body.querySelectorAll(ignoredSelectors)) {
     element.remove()
   }
+  const headingTitle = document.querySelector("h1")?.textContent.trim()
+  const documentTitle = document.querySelector("title")?.textContent.trim()
   const title =
-    document.querySelector("h1")?.textContent.trim() ||
-    document.querySelector("title")?.textContent.trim() ||
-    canonicalUrl.pathname
+    canonicalUrl.pathname === "/"
+      ? documentTitle || headingTitle || canonicalUrl.pathname
+      : headingTitle || documentTitle || canonicalUrl.pathname
   prepareCards(body)
   prepareTags(body)
   prepareLabeledLinks(body)
