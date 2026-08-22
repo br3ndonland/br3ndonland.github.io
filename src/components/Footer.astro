@@ -1,10 +1,15 @@
 ---
 import type { Social } from "@types"
 import { SITE, SOCIALS } from "@consts"
+import { getMarkdownUrlPath } from "../utils/markdown"
 import Icon from "./Icon.astro"
+import MarkdownActions from "./MarkdownActions.astro"
+
+const markdownPath = getMarkdownUrlPath(Astro.url.pathname)
 ---
 
 <footer data-markdown-ignore>
+  {markdownPath && <MarkdownActions markdownPath={markdownPath} />}
   <p class="socials">
     {SOCIALS.map((social: Social) => <a href={social.HREF}>{social.TITLE}</a>)}
   </p>

@@ -7,6 +7,7 @@ import {
   getCanonicalPath,
   getMarkdownOutputPath,
 } from "../../src/integrations/astro-markdown/index"
+import { getMarkdownUrlPath } from "../../src/utils/markdown"
 import { afterEach, describe, expect, it } from "vitest"
 
 const temporaryDirectories: string[] = []
@@ -52,6 +53,17 @@ describe("Markdown route paths", () => {
     [path.join("feed", "page.html"), "/feed/page"],
   ])("gets the canonical route for %s", (htmlPath, canonicalPath) => {
     expect(getCanonicalPath(htmlPath)).toBe(canonicalPath)
+  })
+
+  it.each([
+    ["/", "/index.md"],
+    ["/about/", "/about.md"],
+    ["/projects/example", "/projects/example.md"],
+    ["/feed/page.html", "/feed/page.md"],
+    ["/404", undefined],
+    ["/404.html", undefined],
+  ])("gets the visible Markdown link for %s", (pathname, markdownPath) => {
+    expect(getMarkdownUrlPath(pathname)).toBe(markdownPath)
   })
 })
 
