@@ -164,6 +164,27 @@ const createTurndownService = () => {
     strongDelimiter: "**",
   })
   service.use(gfm)
+  service.addRule("compactListItem", {
+    filter: "li",
+    replacement: (content, node, options) => {
+      const parent = node.parentElement
+      let prefix = `${options.bulletListMarker} `
+      if (parent?.nodeName === "OL") {
+        const start = parent.getAttribute("start")
+        const index = Array.from(parent.children).indexOf(node)
+        prefix = `${start ? Number(start) + index : index + 1}.  `
+      }
+
+      const hasTrailingNewline = /\n$/.test(content)
+      const trimmedContent = content.replace(/^\n+/, "").replace(/\n+$/, "")
+      const normalizedContent =
+        `${trimmedContent}${hasTrailingNewline ? "\n" : ""}`.replaceAll(
+          "\n",
+          `\n${" ".repeat(prefix.length)}`,
+        )
+      return `${prefix}${normalizedContent}${node.nextSibling ? "\n" : ""}`
+    },
+  })
   service.addRule("expressiveCode", {
     filter: (node) =>
       node.nodeName === "PRE" && node.hasAttribute("data-language"),

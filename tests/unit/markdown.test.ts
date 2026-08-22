@@ -104,6 +104,10 @@ describe("createMarkdownPage", () => {
               <div class="pill">Astro</div>
               <div class="pill">TypeScript</div>
             </div>
+            <ul>
+              <li>Parent item<ul><li>Nested item</li></ul></li>
+              <li><input type="checkbox" checked>Complete item</li>
+            </ul>
             <aside class="callout"><p>Important context.</p></aside>
             <table>
               <caption>Example values</caption>
@@ -152,7 +156,10 @@ describe("createMarkdownPage", () => {
     )
     expect(markdown).not.toContain("### Card title")
     expect(markdown).toContain("## Skills used:")
-    expect(markdown).toMatch(/-\s+Astro\n-\s+TypeScript/)
+    expect(markdown).toContain("- Astro\n- TypeScript")
+    expect(markdown).toContain("- Parent item\n  - Nested item")
+    expect(markdown).toContain("- [x] Complete item")
+    expect(markdown).not.toMatch(/^\s*- {2,}/m)
     expect(markdown).toContain("Important context.")
     expect(markdown).toContain("Example values")
     expect(markdown).toContain("| Name | Value |")

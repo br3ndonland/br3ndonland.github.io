@@ -96,15 +96,6 @@ const { markdownPath } = Astro.props
     display: none;
   }
 
-  a:hover,
-  button:hover,
-  a:focus-visible,
-  button:focus-visible {
-    border-color: transparent;
-    background-color: var(--accent-regular);
-    color: var(--accent-text-over);
-  }
-
   a:focus-visible,
   button:focus-visible {
     outline: 2px solid var(--accent-light);
@@ -116,11 +107,25 @@ const { markdownPath } = Astro.props
     opacity: 0.7;
   }
 
-  @media (forced-colors: active) {
+  @media (hover: hover) {
     a:hover,
-    button:hover,
+    button:hover {
+      border-color: transparent;
+      background-color: var(--accent-regular);
+      color: var(--accent-text-over);
+    }
+  }
+
+  @media (forced-colors: active) {
     a:focus-visible,
     button:focus-visible {
+      border-color: ButtonText;
+    }
+  }
+
+  @media (forced-colors: active) and (hover: hover) {
+    a:hover,
+    button:hover {
       border-color: ButtonText;
     }
   }
