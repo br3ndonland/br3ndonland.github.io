@@ -4332,6 +4332,40 @@
     ]
   },
   {
+    "id": "swamp-thing-1982",
+    "title": "Swamp Thing",
+    "originalReleaseDate": "1982-02-12",
+    "urls": [
+      {
+        "type": "IMDb",
+        "url": "https://www.imdb.com/title/tt0084745/"
+      },
+      {
+        "type": "TMDB",
+        "url": "https://www.themoviedb.org/movie/17918"
+      },
+      {
+        "type": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Swamp_Thing_%281982_film%29"
+      }
+    ],
+    "releases": [
+      {
+        "format": "UHD",
+        "distributor": "MVD Visual",
+        "subLabel": "MVD Rewind Collection",
+        "date": "2023-08-08",
+        "url": "https://www.blu-ray.com/movies/Swamp-Thing-4K-Blu-ray/328620/"
+      },
+      {
+        "format": "UHD",
+        "distributor": "88 Films",
+        "date": "2026-02-09",
+        "url": "https://www.blu-ray.com/movies/Swamp-Thing-4K-Blu-ray/401238/"
+      }
+    ]
+  },
+  {
     "id": "evil-under-the-sun-1982",
     "title": "Evil Under the Sun",
     "originalReleaseDate": "1982-03-05",
