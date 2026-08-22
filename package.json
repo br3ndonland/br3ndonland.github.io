@@ -34,7 +34,8 @@
       },
       {
         "files": [
-          "AGENTS.md"
+          "AGENTS.md",
+          "SKILL.md"
         ],
         "options": {
           "proseWrap": "never"

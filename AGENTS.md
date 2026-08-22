@@ -120,61 +120,7 @@ Keep contributions compatible with this sequence.
 
 Awesome Disc metadata lives in `src/content/awesome-discs/awesome-discs.json` and is validated by the `awesomeDiscs` schema in `src/content.config.ts`. The project page derives its yearly lists from this data. Do not add a parallel hand-written list to `src/content/projects/awesome-discs.mdx`.
 
-#### Minimum request input
-
-- Require one full Blu-ray.com release page URL for each requested edition.
-- Treat the film title and original release year as optional but recommended cross-checks. A request can be as simple as:
-
-  ```text
-  https://www.blu-ray.com/movies/Gilda-4K-Blu-ray/404721/
-  ```
-
-  A readable batch can use one release per line:
-
-  ```text
-  Gilda (1946): https://www.blu-ray.com/movies/Gilda-4K-Blu-ray/404721/
-  Trouble in Paradise (1932): https://www.blu-ray.com/movies/Trouble-in-Paradise-4K-Blu-ray/404722/
-  ```
-
-- Do not require the user to supply wiki-link syntax, format, distributor, imprint, release date, IMDb ID, TMDB ID, or Wikipedia URL. Research these fields from the release page and film databases.
-- Ask for clarification only when the supplied page cannot be accessed, does not identify the film or edition unambiguously, or does not establish the contents of a box set.
-
-#### Research and data entry
-
-1. Open the supplied Blu-ray.com page and confirm that it is the exact edition requested. Record its canonical URL, disc format, distributor or label, street date, and box-set contents when applicable. Do not infer these fields from the URL slug alone.
-2. Search the existing JSON before adding anything. Match on the Blu-ray.com URL, title and year, IMDb ID, and TMDB ID. Add another `releases` item to an existing film instead of creating a duplicate film object.
-3. Resolve the film separately from the physical release. Use the film's established display title, usually its canonical English-language title, rather than a translated Blu-ray.com listing or packaging title. Verify that title, year, director, and identifiers all refer to the same work or cut.
-4. Use Wikidata as an identifier hub when possible. Confirm the IMDb title ID (`P345`), TMDB movie ID (`P4947`), linked English Wikipedia page, and candidate original release dates (`P577`) against IMDb, TMDB, and Wikipedia. Do not trust an identifier match based on title alone.
-5. Add exactly one canonical URL of each type, in the existing order: `IMDb`, `TMDB`, and `Wikipedia`.
-6. Build a stable film `id` from the established title and original release year using lowercase ASCII kebab-case, for example `gilda-1946`. Reuse an existing ID when adding another release. If two works would produce the same ID, add the smallest stable distinguishing qualifier.
-7. Populate the physical release fields as follows:
-   - Use `UHD` for a 4K Ultra HD release and `Blu-ray` for a standard Blu-ray.
-   - Store the parent company or main label in `distributor` and a recurring imprint in `subLabel`. Follow existing spellings and pairings, such as:
-     - `Powerhouse` / `Indicator`
-     - `Shout! Factory` / `Scream Factory`
-     - `Warner Bros.` / `Warner Archive Collection`
-   - Search existing release metadata before introducing a new `distributor` or `subLabel` spelling. Reuse the established canonical value, such as `Criterion Collection` rather than `Criterion`.
-   - Store the exact street date for that edition in ISO `YYYY-MM-DD` format.
-   - Keep distinct regional editions or distributors as distinct release objects, even when they concern the same film and year.
-8. For a box set, create or update one film object for every included film. Give each corresponding release the same `collection` ID and title so the component groups them into one list item. Use a lowercase kebab-case collection ID ending in the release year. Reuse existing film objects and collection IDs where applicable.
-9. Avoid exact duplicate releases. Within a film, treat the combination of release date, distributor, `subLabel`, and URL as the release identity. Keep new film and release objects near the existing chronological order without reordering unrelated data.
-
-#### Resolving date conflicts
-
-- Keep `originalReleaseDate` separate from the physical disc release `date`. The former identifies the film; the latter identifies the Blu-ray edition.
-- For `originalReleaseDate`, use the earliest verified public premiere or exhibition of the same film or version. Include a documented festival premiere, but exclude production completion dates, private screenings, later regional openings, restorations, re-releases, and home-video dates.
-- Classify apparently conflicting dates before choosing one. They may describe a festival premiere versus theatrical opening, different countries, a first part versus a complete version, or a substantially different cut. Do not assign the date of a source film to a compilation or recut released as a distinct work.
-- Treat Wikidata dates as candidates, not automatic answers. Inspect `P577` precision, qualifiers, and references. Never convert a year-only value to January 1. Because January 1 can also be a legitimate premiere date, verify it rather than rejecting it automatically.
-- Prefer a film archive, festival record, studio or distributor record, or another source with direct knowledge when IMDb, TMDB, Wikipedia, or Wikidata disagree. Use the database records and Wikipedia citations to locate and corroborate the strongest source.
-- For a film first released in parts, use the first verified public release of the first part. For example, the collection records the July 10, 1970, Taiwanese first-part premiere of _A Touch of Zen_, not a year-only placeholder or the later international release.
-- For a disc street-date conflict, distinguish regional editions first. If the same edition has genuinely conflicting dates, prefer the label or distributor's current official product information over an aggregator and note the discrepancy in the work summary.
-- Do not guess when credible sources remain irreconcilable or only a year is known. Report the evidence and ask the user before adding a fabricated exact date. Briefly explain every non-obvious date decision when handing off the change.
-
-#### Validation
-
-- Confirm that each film has exactly one IMDb, one TMDB, and one Wikipedia URL.
-- Confirm that every new release has a valid format, distributor, exact date, and Blu-ray.com URL, plus consistent collection metadata when applicable.
-- Run the repository's required local validation after editing the collection.
+To add releases, invoke the repository skill with `$awesome-discs URL1 URL2`, or select `awesome-discs` using `/skills`.
 
 ## Dependency and tooling changes
 
