@@ -1,0 +1,132 @@
+---
+import Icon from "./Icon.astro"
+
+interface Props {
+  markdownPath: string
+}
+
+const { markdownPath } = Astro.props
+---
+
+<markdown-actions data-markdown-ignore data-markdown-path={markdownPath}>
+  <a href={markdownPath}>
+    <Icon icon="file-doc" size="1.2em" />
+    <span>View as Markdown</span>
+  </a>
+  <button type="button" data-copy-markdown hidden>
+    <Icon icon="copy" size="1.2em" />
+    <span data-copy-label aria-live="polite">Copy Markdown</span>
+  </button>
+</markdown-actions>
+
+<script>
+  class MarkdownActions extends HTMLElement {
+    connectedCallback() {
+      const button = this.querySelector<HTMLButtonElement>(
+        "[data-copy-markdown]",
+      )
+      const label = this.querySelector<HTMLElement>("[data-copy-label]")
+      const markdownPath = this.dataset.markdownPath
+      if (!button || !label || !markdownPath) return
+
+      let resetTimer: number | undefined
+      const setLabel = (text: string) => {
+        window.clearTimeout(resetTimer)
+        label.textContent = text
+        resetTimer = window.setTimeout(() => {
+          label.textContent = "Copy Markdown"
+        }, 2000)
+      }
+
+      button.hidden = false
+      button.addEventListener("click", async () => {
+        button.disabled = true
+        try {
+          const response = await fetch(markdownPath)
+          if (!response.ok) throw new Error(`HTTP ${response.status}`)
+          await navigator.clipboard.writeText(await response.text())
+          setLabel("Copied!")
+        } catch (error) {
+          console.error("Unable to copy Markdown", error)
+          setLabel("Copy failed")
+        } finally {
+          button.disabled = false
+        }
+      })
+    }
+  }
+
+  customElements.define("markdown-actions", MarkdownActions)
+</script>
+
+<style>
+  markdown-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  a,
+  button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 2.5rem;
+    border: 1px solid var(--gray-600);
+    border-radius: 999rem;
+    padding: 0.5rem 0.75rem;
+    background-color: transparent;
+    color: var(--gray-300);
+    font: inherit;
+    font-weight: 600;
+    text-decoration: none;
+    transition:
+      background-color var(--theme-transition),
+      border-color var(--theme-transition),
+      color var(--theme-transition);
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  button[hidden] {
+    display: none;
+  }
+
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--accent-light);
+    outline-offset: 0.2rem;
+  }
+
+  button:disabled {
+    cursor: wait;
+    opacity: 0.7;
+  }
+
+  @media (hover: hover) {
+    a:hover,
+    button:hover {
+      border-color: transparent;
+      background-color: var(--accent-regular);
+      color: var(--accent-text-over);
+    }
+  }
+
+  @media (forced-colors: active) {
+    a:focus-visible,
+    button:focus-visible {
+      border-color: ButtonText;
+    }
+  }
+
+  @media (forced-colors: active) and (hover: hover) {
+    a:hover,
+    button:hover {
+      border-color: ButtonText;
+    }
+  }
+</style>
