@@ -6,7 +6,7 @@ import {
   generateMarkdownPages,
   getCanonicalPath,
   getMarkdownOutputPath,
-} from "../../src/integrations/astro-markdown/index"
+} from "../../src/integrations/astro-markdown-endpoints/index"
 import { getMarkdownUrlPath } from "../../src/utils/markdown"
 import { afterEach, describe, expect, it } from "vitest"
 
