@@ -61,14 +61,18 @@
     "astro": "^7.2.0",
     "astro-expressive-code": "^0.44.1",
     "glightbox": "^3.3.1",
+    "node-html-parser": "^9.0.1",
     "pagefind": "~1.5.0",
     "plyr": "^3.8.4",
     "rehype-autolink-headings": "^7.1.0",
     "satori": "^0.26.0",
     "sharp": "^0.35.3",
+    "turndown": "^7.2.4",
+    "turndown-plugin-gfm": "^1.0.2",
     "typescript": "^5.9.3"
   },
   "devDependencies": {
+    "@types/turndown": "^5.0.6",
     "@vitest/coverage-v8": "~4.1.10",
     "cspell": "^9.8.0",
     "prettier": "~3.6.2",

@@ -14,6 +14,7 @@ import { fileURLToPath } from "node:url"
 import type { Options as RehypeAutolinkOptions } from "rehype-autolink-headings"
 import rehypeAutolinkHeadings from "rehype-autolink-headings"
 import { ICON_PATHS } from "./src/consts"
+import { astroMarkdownEndpoints } from "./src/integrations/astro-markdown/index"
 import { astroOpenGraph } from "./src/integrations/astro-open-graph/index"
 
 export { astroOpenGraph } from "./src/integrations/astro-open-graph/index"
@@ -312,6 +313,7 @@ export default defineConfig({
     astroSearch(),
     mdx(),
     sitemap(),
+    astroMarkdownEndpoints(),
   ],
   markdown: {
     processor: unified({

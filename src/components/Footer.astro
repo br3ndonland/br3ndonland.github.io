@@ -4,7 +4,7 @@ import { SITE, SOCIALS } from "@consts"
 import Icon from "./Icon.astro"
 ---
 
-<footer>
+<footer data-markdown-ignore>
   <p class="socials">
     {SOCIALS.map((social: Social) => <a href={social.HREF}>{social.TITLE}</a>)}
   </p>

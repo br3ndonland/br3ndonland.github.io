@@ -31,6 +31,7 @@ const headingIds = tableOfContentsItems.flatMap(function flatten(
     <page-table-of-contents
       class={variant}
       data-heading-ids={JSON.stringify(headingIds)}
+      data-markdown-ignore
     >
       {variant === "mobile" ? (
         <nav class="mobile-toc" aria-label="Table of contents">
