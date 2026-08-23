@@ -1,16 +1,23 @@
 import type { HookParameters } from "astro"
-import { createMarkdownProcessor } from "@astrojs/markdown-remark"
+import { satteri } from "@astrojs/markdown-satteri"
+import mdx from "@astrojs/mdx"
+import astroExpressiveCode from "astro-expressive-code"
 import fs from "node:fs/promises"
 import os from "node:os"
 import path from "node:path"
 import { pathToFileURL } from "node:url"
 import {
-  astroOpenGraph,
-  astroSearch,
+  defineHastPlugin,
+  type HastPluginEntry,
+  markdownToHtml,
+  mdxToJs,
+} from "satteri"
+import { astroOpenGraph, astroSearch } from "../../astro.config"
+import {
   calloutIcons,
-  markdownRehypePlugins,
-  rehypeTableCaptions,
-} from "../../astro.config"
+  markdownHastPlugins,
+  satteriTableCaptions,
+} from "../../src/plugins/satteri/index"
 import { describe, expect, it } from "vitest"
 
 type AstroBuildDoneHookOptions = HookParameters<"astro:build:done">
@@ -58,21 +65,68 @@ const openGraphWrap = (...children: unknown[]) => ({
   },
 })
 
-describe("markdownRehypePlugins", () => {
-  it("adds anchor links after adding heading ids", async () => {
-    const processor = await createMarkdownProcessor({
-      rehypePlugins: markdownRehypePlugins,
-      syntaxHighlight: false,
-    })
+const renderMarkdown = async (
+  content: string,
+  extraPlugins: HastPluginEntry[] = [],
+) => {
+  const astro = {
+    frontmatter: {},
+    headings: [] as Array<{ depth: number; slug: string; text: string }>,
+    localImagePaths: new Set<string>(),
+    remoteImagePaths: new Set<string>(),
+  }
+  const result = await markdownToHtml(content, {
+    data: { astro },
+    features: { smartPunctuation: false },
+    hastPlugins: [...markdownHastPlugins, ...extraPlugins],
+  })
+  return { code: result.html, headings: astro.headings }
+}
 
-    const { code } = await processor.render("## Research")
+describe("markdownHastPlugins", () => {
+  it("adds anchor links after adding heading ids", async () => {
+    const { code, headings } = await renderMarkdown(`## Research
+
+## Research
+
+### Methods
+
+#### Results
+
+##### Discussion
+
+###### References`)
 
     expect(code).toContain(
-      '<h2 id="research" tabindex="-1" class="heading-element">',
+      '<h2 id="research" class="heading-element" tabindex="-1">',
     )
     expect(code).toContain(
       '<a aria-label="Link to self" class="anchor-link" href="#research">',
     )
+    expect(code).toContain('<h2 id="research-1"')
+    for (const [depth, slug] of [
+      [3, "methods"],
+      [4, "results"],
+      [5, "discussion"],
+      [6, "references"],
+    ] as const) {
+      expect(code).toContain(
+        `<h${depth} id="${slug}" class="heading-element" tabindex="-1">`,
+      )
+      expect(code).toContain(`href="#${slug}"`)
+    }
+    expect(headings).toEqual([
+      { depth: 2, slug: "research", text: "Research" },
+      { depth: 2, slug: "research-1", text: "Research" },
+      { depth: 3, slug: "methods", text: "Methods" },
+      { depth: 4, slug: "results", text: "Results" },
+      { depth: 5, slug: "discussion", text: "Discussion" },
+      { depth: 6, slug: "references", text: "References" },
+    ])
+
+    const secondDocument = await renderMarkdown("## Research")
+    expect(secondDocument.code).toContain('<h2 id="research"')
+    expect(secondDocument.code).not.toContain('id="research-2"')
   })
 
   it.each([
@@ -82,12 +136,7 @@ describe("markdownRehypePlugins", () => {
     ["TIP", "Tip", calloutIcons.tip],
     ["WARNING", "Warning", calloutIcons.warning],
   ])("renders %s callouts with a default title", async (type, title, icon) => {
-    const processor = await createMarkdownProcessor({
-      rehypePlugins: markdownRehypePlugins,
-      syntaxHighlight: false,
-    })
-
-    const { code } = await processor.render(`> [!${type}]\n> Callout content`)
+    const { code } = await renderMarkdown(`> [!${type}]\n> Callout content`)
 
     expect(code).toContain(`class="callout callout-${type.toLowerCase()}"`)
     expect(code).toContain(`aria-label="${title}"`)
@@ -99,12 +148,7 @@ describe("markdownRehypePlugins", () => {
   })
 
   it("renders a custom callout title and rich body content", async () => {
-    const processor = await createMarkdownProcessor({
-      rehypePlugins: markdownRehypePlugins,
-      syntaxHighlight: false,
-    })
-
-    const { code } = await processor.render(`> [!TIP] Optional **callout title**
+    const { code } = await renderMarkdown(`> [!TIP] Optional **callout title**
 > Callout content
 >
 > - First item
@@ -118,13 +162,21 @@ describe("markdownRehypePlugins", () => {
     expect(code).toContain("<li>Second item</li>")
   })
 
-  it("preserves ordinary and unsupported blockquotes", async () => {
-    const processor = await createMarkdownProcessor({
-      rehypePlugins: markdownRehypePlugins,
-      syntaxHighlight: false,
-    })
+  it("renders nested callouts", async () => {
+    const { code } = await renderMarkdown(`> [!NOTE] Outer title
+> Outer content
+>
+> > [!TIP] Inner title
+> > Inner content`)
 
-    const { code } = await processor.render(`> Ordinary quotation
+    expect(code).toContain('class="callout callout-note"')
+    expect(code).toContain('class="callout callout-tip"')
+    expect(code).toContain('aria-label="Outer title"')
+    expect(code).toContain('aria-label="Inner title"')
+  })
+
+  it("preserves ordinary and unsupported blockquotes", async () => {
+    const { code } = await renderMarkdown(`> Ordinary quotation
 
 > [!INFO]
 > Unsupported callout
@@ -141,69 +193,102 @@ describe("markdownRehypePlugins", () => {
     )
     expect(code).not.toContain('class="callout')
   })
-})
 
-describe("rehypeTableCaptions", () => {
-  it("wraps tables and moves a caption into the table", () => {
-    const tree = {
-      children: [
-        {
-          children: [
-            {
-              type: "text",
-              value: "Table: Fixture caption.",
-            },
-          ],
-          name: "caption",
-          type: "mdxJsxFlowElement",
+  it("preserves code metadata and renders Expressive Code", async () => {
+    let codeData: unknown
+    const metadataProbe = defineHastPlugin({
+      name: "code-metadata-probe",
+      element: {
+        filter: ["pre"],
+        visit(node) {
+          const code = node.children.find(
+            (child) => child.type === "element" && child.tagName === "code",
+          )
+          codeData = code?.data
         },
-        {
-          children: [
-            {
-              children: [],
-              tagName: "thead",
-              type: "element",
-            },
-          ],
-          tagName: "table",
-          type: "element",
-        },
-      ],
-      type: "root",
+      },
+    })
+
+    await renderMarkdown('```ts title="example.ts"\nconst value = 1\n```', [
+      metadataProbe,
+    ])
+
+    expect(codeData).toMatchObject({
+      lang: "ts",
+      meta: 'title="example.ts"',
+    })
+
+    const processor = satteri({ hastPlugins: [] })
+    const expressiveCode = astroExpressiveCode({ themes: ["dracula"] })
+    const root = new URL("../../", import.meta.url)
+    const logger = {
+      debug() {},
+      error() {},
+      fork: () => logger,
+      info() {},
+      warn() {},
     }
 
-    rehypeTableCaptions()(tree)
-
-    expect(tree.children).toEqual([
-      {
-        children: [
-          {
-            children: [
-              {
-                children: [
-                  {
-                    type: "text",
-                    value: "Table: Fixture caption.",
-                  },
-                ],
-                tagName: "caption",
-                type: "element",
-              },
-              {
-                children: [],
-                tagName: "thead",
-                type: "element",
-              },
-            ],
-            tagName: "table",
-            type: "element",
-          },
-        ],
-        properties: { className: ["table-scroll"] },
-        tagName: "div",
-        type: "element",
+    await expressiveCode.hooks["astro:config:setup"]?.({
+      addWatchFile() {},
+      command: "build",
+      config: {
+        base: "/",
+        build: { assets: "_astro" },
+        integrations: [expressiveCode, mdx()],
+        markdown: { processor, shikiConfig: {} },
+        root,
+        srcDir: new URL("src/", root),
       },
-    ])
+      logger,
+      updateConfig() {},
+    } as never)
+
+    const result = await markdownToHtml(
+      '```ts title="example.ts"\nconst value = 1\n```',
+      { hastPlugins: processor.options.hastPlugins },
+    )
+
+    expect(result.html).toContain('<div class="expressive-code">')
+    expect(result.html).toContain('<figure class="frame has-title">')
+    expect(result.html).toContain('<span class="title">example.ts</span>')
+    expect(result.html).toContain('<pre data-language="ts">')
+    expect(result.html).toContain('data-code="const value = 1"')
+  })
+})
+
+describe("satteriTableCaptions", () => {
+  it("wraps an uncaptioned Markdown table", async () => {
+    const { code } = await renderMarkdown(`| Name | Value |
+| --- | --- |
+| Alpha | 1 |`)
+
+    expect(code).toContain('<div class="table-scroll"><table>')
+    expect(code).not.toContain("<caption>")
+  })
+
+  it("wraps an MDX table and moves its caption into the table", async () => {
+    const result = mdxToJs(
+      `<caption>Table: Fixture caption.</caption>
+
+| Name | Value |
+| --- | --- |
+| Alpha | 1 |`,
+      {
+        elementAttributeNameCase: "html",
+        hastPlugins: [satteriTableCaptions],
+        jsx: true,
+      },
+    )
+
+    expect(result.code).toContain('<_components.div class="table-scroll">')
+    expect(result.code).toContain("<_components.table>")
+    expect(result.code).toContain(
+      '<_components.caption>{"Table: Fixture caption."}</_components.caption>',
+    )
+    expect(result.code.indexOf("<_components.caption>")).toBeLessThan(
+      result.code.indexOf("<_components.thead>"),
+    )
   })
 })
 
