@@ -12,13 +12,12 @@ import {
   markdownToHtml,
   mdxToJs,
 } from "satteri"
+import { astroOpenGraph, astroSearch } from "../../astro.config"
 import {
-  astroOpenGraph,
-  astroSearch,
   calloutIcons,
   markdownHastPlugins,
   satteriTableCaptions,
-} from "../../astro.config"
+} from "../../src/plugins/satteri/index"
 import { describe, expect, it } from "vitest"
 
 type AstroBuildDoneHookOptions = HookParameters<"astro:build:done">
