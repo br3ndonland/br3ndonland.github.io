@@ -3,30 +3,21 @@
 @font-face {
   font-family: "Recursive Sans";
   font-display: swap;
-  src:
-    local(Recursive Sans Medium),
-    local(RecursiveSans-Medium),
-    url("/fonts/RecursiveSansLinearStatic-Regular.woff2") format("woff2");
+  src: url("/fonts/RecursiveSansLinearStatic-Regular.woff2") format("woff2");
 }
 
 @font-face {
   font-family: "Recursive Sans";
   font-display: swap;
   font-weight: bold;
-  src:
-    local(Recursive Sans Bold),
-    local(RecursiveSans-Bold),
-    url("/fonts/RecursiveSansCasualStatic-Bold.woff2") format("woff2");
+  src: url("/fonts/RecursiveSansCasualStatic-Bold.woff2") format("woff2");
 }
 
 @font-face {
   font-family: "Recursive Sans";
   font-display: swap;
   font-style: italic;
-  src:
-    local(Recursive Sans Italic),
-    local(RecursiveSans-Italic),
-    url("/fonts/RecursiveSansCasualStatic-Italic.woff2") format("woff2");
+  src: url("/fonts/RecursiveSansCasualStatic-Italic.woff2") format("woff2");
 }
 
 @font-face {
@@ -34,39 +25,27 @@
   font-display: swap;
   font-style: italic;
   font-weight: bold;
-  src:
-    local(Recursive Sans Bold Italic),
-    local(RecursiveSans-BoldItalic),
-    url("/fonts/RecursiveSansCasualStatic-BoldItalic.woff2") format("woff2");
+  src: url("/fonts/RecursiveSansCasualStatic-BoldItalic.woff2") format("woff2");
 }
 
 @font-face {
   font-family: "Recursive Mono";
   font-display: swap;
-  src:
-    local(Recursive Mono Medium),
-    local(RecursiveMono-Medium),
-    url("/fonts/RecursiveMonoDuotone-Regular.woff2") format("woff2");
+  src: url("/fonts/RecursiveMonoDuotone-Regular.woff2") format("woff2");
 }
 
 @font-face {
   font-family: "Recursive Mono";
   font-display: swap;
   font-weight: bold;
-  src:
-    local(Recursive Mono Bold),
-    local(RecursiveMono-Bold),
-    url("/fonts/RecursiveMonoDuotone-Bold.woff2") format("woff2");
+  src: url("/fonts/RecursiveMonoDuotone-Bold.woff2") format("woff2");
 }
 
 @font-face {
   font-family: "Recursive Mono";
   font-display: swap;
   font-style: italic;
-  src:
-    local(Recursive Mono Italic),
-    local(RecursiveMono-Italic),
-    url("/fonts/RecursiveMonoDuotone-Italic.woff2") format("woff2");
+  src: url("/fonts/RecursiveMonoDuotone-Italic.woff2") format("woff2");
 }
 
 @font-face {
@@ -74,10 +53,7 @@
   font-display: swap;
   font-style: italic;
   font-weight: bold;
-  src:
-    local(Recursive Mono Bold Italic),
-    local(RecursiveMono-BoldItalic),
-    url("/fonts/RecursiveMonoDuotone-BoldItalic.woff2") format("woff2");
+  src: url("/fonts/RecursiveMonoDuotone-BoldItalic.woff2") format("woff2");
 }
 
 /* Global variables */

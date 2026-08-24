@@ -23,13 +23,6 @@ const imageURL = image && new URL(image, OPEN_GRAPH.getImageBaseUrl(Astro.url))
 <meta name="description" property="og:description" content={description} />
 <meta name="viewport" content="width=device-width" />
 <meta name="generator" content={Astro.generator} />
-<link
-  rel="preload"
-  href="/fonts/RecursiveMonoDuotone-Italic.woff2"
-  as="font"
-  type="font/woff2"
-  crossorigin
-/>
 <link rel="sitemap" href="/sitemap-index.xml" />
 {canonicalURL && <link rel="canonical" href={canonicalURL} />}
 <title>{title}</title>
