@@ -9,3 +9,5 @@ overrides:
   lodash: ^4.17.23
   postcss: ^8.5.10
   yaml: ^2.8.3
+
+virtualStoreType: global
