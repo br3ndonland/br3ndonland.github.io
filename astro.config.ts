@@ -3,8 +3,9 @@ import { defineConfig } from "astro/config"
 import { satteri } from "@astrojs/markdown-satteri"
 import mdx from "@astrojs/mdx"
 import sitemap from "@astrojs/sitemap"
-import astroExpressiveCode from "astro-expressive-code"
+import astroExpressiveCode, { ExpressiveCodeTheme } from "astro-expressive-code"
 import { spawn } from "node:child_process"
+import fs from "node:fs"
 import { dirname, relative } from "node:path"
 import { fileURLToPath } from "node:url"
 import { astroMarkdownEndpoints } from "./src/integrations/astro-markdown-endpoints/index"
@@ -34,6 +35,12 @@ export const astroSearch = (): AstroIntegration => {
   }
 }
 
+const jsoncString = fs.readFileSync(
+  new URL(`./src/themes/dracula.jsonc`, import.meta.url),
+  "utf-8",
+)
+const draculaTheme = ExpressiveCodeTheme.fromJSONString(jsoncString)
+
 export default defineConfig({
   integrations: [
     astroExpressiveCode({
@@ -44,7 +51,7 @@ export default defineConfig({
         codeFontFamily: "var(--font-mono)",
         codeFontSize: "var(--text-sm)",
       },
-      themes: ["dracula"],
+      themes: [draculaTheme],
     }),
     astroOpenGraph(),
     astroSearch(),
