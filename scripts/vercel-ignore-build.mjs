@@ -52,6 +52,8 @@ export function shouldIgnoreBuild(commitMessage) {
 }
 
 function main() {
+  // Read from git log. $VERCEL_GIT_COMMIT_MESSAGE is truncated to 2048 bytes.
+  // https://vercel.com/docs/environment-variables/system-environment-variables
   const commitMessage = execFileSync("git", ["log", "-1", "--format=%B"], {
     encoding: "utf8",
   })
