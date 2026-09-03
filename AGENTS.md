@@ -116,6 +116,10 @@ Keep contributions compatible with this sequence.
   - place route-served static files in `public/`
   - use `src/images/` for source images processed in Astro where appropriate
 
+### Markdown discovery
+
+The Markdown integration generates `llms.txt` from the same rendered public pages as the `.md` endpoints. Do not maintain a separate page or collection list. When adding routes or sections, provide meaningful page titles and descriptions and preserve automatic discovery, Markdown negotiation, and the generation coverage in `tests/unit/markdown.test.ts`.
+
 ### Awesome Discs collection
 
 Awesome Disc metadata lives in `src/content/awesome-discs/awesome-discs.json` and is validated by the `awesomeDiscs` schema in `src/content.config.ts`. The project page derives its yearly lists from this data. Do not add a parallel hand-written list to `src/content/projects/awesome-discs.mdx`.

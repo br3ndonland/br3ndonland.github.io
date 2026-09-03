@@ -195,6 +195,67 @@ describe("createMarkdownPage", () => {
 })
 
 describe("generateMarkdownPages", () => {
+  it("automatically indexes every Markdown page, including new sections", async () => {
+    const outputDirectory = await fs.mkdtemp(
+      path.join(os.tmpdir(), "astro-markdown-discovery-"),
+    )
+    temporaryDirectories.push(outputDirectory)
+    const fixtures = [
+      ["index.html", "Example site"],
+      ["blog/index.html", "Blog"],
+      ["blog/new-post/index.html", "New post"],
+      ["blog/2026/another-post/index.html", "Another post"],
+      ["guides/setup/index.html", "Setup guide"],
+      ["404.html", "Missing"],
+      ["_astro/internal.html", "Internal"],
+      ["pagefind/internal.html", "Internal"],
+    ]
+    for (const [file, title] of fixtures) {
+      const outputFile = path.join(outputDirectory, file!)
+      await fs.mkdir(path.dirname(outputFile), { recursive: true })
+      await fs.writeFile(
+        outputFile,
+        `<!doctype html><html><head><title>${title}</title><meta name="description" content="About ${title}"></head><body><h1>${title}</h1></body></html>`,
+      )
+    }
+
+    const site = new URL("https://new-domain.example")
+    const count = await generateMarkdownPages(outputDirectory, site)
+    const index = await fs.readFile(
+      path.join(outputDirectory, "llms.txt"),
+      "utf8",
+    )
+    const paths = [...index.matchAll(/^- \[.*?\]\((https:\/\/[^)]+)\)/gm)].map(
+      ([, href]) => {
+        const url = new URL(href!)
+        expect(url.origin).toBe(site.origin)
+        return url.pathname.slice(1)
+      },
+    )
+    expect(count).toBe(5)
+    expect(paths).toHaveLength(count)
+    expect(new Set(paths).size).toBe(count)
+    expect(paths.sort()).toEqual([
+      "blog.md",
+      "blog/2026/another-post.md",
+      "blog/new-post.md",
+      "guides/setup.md",
+      "index.md",
+    ])
+    for (const file of paths) {
+      expect((await fs.stat(path.join(outputDirectory, file))).isFile()).toBe(
+        true,
+      )
+    }
+    expect(index).toContain("# Example site\n\n> About Example site")
+    expect(index).toContain("## Blog\n\n- [Another post]")
+    expect(index).toContain("## Guides\n\n- [Setup guide]")
+    expect(index).toContain(
+      "[New post](https://new-domain.example/blog/new-post.md): About New post",
+    )
+    expect(index).not.toMatch(/Missing|Internal/)
+  })
+
   it("writes Markdown siblings for public HTML pages", async () => {
     const outputDirectory = await fs.mkdtemp(
       path.join(os.tmpdir(), "astro-markdown-"),

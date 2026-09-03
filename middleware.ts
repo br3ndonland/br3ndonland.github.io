@@ -54,5 +54,5 @@ export default function middleware(request: Request) {
 }
 
 export const config = {
-  matcher: ["/", "/about", "/projects/:path*", "/work/:path*"],
+  matcher: ["/((?!_astro/|pagefind/|.*\\.).*)"],
 }

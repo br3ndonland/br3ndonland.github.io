@@ -207,12 +207,12 @@ interface MarkdownPageOptions {
   site: URL
 }
 
-export const createMarkdownPage = ({
+const renderMarkdownPage = ({
   canonicalUrl,
   html,
   markdownUrl,
   site,
-}: MarkdownPageOptions): string => {
+}: MarkdownPageOptions) => {
   const document = parse(html)
   const body = document.querySelector("body")
   if (!body) throw new Error(`No body found for ${canonicalUrl.href}`)
@@ -247,7 +247,69 @@ export const createMarkdownPage = ({
     "---",
   ].join("\n")
   const markdown = createTurndownService().turndown(body.innerHTML).trim()
-  return `${frontmatter}\n\n${markdown}\n`
+  return {
+    canonicalUrl,
+    description,
+    markdown: `${frontmatter}\n\n${markdown}\n`,
+    markdownUrl,
+    title,
+  }
+}
+
+export const createMarkdownPage = (options: MarkdownPageOptions): string =>
+  renderMarkdownPage(options).markdown
+
+const plainText = (text: string) =>
+  text
+    .replace(/[^\x20-\x7E]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+
+const createLlmsTxt = (
+  pages: ReturnType<typeof renderMarkdownPage>[],
+  site: URL,
+) => {
+  const homepage = pages.find(
+    ({ canonicalUrl }) => canonicalUrl.pathname === "/",
+  )
+  const sections = new Map<string, typeof pages>()
+
+  for (const page of pages) {
+    const parts = page.markdownUrl.pathname.split("/").filter(Boolean)
+    const section = parts.length > 1 ? parts[0]! : ""
+    const entries = sections.get(section) ?? []
+    entries.push(page)
+    sections.set(section, entries)
+  }
+
+  const index = [
+    `# ${plainText(homepage?.title ?? site.hostname)}`,
+    ...(homepage?.description ? [`> ${plainText(homepage.description)}`] : []),
+    "The links below provide Markdown versions of the site's pages. Each includes the canonical HTML URL in its frontmatter.",
+  ]
+  for (const [section, entries] of [...sections].sort(([a], [b]) =>
+    a.localeCompare(b),
+  )) {
+    const sectionPage = pages.find(
+      ({ markdownUrl }) => markdownUrl.pathname === `/${section}.md`,
+    )
+    const title = section
+      ? (sectionPage?.title ??
+        section.charAt(0).toUpperCase() + section.slice(1))
+      : "Overview"
+    index.push(
+      `## ${plainText(title)}`,
+      entries
+        .sort((a, b) => a.title.localeCompare(b.title))
+        .map(({ description, markdownUrl, title }) => {
+          const label = plainText(title).replace(/[\\[\]]/g, "\\$&")
+          const summary = description ? `: ${plainText(description)}` : ""
+          return `- [${label}](${markdownUrl.href})${summary}`
+        })
+        .join("\n"),
+    )
+  }
+  return `${index.join("\n\n")}\n`
 }
 
 const findHtmlFiles = async (directory: string): Promise<string[]> => {
@@ -264,7 +326,7 @@ const findHtmlFiles = async (directory: string): Promise<string[]> => {
 
 export const generateMarkdownPages = async (outputDir: string, site: URL) => {
   const htmlFiles = await findHtmlFiles(outputDir)
-  let generatedCount = 0
+  const pages: ReturnType<typeof renderMarkdownPage>[] = []
 
   for (const htmlFile of htmlFiles) {
     const relativeHtmlPath = relative(outputDir, htmlFile)
@@ -274,18 +336,23 @@ export const generateMarkdownPages = async (outputDir: string, site: URL) => {
     const canonicalUrl = new URL(getCanonicalPath(relativeHtmlPath), site)
     const markdownUrl = new URL(getMarkdownPath(markdownOutputPath), site)
     const html = await readFile(htmlFile, "utf8")
-    const markdown = createMarkdownPage({
+    const page = renderMarkdownPage({
       canonicalUrl,
       html,
       markdownUrl,
       site,
     })
     const markdownFile = join(outputDir, markdownOutputPath)
-    await writeFile(markdownFile, markdown, "utf8")
-    generatedCount += 1
+    await writeFile(markdownFile, page.markdown, "utf8")
+    pages.push(page)
   }
 
-  return generatedCount
+  await writeFile(
+    join(outputDir, "llms.txt"),
+    createLlmsTxt(pages, site),
+    "utf8",
+  )
+  return pages.length
 }
 
 export const astroMarkdownEndpoints = (): AstroIntegration => {
@@ -301,7 +368,7 @@ export const astroMarkdownEndpoints = (): AstroIntegration => {
         if (!site) throw new Error("Astro site URL is required")
         const outputDir = fileURLToPath(dir)
         const count = await generateMarkdownPages(outputDir, site)
-        logger.info(`Generated ${count} Markdown pages`)
+        logger.info(`Generated ${count} Markdown pages and llms.txt`)
       },
     },
   }

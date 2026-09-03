@@ -41,7 +41,7 @@ curl -fsSL "$script" | /usr/bin/env node - "$repo"
 
 ## Markdown access
 
-The site publishes an [`llms.txt`](https://www.bws.bio/llms.txt) index with links to its static Markdown pages. The index is generated from the site metadata and published content collections during the build. Each HTML page advertises the index and its Markdown version with `rel="describedby"` and `rel="alternate"` links, following the [llms.txt proposal](https://llmstxt.org/).
+The site publishes an [`llms.txt`](https://www.bws.bio/llms.txt) index with links to its static Markdown pages. The Markdown integration generates the index from the rendered public HTML pages during every build, using their titles and descriptions. Links are grouped by their first path segment. New pages and sections, such as `/blog/` and `/blog/new-post/`, are included automatically when Astro builds them. No separate list or agent skill needs updating. Each HTML page advertises the index and its Markdown version with `rel="describedby"` and `rel="alternate"` links, following the [llms.txt proposal](https://llmstxt.org/).
 
 Append `.md` to a page path to read its Markdown version, or use `/index.md` for the homepage. These files work on both Vercel and GitHub Pages.
 

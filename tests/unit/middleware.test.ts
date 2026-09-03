@@ -5,6 +5,7 @@ describe("Markdown content negotiation", () => {
   it.each([
     ["/", "/index.md"],
     ["/about", "/about.md"],
+    ["/blog/new-post", "/blog/new-post.md"],
     ["/projects", "/projects.md"],
     ["/projects/gitless/", "/projects/gitless.md"],
     ["/work/harvard?source=agent", "/work/harvard.md?source=agent"],
