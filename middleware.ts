@@ -1,5 +1,5 @@
 import { next, rewrite } from "@vercel/functions"
-import { getMarkdownUrlPath } from "./src/utils/markdown"
+import { getMarkdownUrlPath } from "./src/utils/markdown.js"
 
 const prefersMarkdown = (accept: string) => {
   const ranges = accept
