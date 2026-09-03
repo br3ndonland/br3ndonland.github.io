@@ -1,4 +1,4 @@
-import { next, rewrite } from "@vercel/functions"
+import { next, rewrite } from "@vercel/functions/middleware"
 import { getMarkdownUrlPath } from "./src/utils/markdown.js"
 
 const prefersMarkdown = (accept: string) => {

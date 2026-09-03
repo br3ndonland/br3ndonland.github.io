@@ -12,7 +12,7 @@
     "astro": "astro",
     "build": "astro build",
     "check": "prettier . --check && cspell --dot --gitignore **/*.astro **/*.md* && astro check && pnpm run check:middleware",
-    "check:middleware": "tsc --noEmit --module nodenext --moduleResolution nodenext --target es2022 --strict --skipLibCheck middleware.ts",
+    "check:middleware": "tsc --noEmit --module nodenext --moduleResolution nodenext --target es2022 --strict middleware.ts",
     "dev": "astro dev",
     "fmt": "prettier . --write",
     "preview": "astro preview",
