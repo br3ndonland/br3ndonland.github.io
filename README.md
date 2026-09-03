@@ -39,6 +39,12 @@ script="https://raw.githubusercontent.com/$repo/HEAD/.devcontainer/bootstrap.mjs
 curl -fsSL "$script" | /usr/bin/env node - "$repo"
 ```
 
+## Deployment
+
+- The site is deployed with GitHub Pages to [br3ndonland.github.io](https://br3ndonland.github.io/) using a [GitHub Actions workflow](.github/workflows/ci.yml). The `astro build` step includes `--site "https://${GITHUB_REPOSITORY##*/}"` so that [the site URL can be set for GitHub Pages](https://docs.astro.build/en/guides/deploy/github/) without having to hard-code it in the [Astro config file](https://docs.astro.build/en/guides/configuring-astro/).
+- The site is also deployed with [Vercel](https://vercel.com/docs/frameworks/astro) to other domains including [bws.bio](https://www.bws.bio).
+- [Vercel deployment checks](https://vercel.com/docs/deployment-checks) are enabled for the project. Vercel waits for GitHub Actions checks to finish before deploying. The problem with this is that Vercel and GitHub have different behaviors for skipping CI runs. GitHub supports [certain skip terms](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/skip-workflow-runs) and will not run Actions on commits that have those terms. Vercel does not respect those terms, so it will begin deployments and wait for GitHub Actions checks that aren't going to run. As mentioned in the [Vercel docs](https://vercel.com/docs/project-configuration/project-settings#ignored-build-step), [Vercel knowledgebase](https://vercel.com/kb/guide/how-do-i-use-the-ignored-build-step-field-on-vercel), and [Vercel GitHub Discussions](https://github.com/vercel/community/discussions/60), one solution is to use the ignored build step field (`ignoreCommand` in `vercel.json`) to configure Vercel to behave like GitHub. The `ignoreCommand` runs [a Node.js script](scripts/vercel-ignore-build.mjs).
+
 ## Markdown access
 
 The site publishes an [`llms.txt`](https://www.bws.bio/llms.txt) index with links to its static Markdown pages. The Markdown integration generates the index from the rendered public HTML pages during every build, using their titles and descriptions. Links are grouped by their first path segment. New pages and sections, such as `/blog/` and `/blog/new-post/`, are included automatically when Astro builds them. No separate list or agent skill needs updating. Each HTML page advertises the index and its Markdown version with `rel="describedby"` and `rel="alternate"` links, following the [llms.txt proposal](https://llmstxt.org/).
@@ -51,12 +57,6 @@ On Vercel, [Routing Middleware](https://vercel.com/docs/routing-middleware) also
 curl --header 'Accept: text/markdown' https://www.bws.bio/about
 curl https://www.bws.bio/about.md
 ```
-
-## Deployment
-
-- The site is deployed with GitHub Pages to [br3ndonland.github.io](https://br3ndonland.github.io/) using a [GitHub Actions workflow](.github/workflows/ci.yml). The `astro build` step includes `--site "https://${GITHUB_REPOSITORY##*/}"` so that [the site URL can be set for GitHub Pages](https://docs.astro.build/en/guides/deploy/github/) without having to hard-code it in the [Astro config file](https://docs.astro.build/en/guides/configuring-astro/).
-- The site is also deployed with [Vercel](https://vercel.com/docs/frameworks/astro) to other domains including [bws.bio](https://www.bws.bio).
-- [Vercel deployment checks](https://vercel.com/docs/deployment-checks) are enabled for the project. Vercel waits for GitHub Actions checks to finish before deploying. The problem with this is that Vercel and GitHub have different behaviors for skipping CI runs. GitHub supports [certain skip terms](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/skip-workflow-runs) and will not run Actions on commits that have those terms. Vercel does not respect those terms, so it will begin deployments and wait for GitHub Actions checks that aren't going to run. As mentioned in the [Vercel docs](https://vercel.com/docs/project-configuration/project-settings#ignored-build-step), [Vercel knowledgebase](https://vercel.com/kb/guide/how-do-i-use-the-ignored-build-step-field-on-vercel), and [Vercel GitHub Discussions](https://github.com/vercel/community/discussions/60), one solution is to use the ignored build step field (`ignoreCommand` in `vercel.json`) to configure Vercel to behave like GitHub. The `ignoreCommand` runs [a Node.js script](scripts/vercel-ignore-build.mjs).
 
 ## License
 
