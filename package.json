@@ -11,7 +11,8 @@
   "scripts": {
     "astro": "astro",
     "build": "astro build",
-    "check": "prettier . --check && cspell --dot --gitignore **/*.astro **/*.md* && astro check",
+    "check": "prettier . --check && cspell --dot --gitignore **/*.astro **/*.md* && astro check && pnpm run check:middleware",
+    "check:middleware": "tsc --noEmit --module nodenext --moduleResolution nodenext --target es2022 --strict middleware.ts",
     "dev": "astro dev",
     "fmt": "prettier . --write",
     "preview": "astro preview",
@@ -58,6 +59,7 @@
     "@astrojs/markdown-satteri": "^0.3.7",
     "@astrojs/mdx": "^7.0.7",
     "@astrojs/sitemap": "^3.7.3",
+    "@vercel/functions": "^3.9.5",
     "astro": "^7.2.4",
     "astro-expressive-code": "^0.44.1",
     "glightbox": "^3.3.1",

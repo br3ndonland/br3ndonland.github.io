@@ -2,6 +2,7 @@
 import "@styles/global.css"
 import Favicon from "./Favicon.astro"
 import { OPEN_GRAPH, SITE } from "@consts"
+import { getMarkdownUrlPath } from "../utils/markdown"
 
 interface Props {
   title?: string | undefined
@@ -17,6 +18,7 @@ const {
 
 const canonicalURL = Astro.site
 const imageURL = image && new URL(image, OPEN_GRAPH.getImageBaseUrl(Astro.url))
+const markdownURL = getMarkdownUrlPath(Astro.url.pathname)
 ---
 
 <meta charset="utf-8" />
@@ -24,6 +26,12 @@ const imageURL = image && new URL(image, OPEN_GRAPH.getImageBaseUrl(Astro.url))
 <meta name="viewport" content="width=device-width" />
 <meta name="generator" content={Astro.generator} />
 <link rel="sitemap" href="/sitemap-index.xml" />
+<link rel="describedby" href="/llms.txt" type="text/plain" />
+{
+  markdownURL && (
+    <link rel="alternate" href={markdownURL} type="text/markdown" />
+  )
+}
 {canonicalURL && <link rel="canonical" href={canonicalURL} />}
 <title>{title}</title>
 <meta name="title" content={title} />
