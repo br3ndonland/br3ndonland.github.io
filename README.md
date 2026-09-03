@@ -39,6 +39,19 @@ script="https://raw.githubusercontent.com/$repo/HEAD/.devcontainer/bootstrap.mjs
 curl -fsSL "$script" | /usr/bin/env node - "$repo"
 ```
 
+## Markdown access
+
+The site publishes an [`llms.txt`](https://www.bws.bio/llms.txt) index with links to its static Markdown pages. The index is generated from the site metadata and published content collections during the build. Each HTML page advertises the index and its Markdown version with `rel="describedby"` and `rel="alternate"` links, following the [llms.txt proposal](https://llmstxt.org/).
+
+Append `.md` to a page path to read its Markdown version, or use `/index.md` for the homepage. These files work on both Vercel and GitHub Pages.
+
+On Vercel, [Routing Middleware](https://vercel.com/docs/routing-middleware) also supports requesting the same content from the HTML URL with `Accept: text/markdown`, as described in [Vercel's Markdown access guide](https://vercel.com/docs/agent-resources/markdown-access). It respects quality values and wildcard specificity, keeps HTML as the default and for equally specific tied preferences, and adds `Vary: Accept` to both negotiated representations. GitHub Pages and `astro preview` serve static files without running the Vercel middleware; use the explicit `.md` URLs there.
+
+```sh
+curl --header 'Accept: text/markdown' https://www.bws.bio/about
+curl https://www.bws.bio/about.md
+```
+
 ## Deployment
 
 - The site is deployed with GitHub Pages to [br3ndonland.github.io](https://br3ndonland.github.io/) using a [GitHub Actions workflow](.github/workflows/ci.yml). The `astro build` step includes `--site "https://${GITHUB_REPOSITORY##*/}"` so that [the site URL can be set for GitHub Pages](https://docs.astro.build/en/guides/deploy/github/) without having to hard-code it in the [Astro config file](https://docs.astro.build/en/guides/configuring-astro/).

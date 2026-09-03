@@ -58,6 +58,7 @@
     "@astrojs/markdown-satteri": "^0.3.7",
     "@astrojs/mdx": "^7.0.7",
     "@astrojs/sitemap": "^3.7.3",
+    "@vercel/functions": "^3.9.5",
     "astro": "^7.2.4",
     "astro-expressive-code": "^0.44.1",
     "glightbox": "^3.3.1",
