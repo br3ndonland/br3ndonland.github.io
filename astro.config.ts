@@ -26,7 +26,6 @@ export const astroSearch = (): AstroIntegration => {
         return new Promise<void>((resolve) => {
           spawn("pagefind", ["--site", relativeDir], {
             stdio: "inherit",
-            shell: true,
             cwd,
           }).on("close", () => resolve())
         })
