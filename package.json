@@ -1,7 +1,7 @@
 {
   "name": "bws",
   "license": "UNLICENSED",
-  "packageManager": "pnpm@11.23.0",
+  "packageManager": "pnpm@12.4.1",
   "private": true,
   "type": "module",
   "version": "0.0.0",
