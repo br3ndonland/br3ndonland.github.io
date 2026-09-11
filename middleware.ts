@@ -55,4 +55,5 @@ export default function middleware(request: Request) {
 
 export const config = {
   matcher: ["/((?!_astro/|pagefind/|.*\\.).*)"],
+  runtime: "nodejs",
 }
