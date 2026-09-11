@@ -6,7 +6,7 @@
   "type": "module",
   "version": "0.0.0",
   "engines": {
-    "node": "22.x"
+    "node": "24.x"
   },
   "scripts": {
     "astro": "astro",
