@@ -3,7 +3,7 @@ import { getCollection } from "astro:content"
 import { readFile } from "node:fs/promises"
 import { join } from "node:path"
 import sharp from "sharp"
-import defaultImage from "@images/brendon-smith-portrait-2025-07-15-1920.jpg"
+import defaultImage from "@images/brendon-smith-portrait-transfyr-2026-07-23-2.jpg"
 import { ABOUT, HOME, OPEN_GRAPH, PROJECTS, SITE, WORK } from "@consts"
 import { astroOpenGraph } from "@integrations/astro-open-graph"
 
@@ -27,7 +27,7 @@ interface OgRouteProps extends Record<string, unknown> {
 
 const DEFAULT_IMAGE_FILE = join(
   process.cwd(),
-  "src/images/brendon-smith-portrait-2025-07-15-1920.jpg",
+  "src/images/brendon-smith-portrait-transfyr-2026-07-23-2.jpg",
 )
 
 const FONT_FILES = {
@@ -90,7 +90,7 @@ const getImageDataUri = async (
   const resizedImage = await sharp(imageBuffer, { density: 192 })
     .resize(432, 432, {
       background: { alpha: 0, b: 0, g: 0, r: 0 },
-      fit: "contain",
+      fit: imageFile === DEFAULT_IMAGE_FILE ? "cover" : "contain",
     })
     .png()
     .toBuffer()

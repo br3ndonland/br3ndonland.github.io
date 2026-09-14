@@ -94,6 +94,9 @@
   --callout-warning-background: rgba(154, 103, 0, 0.12);
   --callout-warning-color: #9a6700;
 
+  /* Borders */
+  --card-border-radius: 1rem;
+
   /* Gradients */
   --gradient-stop-1: var(--accent-light);
   --gradient-stop-2: var(--accent-regular);
@@ -1069,6 +1072,10 @@ tbody tr + tr > :is(th, td) {
 }
 
 @media (min-width: 75em) {
+  :root {
+    --card-border-radius: 2rem;
+  }
+
   .xl\:d-block {
     display: block;
   }

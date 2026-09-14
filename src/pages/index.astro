@@ -9,7 +9,7 @@ import Hero from "@components/Hero.astro"
 import Icon from "@components/Icon.astro"
 import PreviewCard from "@components/PreviewCard.astro"
 import Skills from "@components/Skills.astro"
-import portrait from "@images/brendon-smith-portrait-2025-07-15-1920.jpg"
+import portrait from "@images/brendon-smith-portrait-transfyr-2026-07-23-2.jpg"
 import { PICTURE_FORMATS, PROJECTS, SITE, WORK } from "@consts"
 
 const projects = (await getCollection("projects"))
@@ -36,7 +36,7 @@ const works = (await getCollection("work"))
         <Fragment slot="portrait">
           <Picture
             src={portrait}
-            alt="Portrait of Brendon Smith smiling in a spiffy button-down shirt"
+            alt="Portrait of Brendon Smith smiling in a Transfyr t-shirt in the Transfyr lab at The Engine, Cambridge, Massachusetts"
             formats={PICTURE_FORMATS}
             decoding="async"
             loading="eager"

@@ -28,7 +28,7 @@ import Icon from "./Icon.astro"
 <style>
   .box {
     border: 1px solid var(--gray-800);
-    border-radius: 0.75rem;
+    border-radius: var(--card-border-radius);
     padding: 1.5rem;
     background-color: var(--gray-999_40);
     box-shadow: var(--shadow-sm);
@@ -50,7 +50,6 @@ import Icon from "./Icon.astro"
 
   @media (min-width: 50em) {
     .box {
-      border-radius: 1.5rem;
       padding: 2rem;
     }
 
