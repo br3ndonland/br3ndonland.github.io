@@ -1639,6 +1639,33 @@
     ]
   },
   {
+    "id": "the-dirty-dozen-1967",
+    "title": "The Dirty Dozen",
+    "originalReleaseDate": "1967-06-15",
+    "urls": [
+      {
+        "type": "IMDb",
+        "url": "https://www.imdb.com/title/tt0061578/"
+      },
+      {
+        "type": "TMDB",
+        "url": "https://www.themoviedb.org/movie/1654"
+      },
+      {
+        "type": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/The_Dirty_Dozen"
+      }
+    ],
+    "releases": [
+      {
+        "format": "UHD",
+        "distributor": "Arrow",
+        "date": "2026-11-17",
+        "url": "https://www.blu-ray.com/movies/The-Dirty-Dozen-4K-Blu-ray/419860/"
+      }
+    ]
+  },
+  {
     "id": "dragon-inn-1967",
     "title": "Dragon Inn",
     "originalReleaseDate": "1967-10-21",
