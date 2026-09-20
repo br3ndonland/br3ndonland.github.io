@@ -9011,6 +9011,33 @@
     ]
   },
   {
+    "id": "go-1999",
+    "title": "Go",
+    "originalReleaseDate": "1999-04-09",
+    "urls": [
+      {
+        "type": "IMDb",
+        "url": "https://www.imdb.com/title/tt0139239/"
+      },
+      {
+        "type": "TMDB",
+        "url": "https://www.themoviedb.org/movie/9430"
+      },
+      {
+        "type": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Go_%281999_film%29"
+      }
+    ],
+    "releases": [
+      {
+        "format": "UHD",
+        "distributor": "Arrow",
+        "date": "2026-09-29",
+        "url": "https://www.blu-ray.com/movies/Go-4K-Blu-ray/415517/"
+      }
+    ]
+  },
+  {
     "id": "ghost-dog-the-way-of-the-samurai-1999",
     "title": "Ghost Dog: The Way of the Samurai",
     "originalReleaseDate": "1999-05-18",
