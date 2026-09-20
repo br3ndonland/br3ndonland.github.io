@@ -8144,6 +8144,33 @@
     ]
   },
   {
+    "id": "welcome-ii-the-terrordome-1994",
+    "title": "Welcome II the Terrordome",
+    "originalReleaseDate": "1994-10-20",
+    "urls": [
+      {
+        "type": "IMDb",
+        "url": "https://www.imdb.com/title/tt0111681/"
+      },
+      {
+        "type": "TMDB",
+        "url": "https://www.themoviedb.org/movie/274710"
+      },
+      {
+        "type": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Ngozi_Onwurah#Welcome_II_the_Terrordome_(1994)"
+      }
+    ],
+    "releases": [
+      {
+        "format": "Blu-ray",
+        "distributor": "Criterion Collection",
+        "date": "2026-10-06",
+        "url": "https://www.blu-ray.com/movies/Welcome-II-the-Terrordome-Blu-ray/275610/"
+      }
+    ]
+  },
+  {
     "id": "felidae-1994",
     "title": "Felidae",
     "originalReleaseDate": "1994-11-03",
