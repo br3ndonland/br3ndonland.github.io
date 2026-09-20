@@ -6035,6 +6035,34 @@
     ]
   },
   {
+    "id": "masters-of-the-universe-1987",
+    "title": "Masters of the Universe",
+    "originalReleaseDate": "1987-08-07",
+    "urls": [
+      {
+        "type": "IMDb",
+        "url": "https://www.imdb.com/title/tt0093507/"
+      },
+      {
+        "type": "TMDB",
+        "url": "https://www.themoviedb.org/movie/11649"
+      },
+      {
+        "type": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Masters_of_the_Universe_%281987_film%29"
+      }
+    ],
+    "releases": [
+      {
+        "format": "UHD",
+        "distributor": "Arrow",
+        "subLabel": "Toy Robot Video",
+        "date": "2026-09-15",
+        "url": "https://www.blu-ray.com/movies/Masters-of-the-Universe-4K-Blu-ray/413343/"
+      }
+    ]
+  },
+  {
     "id": "hellraiser-1987",
     "title": "Hellraiser",
     "originalReleaseDate": "1987-09-10",
