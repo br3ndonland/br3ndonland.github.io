@@ -733,6 +733,33 @@
     ]
   },
   {
+    "id": "forbidden-planet-1956",
+    "title": "Forbidden Planet",
+    "originalReleaseDate": "1956-03-03",
+    "urls": [
+      {
+        "type": "IMDb",
+        "url": "https://www.imdb.com/title/tt0049223/"
+      },
+      {
+        "type": "TMDB",
+        "url": "https://www.themoviedb.org/movie/830"
+      },
+      {
+        "type": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Forbidden_Planet"
+      }
+    ],
+    "releases": [
+      {
+        "format": "UHD",
+        "distributor": "Arrow",
+        "date": "2026-09-29",
+        "url": "https://www.blu-ray.com/movies/Forbidden-Planet-4K-Blu-ray/415507/"
+      }
+    ]
+  },
+  {
     "id": "the-searchers-1956",
     "title": "The Searchers",
     "originalReleaseDate": "1956-03-13",
