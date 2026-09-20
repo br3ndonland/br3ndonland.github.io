@@ -3588,6 +3588,33 @@
     ]
   },
   {
+    "id": "stalker-1979",
+    "title": "Stalker",
+    "originalReleaseDate": "1979-06-15",
+    "urls": [
+      {
+        "type": "IMDb",
+        "url": "https://www.imdb.com/title/tt0079944/"
+      },
+      {
+        "type": "TMDB",
+        "url": "https://www.themoviedb.org/movie/1398"
+      },
+      {
+        "type": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Stalker_%281979_film%29"
+      }
+    ],
+    "releases": [
+      {
+        "format": "UHD",
+        "distributor": "Filmjuwelen",
+        "date": "2026-08-06",
+        "url": "https://www.blu-ray.com/movies/Stalker-4K-Blu-ray/411298/"
+      }
+    ]
+  },
+  {
     "id": "monty-python-s-life-of-brian-1979",
     "title": "Monty Python's Life of Brian",
     "originalReleaseDate": "1979-08-17",
