@@ -6556,6 +6556,33 @@
     ]
   },
   {
+    "id": "tequila-sunrise-1988",
+    "title": "Tequila Sunrise",
+    "originalReleaseDate": "1988-12-02",
+    "urls": [
+      {
+        "type": "IMDb",
+        "url": "https://www.imdb.com/title/tt0096244/"
+      },
+      {
+        "type": "TMDB",
+        "url": "https://www.themoviedb.org/movie/10396"
+      },
+      {
+        "type": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Tequila_Sunrise_%28film%29"
+      }
+    ],
+    "releases": [
+      {
+        "format": "UHD",
+        "distributor": "Arrow",
+        "date": "2026-09-15",
+        "url": "https://www.blu-ray.com/movies/Tequila-Sunrise-4K-Blu-ray/415512/"
+      }
+    ]
+  },
+  {
     "id": "i-m-gonna-git-you-sucka-1988",
     "title": "I'm Gonna Git You Sucka",
     "originalReleaseDate": "1988-12-14",
