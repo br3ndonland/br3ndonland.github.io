@@ -7061,6 +7061,33 @@
     ]
   },
   {
+    "id": "kindergarten-cop-1990",
+    "title": "Kindergarten Cop",
+    "originalReleaseDate": "1990-12-21",
+    "urls": [
+      {
+        "type": "IMDb",
+        "url": "https://www.imdb.com/title/tt0099938/"
+      },
+      {
+        "type": "TMDB",
+        "url": "https://www.themoviedb.org/movie/951"
+      },
+      {
+        "type": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Kindergarten_Cop"
+      }
+    ],
+    "releases": [
+      {
+        "format": "UHD",
+        "distributor": "Plaion",
+        "date": "2026-08-27",
+        "url": "https://www.blu-ray.com/movies/Kindergarten-Cop-4K-Blu-ray/409538/"
+      }
+    ]
+  },
+  {
     "id": "the-silence-of-the-lambs-1991",
     "title": "The Silence of the Lambs",
     "originalReleaseDate": "1991-01-30",
