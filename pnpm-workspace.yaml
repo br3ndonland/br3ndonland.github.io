@@ -3,6 +3,8 @@ allowBuilds:
   esbuild: true
   sharp: true
 
+autoDedupe: true
+
 overrides:
   devalue: ^5.8.1
   fast-uri: ^3.1.6
