@@ -1,7 +1,7 @@
 ---
 interface Props {
   dateStart: Date
-  dateEnd: Date | string
+  dateEnd?: Date | string
   locale?: Intl.LocalesArgument
   options?: Intl.DateTimeFormatOptions
 }
@@ -29,7 +29,12 @@ const formatDate = (
 
 const formattedStartDate = formatDate(dateStart)
 const formattedEndDate = dateEnd instanceof Date ? formatDate(dateEnd) : dateEnd
-const formattedDateRange = `${formattedStartDate} - ${formattedEndDate}`
 ---
 
-<div>{formattedDateRange}</div>
+{
+  dateEnd === undefined ? (
+    <time datetime={dateStart.toISOString()}>{formattedStartDate}</time>
+  ) : (
+    <div>{`${formattedStartDate} - ${formattedEndDate}`}</div>
+  )
+}

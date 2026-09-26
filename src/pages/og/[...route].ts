@@ -4,7 +4,7 @@ import { readFile } from "node:fs/promises"
 import { join } from "node:path"
 import sharp from "sharp"
 import defaultImage from "@images/brendon-smith-portrait-transfyr-2026-07-23-2.jpg"
-import { ABOUT, HOME, OPEN_GRAPH, PROJECTS, SITE, WORK } from "@consts"
+import { ABOUT, BLOG, HOME, OPEN_GRAPH, PROJECTS, SITE, WORK } from "@consts"
 import { astroOpenGraph } from "@integrations/astro-open-graph"
 
 type OgImageSource = ImageMetadata | string
@@ -155,6 +155,12 @@ const getStaticPages = (): OgPage[] => {
       image: defaultImage,
     }),
     withRoute({
+      pathname: BLOG.HREF,
+      title: `${SITE.TITLE}: ${BLOG.TITLE}`,
+      description: BLOG.DESCRIPTION,
+      image: defaultImage,
+    }),
+    withRoute({
       pathname: PROJECTS.HREF,
       title: `${SITE.TITLE}: ${PROJECTS.TITLE}`,
       description: PROJECTS.DESCRIPTION,
@@ -176,11 +182,20 @@ const getStaticPages = (): OgPage[] => {
 }
 
 const getOgPages = async (): Promise<OgPage[]> => {
+  const blog = await getCollection("blog", ({ data }) => !data.draft)
   const projects = await getCollection("projects")
   const work = await getCollection("work")
 
   return [
     ...getStaticPages(),
+    ...blog.map((entry) =>
+      withRoute({
+        pathname: `${BLOG.HREF}/${entry.id}`,
+        title: entry.data.title,
+        description: entry.data.description,
+        image: entry.data.image?.src,
+      }),
+    ),
     ...projects.map((entry) =>
       withRoute({
         pathname: `${PROJECTS.HREF}/${entry.id}`,

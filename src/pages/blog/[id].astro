@@ -1,0 +1,149 @@
+---
+import { type CollectionEntry, getCollection, render } from "astro:content"
+import BaseLayout from "@layouts/BaseLayout.astro"
+import Contact from "@components/Contact.astro"
+import DateRange from "@components/DateRange.astro"
+import Hero from "@components/Hero.astro"
+import Icon from "@components/Icon.astro"
+import LightboxImage from "@components/LightboxImage.astro"
+import TableOfContents from "@components/TableOfContents.astro"
+import { BLOG, SITE } from "@consts"
+
+interface Props {
+  entry: CollectionEntry<"blog">
+}
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => !data.draft)
+  return posts.map((entry) => ({
+    params: { id: entry.id },
+    props: { entry },
+  }))
+}
+
+const { entry } = Astro.props
+const { Content, headings } = await render(entry)
+---
+
+<BaseLayout
+  title={`${SITE.TITLE}: ${BLOG.TITLE} - ${entry.data.title}`}
+  description={entry.data.description}
+>
+  <div class="stack gap-4">
+    <TableOfContents
+      headings={headings}
+      title={entry.data.title}
+      variant="mobile"
+    />
+    <header>
+      <div class="wrapper stack gap-2">
+        <a class="back-link" href={BLOG.HREF}>
+          <Icon icon="arrow-left" />{BLOG.TITLE}
+        </a>
+        <Hero title={entry.data.title} align="start">
+          <div>
+            <p>Published <DateRange dateStart={entry.data.datePublished} /></p>
+            {
+              entry.data.dateUpdated && (
+                <p>
+                  Updated <DateRange dateStart={entry.data.dateUpdated} />
+                </p>
+              )
+            }
+          </div>
+          {
+            entry.data.image && (
+              <LightboxImage
+                src={entry.data.image.src}
+                alt={entry.data.image.alt}
+                imageClass="img-hero"
+                gallery={entry.id}
+                loading="eager"
+              />
+            )
+          }
+          <p>{entry.data.description}</p>
+        </Hero>
+      </div>
+    </header>
+    <main class="wrapper content-layout">
+      <TableOfContents
+        headings={headings}
+        title={entry.data.title}
+        variant="desktop"
+      />
+      <article class="content">
+        <Content />
+      </article>
+    </main>
+  </div>
+  <Contact />
+</BaseLayout>
+
+<style>
+  header {
+    border-bottom: 1px solid var(--gray-800);
+    padding-bottom: 2.5rem;
+  }
+
+  .content {
+    max-width: 80ch;
+    margin-inline: auto;
+    min-width: 0;
+    padding-bottom: 1.25rem;
+    width: 100%;
+  }
+
+  .content-layout {
+    display: grid;
+  }
+
+  .content > :global(* + *) {
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+  }
+
+  .content :global(h1),
+  .content :global(h2),
+  .content :global(h3),
+  .content :global(h4),
+  .content :global(h5) {
+    margin: 1.5rem 1rem 0 0;
+  }
+
+  .back-link,
+  .content :global(a) {
+    text-decoration: solid underline transparent;
+    text-underline-offset: 0.25em;
+    transition: text-decoration-color var(--theme-transition);
+  }
+
+  .back-link:hover,
+  .back-link:focus,
+  .content :global(a:hover),
+  .content :global(a:focus) {
+    text-decoration-color: currentColor;
+  }
+
+  @media (min-width: 50em) {
+    .back-link {
+      align-self: flex-start;
+      display: block;
+    }
+  }
+
+  @media (min-width: 75em) {
+    .content-layout:has(> page-table-of-contents) {
+      align-items: start;
+      gap: 3rem;
+      grid-template-columns: minmax(0, 80ch) minmax(12rem, 16rem);
+      justify-content: center;
+    }
+
+    .content-layout:has(> page-table-of-contents) > .content {
+      grid-column: 1;
+      grid-row: 1;
+      margin-inline: 0;
+    }
+  }
+</style>
