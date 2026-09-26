@@ -444,6 +444,34 @@
     ]
   },
   {
+    "id": "out-of-the-past-1947",
+    "title": "Out of the Past",
+    "originalReleaseDate": "1947-11-13",
+    "urls": [
+      {
+        "type": "IMDb",
+        "url": "https://www.imdb.com/title/tt0039689/"
+      },
+      {
+        "type": "TMDB",
+        "url": "https://www.themoviedb.org/movie/678"
+      },
+      {
+        "type": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Out_of_the_Past"
+      }
+    ],
+    "releases": [
+      {
+        "format": "UHD",
+        "distributor": "Warner Bros.",
+        "subLabel": "Warner Archive Collection",
+        "date": "2026-09-15",
+        "url": "https://www.blu-ray.com/movies/Out-of-the-Past-4K-Blu-ray/416336/"
+      }
+    ]
+  },
+  {
     "id": "the-red-shoes-1948",
     "title": "The Red Shoes",
     "originalReleaseDate": "1948-09-06",
