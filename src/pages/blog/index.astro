@@ -1,0 +1,87 @@
+---
+import { getCollection } from "astro:content"
+import BaseLayout from "@layouts/BaseLayout.astro"
+import Contact from "@components/Contact.astro"
+import DateRange from "@components/DateRange.astro"
+import Grid from "@components/Grid.astro"
+import Hero from "@components/Hero.astro"
+import Icon from "@components/Icon.astro"
+import { BLOG, SITE } from "@consts"
+
+const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.datePublished.valueOf() - a.data.datePublished.valueOf(),
+)
+---
+
+<BaseLayout
+  title={`${SITE.TITLE}: ${BLOG.TITLE}`}
+  description={BLOG.DESCRIPTION}
+>
+  <div class="stack gap-20">
+    <main class="wrapper stack gap-8">
+      <Hero title={BLOG.TITLE} tagline={BLOG.DESCRIPTION} align="start" />
+      {
+        posts.length > 0 ? (
+          <Grid>
+            {posts.map((post) => (
+              <li>
+                <article class="post-card stack gap-4">
+                  <h2>
+                    <a href={`${BLOG.HREF}/${post.id}`}>
+                      {post.data.title}
+                      <Icon icon="arrow-right" size="1.2em" />
+                    </a>
+                  </h2>
+                  <DateRange dateStart={post.data.datePublished} />
+                  <p>{post.data.description}</p>
+                </article>
+              </li>
+            ))}
+          </Grid>
+        ) : (
+          <p>No posts yet.</p>
+        )
+      }
+    </main>
+    <Contact />
+  </div>
+</BaseLayout>
+
+<style>
+  .post-card {
+    background: var(--gradient-subtle);
+    border: 1px solid var(--gray-800);
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--shadow-sm);
+    color: var(--gray-200);
+    height: 100%;
+    padding: 1.5rem;
+    transition: box-shadow var(--theme-transition);
+  }
+
+  .post-card:hover,
+  .post-card:focus-within {
+    box-shadow: var(--shadow-md);
+  }
+
+  h2 {
+    font-family: var(--font-brand);
+    font-size: var(--text-xl);
+  }
+
+  h2 a {
+    text-decoration: solid underline transparent;
+    text-underline-offset: 0.25em;
+    transition: text-decoration-color var(--theme-transition);
+  }
+
+  h2 a:hover,
+  h2 a:focus-visible {
+    text-decoration-color: currentColor;
+  }
+
+  .post-card :global(time) {
+    color: var(--gray-300);
+    font-size: var(--text-sm);
+  }
+</style>
