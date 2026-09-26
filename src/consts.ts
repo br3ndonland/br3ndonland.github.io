@@ -34,6 +34,12 @@ export const ABOUT: Metadata = {
   TITLE: "About",
 }
 
+export const BLOG: Metadata = {
+  DESCRIPTION: `${AUTHOR.NAME}'s weblog`,
+  HREF: "/blog",
+  TITLE: "Blog",
+}
+
 export const WORK: Metadata = {
   DESCRIPTION: `Jobs at which ${AUTHOR.NAME} has worked`,
   HREF: "/work",
@@ -94,6 +100,7 @@ export const SOCIALS: Socials = [
 export const NAV_LINKS: NavLinks = [
   { HREF: HOME.HREF, TITLE: HOME.TITLE },
   { HREF: ABOUT.HREF, TITLE: ABOUT.TITLE },
+  { HREF: BLOG.HREF, TITLE: BLOG.TITLE },
   { HREF: PROJECTS.HREF, TITLE: PROJECTS.TITLE },
   { HREF: WORK.HREF, TITLE: WORK.TITLE },
 ]

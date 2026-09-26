@@ -41,6 +41,27 @@ const awesomeDiscs = defineCollection({
 
 const publicImage = z.string().regex(/^\/images\/.+/)
 
+const blog = defineCollection({
+  loader: glob({
+    pattern: "[^_]*.{md,mdx}",
+    base: "./src/content/blog",
+  }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      datePublished: z.coerce.date(),
+      dateUpdated: z.coerce.date().optional(),
+      draft: z.boolean().default(false),
+      image: z
+        .object({
+          src: z.union([publicImage, image()]),
+          alt: z.string().default(""),
+        })
+        .optional(),
+    }),
+})
+
 const projects = defineCollection({
   loader: glob({
     pattern: "**/[^_]*.{md,mdx}",
@@ -84,4 +105,4 @@ const work = defineCollection({
     }),
 })
 
-export const collections = { awesomeDiscs, projects, work }
+export const collections = { awesomeDiscs, blog, projects, work }
