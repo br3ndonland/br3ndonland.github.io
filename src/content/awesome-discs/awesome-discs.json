@@ -4413,6 +4413,34 @@
     ]
   },
   {
+    "id": "sharkys-machine-1981",
+    "title": "Sharky's Machine",
+    "originalReleaseDate": "1981-12-18",
+    "urls": [
+      {
+        "type": "IMDb",
+        "url": "https://www.imdb.com/title/tt0083064/"
+      },
+      {
+        "type": "TMDB",
+        "url": "https://www.themoviedb.org/movie/14664"
+      },
+      {
+        "type": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Sharky%27s_Machine"
+      }
+    ],
+    "releases": [
+      {
+        "format": "UHD",
+        "distributor": "Arrow",
+        "subLabel": "Toy Robot Video",
+        "date": "2026-12-08",
+        "url": "https://www.blu-ray.com/movies/Sharkys-Machine-4K-Blu-ray/419321/"
+      }
+    ]
+  },
+  {
     "id": "swamp-thing-1982",
     "title": "Swamp Thing",
     "originalReleaseDate": "1982-02-12",
