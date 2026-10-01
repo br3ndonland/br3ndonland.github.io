@@ -324,6 +324,38 @@
     ]
   },
   {
+    "id": "one-of-our-aircraft-is-missing-1942",
+    "title": "One of Our Aircraft Is Missing",
+    "originalReleaseDate": "1942-04-24",
+    "urls": [
+      {
+        "type": "IMDb",
+        "url": "https://www.imdb.com/title/tt0035153/"
+      },
+      {
+        "type": "TMDB",
+        "url": "https://www.themoviedb.org/movie/43780"
+      },
+      {
+        "type": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/One_of_Our_Aircraft_Is_Missing"
+      }
+    ],
+    "releases": [
+      {
+        "format": "Blu-ray",
+        "distributor": "Imprint",
+        "date": "2026-09-09",
+        "url": "https://www.blu-ray.com/movies/The-Cinema-of-Powell-and-Pressburger-Collection-Two-4K-Blu-ray/415479/",
+        "collection": {
+          "id": "the-cinema-of-powell-and-pressburger-collection-two-2026",
+          "title": "The Cinema of Powell and Pressburger: Collection Two",
+          "url": "https://www.blu-ray.com/movies/The-Cinema-of-Powell-and-Pressburger-Collection-Two-4K-Blu-ray/415479/"
+        }
+      }
+    ]
+  },
+  {
     "id": "double-indemnity-1944",
     "title": "Double Indemnity",
     "originalReleaseDate": "1944-07-06",
@@ -379,6 +411,38 @@
           "id": "the-complete-thin-man-collection-2024",
           "title": "The Complete Thin Man Collection",
           "url": "https://www.blu-ray.com/movies/The-Complete-Thin-Man-Collection-Blu-ray/371995/"
+        }
+      }
+    ]
+  },
+  {
+    "id": "i-know-where-i-m-going-1945",
+    "title": "I Know Where I'm Going!",
+    "originalReleaseDate": "1945-11-08",
+    "urls": [
+      {
+        "type": "IMDb",
+        "url": "https://www.imdb.com/title/tt0037800/"
+      },
+      {
+        "type": "TMDB",
+        "url": "https://www.themoviedb.org/movie/56137"
+      },
+      {
+        "type": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/I_Know_Where_I%27m_Going%21"
+      }
+    ],
+    "releases": [
+      {
+        "format": "UHD",
+        "distributor": "Imprint",
+        "date": "2026-09-09",
+        "url": "https://www.blu-ray.com/movies/The-Cinema-of-Powell-and-Pressburger-Collection-Two-4K-Blu-ray/415479/",
+        "collection": {
+          "id": "the-cinema-of-powell-and-pressburger-collection-two-2026",
+          "title": "The Cinema of Powell and Pressburger: Collection Two",
+          "url": "https://www.blu-ray.com/movies/The-Cinema-of-Powell-and-Pressburger-Collection-Two-4K-Blu-ray/415479/"
         }
       }
     ]
@@ -495,6 +559,49 @@
         "distributor": "Criterion Collection",
         "date": "2021-12-14",
         "url": "https://www.blu-ray.com/movies/The-Red-Shoes-4K-Blu-ray/297992/"
+      },
+      {
+        "format": "UHD",
+        "distributor": "Imprint",
+        "date": "2026-09-09",
+        "url": "https://www.blu-ray.com/movies/The-Cinema-of-Powell-and-Pressburger-Collection-Two-4K-Blu-ray/415479/",
+        "collection": {
+          "id": "the-cinema-of-powell-and-pressburger-collection-two-2026",
+          "title": "The Cinema of Powell and Pressburger: Collection Two",
+          "url": "https://www.blu-ray.com/movies/The-Cinema-of-Powell-and-Pressburger-Collection-Two-4K-Blu-ray/415479/"
+        }
+      }
+    ]
+  },
+  {
+    "id": "the-small-back-room-1949",
+    "title": "The Small Back Room",
+    "originalReleaseDate": "1949-01-20",
+    "urls": [
+      {
+        "type": "IMDb",
+        "url": "https://www.imdb.com/title/tt0041886/"
+      },
+      {
+        "type": "TMDB",
+        "url": "https://www.themoviedb.org/movie/46096"
+      },
+      {
+        "type": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/The_Small_Back_Room"
+      }
+    ],
+    "releases": [
+      {
+        "format": "UHD",
+        "distributor": "Imprint",
+        "date": "2026-09-09",
+        "url": "https://www.blu-ray.com/movies/The-Cinema-of-Powell-and-Pressburger-Collection-Two-4K-Blu-ray/415479/",
+        "collection": {
+          "id": "the-cinema-of-powell-and-pressburger-collection-two-2026",
+          "title": "The Cinema of Powell and Pressburger: Collection Two",
+          "url": "https://www.blu-ray.com/movies/The-Cinema-of-Powell-and-Pressburger-Collection-Two-4K-Blu-ray/415479/"
+        }
       }
     ]
   },
@@ -549,6 +656,38 @@
         "distributor": "Paramount",
         "date": "2025-08-05",
         "url": "https://www.blu-ray.com/movies/Sunset-Boulevard-4K-Blu-ray/387387/"
+      }
+    ]
+  },
+  {
+    "id": "the-tales-of-hoffmann-1951",
+    "title": "The Tales of Hoffmann",
+    "originalReleaseDate": "1951-04-01",
+    "urls": [
+      {
+        "type": "IMDb",
+        "url": "https://www.imdb.com/title/tt0044103/"
+      },
+      {
+        "type": "TMDB",
+        "url": "https://www.themoviedb.org/movie/44334"
+      },
+      {
+        "type": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/The_Tales_of_Hoffmann_%281951_film%29"
+      }
+    ],
+    "releases": [
+      {
+        "format": "UHD",
+        "distributor": "Imprint",
+        "date": "2026-09-09",
+        "url": "https://www.blu-ray.com/movies/The-Cinema-of-Powell-and-Pressburger-Collection-Two-4K-Blu-ray/415479/",
+        "collection": {
+          "id": "the-cinema-of-powell-and-pressburger-collection-two-2026",
+          "title": "The Cinema of Powell and Pressburger: Collection Two",
+          "url": "https://www.blu-ray.com/movies/The-Cinema-of-Powell-and-Pressburger-Collection-Two-4K-Blu-ray/415479/"
+        }
       }
     ]
   },
@@ -761,6 +900,38 @@
     ]
   },
   {
+    "id": "oh-rosalinda-1955",
+    "title": "Oh... Rosalinda!!",
+    "originalReleaseDate": "1955-11-18",
+    "urls": [
+      {
+        "type": "IMDb",
+        "url": "https://www.imdb.com/title/tt0048441/"
+      },
+      {
+        "type": "TMDB",
+        "url": "https://www.themoviedb.org/movie/166168"
+      },
+      {
+        "type": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Oh..._Rosalinda%21%21"
+      }
+    ],
+    "releases": [
+      {
+        "format": "Blu-ray",
+        "distributor": "Imprint",
+        "date": "2026-09-09",
+        "url": "https://www.blu-ray.com/movies/The-Cinema-of-Powell-and-Pressburger-Collection-Two-4K-Blu-ray/415479/",
+        "collection": {
+          "id": "the-cinema-of-powell-and-pressburger-collection-two-2026",
+          "title": "The Cinema of Powell and Pressburger: Collection Two",
+          "url": "https://www.blu-ray.com/movies/The-Cinema-of-Powell-and-Pressburger-Collection-Two-4K-Blu-ray/415479/"
+        }
+      }
+    ]
+  },
+  {
     "id": "forbidden-planet-1956",
     "title": "Forbidden Planet",
     "originalReleaseDate": "1956-03-03",
@@ -926,6 +1097,38 @@
         "distributor": "Paramount",
         "date": "2021-03-30",
         "url": "https://www.blu-ray.com/movies/The-Ten-Commandments-4K-Blu-ray/282780/"
+      }
+    ]
+  },
+  {
+    "id": "the-battle-of-the-river-plate-1956",
+    "title": "The Battle of the River Plate",
+    "originalReleaseDate": "1956-10-29",
+    "urls": [
+      {
+        "type": "IMDb",
+        "url": "https://www.imdb.com/title/tt0048990/"
+      },
+      {
+        "type": "TMDB",
+        "url": "https://www.themoviedb.org/movie/17591"
+      },
+      {
+        "type": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/The_Battle_of_the_River_Plate_%28film%29"
+      }
+    ],
+    "releases": [
+      {
+        "format": "Blu-ray",
+        "distributor": "Imprint",
+        "date": "2026-09-09",
+        "url": "https://www.blu-ray.com/movies/The-Cinema-of-Powell-and-Pressburger-Collection-Two-4K-Blu-ray/415479/",
+        "collection": {
+          "id": "the-cinema-of-powell-and-pressburger-collection-two-2026",
+          "title": "The Cinema of Powell and Pressburger: Collection Two",
+          "url": "https://www.blu-ray.com/movies/The-Cinema-of-Powell-and-Pressburger-Collection-Two-4K-Blu-ray/415479/"
+        }
       }
     ]
   },

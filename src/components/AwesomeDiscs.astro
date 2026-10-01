@@ -10,6 +10,7 @@ type DiscGroup = {
   id: string
   collection?: AwesomeDiscCollection
   films: Map<string, AwesomeDisc>
+  formats: Set<AwesomeDiscRelease["format"]>
   releases: Map<string, AwesomeDiscRelease>
 }
 
@@ -33,6 +34,7 @@ for (const { data: film } of films) {
         id: groupId,
         ...(release.collection ? { collection: release.collection } : {}),
         films: new Map<string, AwesomeDisc>(),
+        formats: new Set<AwesomeDiscRelease["format"]>(),
         releases: new Map<string, AwesomeDiscRelease>(),
       } satisfies DiscGroup)
     const releaseId = [
@@ -43,6 +45,7 @@ for (const { data: film } of films) {
     ].join(":")
 
     group.films.set(film.id, film)
+    group.formats.add(release.format)
     group.releases.set(releaseId, release)
     yearGroups.set(groupId, group)
     groupsByYear.set(year, yearGroups)
@@ -65,6 +68,7 @@ const discYears = [...groupsByYear.entries()]
           id: group.id,
           ...(group.collection ? { collection: group.collection } : {}),
           films: groupFilms,
+          formats: [...group.formats].sort().reverse(),
           primaryFilm,
           releases: [...group.releases.values()].sort(
             (releaseA, releaseB) =>
@@ -137,8 +141,7 @@ function releaseLabel(release: AwesomeDiscRelease) {
                 {filmLabel(item.primaryFilm)}
               </a>
             )}{" "}
-            {[...new Set(item.releases.map(({ format }) => format))].join("/")}{" "}
-            (
+            {item.formats.join("/")} (
             {item.releases.map((release, index) => (
               <>
                 {index > 0 && ", "}
