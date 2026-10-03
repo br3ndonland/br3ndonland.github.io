@@ -128,6 +128,8 @@ To add releases, invoke the repository skill with `$awesome-discs URL1 URL2`, or
 
 ### Blog collection
 
+The RSS feed at `/rss.xml` includes full rendered content from published blog, project, and work entries. Keep feed discovery and navigation links synchronized with the feed route.
+
 Blog posts live in one flat `src/content/blog` directory and are validated by the `blog` schema in `src/content.config.ts`. Do not use date subdirectories. Preserve original publication dates for backdated posts.
 
 When editing a post, review its author-supplied `dateUpdated` and set it to the date of the latest substantive editorial revision. Do not advance it for formatting-only changes, routine metadata maintenance, or importing unchanged content. Preserve known historical revision dates when importing older posts. Keep this guidance synchronized with the implementation as it changes, including during an ongoing conversation.

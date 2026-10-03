@@ -45,6 +45,7 @@ export type IconNames =
   | "pencil-line"
   | "read-cv-logo"
   | "rocket-launch"
+  | "rss"
   | "star"
   | "terminal-window"
   | "atom"
