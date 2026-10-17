@@ -4939,6 +4939,33 @@
     ]
   },
   {
+    "id": "cujo-1983",
+    "title": "Cujo",
+    "originalReleaseDate": "1983-08-10",
+    "urls": [
+      {
+        "type": "IMDb",
+        "url": "https://www.imdb.com/title/tt0085382/"
+      },
+      {
+        "type": "TMDB",
+        "url": "https://www.themoviedb.org/movie/10489"
+      },
+      {
+        "type": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Cujo_%28film%29"
+      }
+    ],
+    "releases": [
+      {
+        "format": "UHD",
+        "distributor": "Arrow",
+        "date": "2026-10-12",
+        "url": "https://www.blu-ray.com/movies/Cujo-4K-Blu-ray/417828/"
+      }
+    ]
+  },
+  {
     "id": "the-right-stuff-1983",
     "title": "The Right Stuff",
     "originalReleaseDate": "1983-10-16",
