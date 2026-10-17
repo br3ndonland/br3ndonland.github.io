@@ -6349,6 +6349,33 @@
     ]
   },
   {
+    "id": "the-monster-squad-1987",
+    "title": "The Monster Squad",
+    "originalReleaseDate": "1987-08-14",
+    "urls": [
+      {
+        "type": "IMDb",
+        "url": "https://www.imdb.com/title/tt0093560/"
+      },
+      {
+        "type": "TMDB",
+        "url": "https://www.themoviedb.org/movie/13509"
+      },
+      {
+        "type": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/The_Monster_Squad"
+      }
+    ],
+    "releases": [
+      {
+        "format": "UHD",
+        "distributor": "Arrow",
+        "date": "2026-10-12",
+        "url": "https://www.blu-ray.com/movies/The-Monster-Squad-4K-Blu-ray/417830/"
+      }
+    ]
+  },
+  {
     "id": "hellraiser-1987",
     "title": "Hellraiser",
     "originalReleaseDate": "1987-09-10",
