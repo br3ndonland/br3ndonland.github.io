@@ -1698,6 +1698,33 @@
     ]
   },
   {
+    "id": "the-saragossa-manuscript-1965",
+    "title": "The Saragossa Manuscript",
+    "originalReleaseDate": "1965-02-09",
+    "urls": [
+      {
+        "type": "IMDb",
+        "url": "https://www.imdb.com/title/tt0059643/"
+      },
+      {
+        "type": "TMDB",
+        "url": "https://www.themoviedb.org/movie/8785"
+      },
+      {
+        "type": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/The_Saragossa_Manuscript_%28film%29"
+      }
+    ],
+    "releases": [
+      {
+        "format": "UHD",
+        "distributor": "Radiance",
+        "date": "2026-09-14",
+        "url": "https://www.blu-ray.com/movies/The-Saragossa-Manuscript-4K-Blu-ray/414448/"
+      }
+    ]
+  },
+  {
     "id": "the-sound-of-music-1965",
     "title": "The Sound of Music",
     "originalReleaseDate": "1965-03-02",
