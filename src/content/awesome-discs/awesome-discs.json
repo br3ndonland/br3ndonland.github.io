@@ -6122,6 +6122,33 @@
     ]
   },
   {
+    "id": "little-shop-of-horrors-1986",
+    "title": "Little Shop of Horrors",
+    "originalReleaseDate": "1986-12-19",
+    "urls": [
+      {
+        "type": "IMDb",
+        "url": "https://www.imdb.com/title/tt0091419/"
+      },
+      {
+        "type": "TMDB",
+        "url": "https://www.themoviedb.org/movie/10776"
+      },
+      {
+        "type": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Little_Shop_of_Horrors_%28film%29"
+      }
+    ],
+    "releases": [
+      {
+        "format": "UHD",
+        "distributor": "Warner Bros.",
+        "date": "2026-10-06",
+        "url": "https://www.blu-ray.com/movies/Little-Shop-of-Horrors-4K-Blu-ray/347628/"
+      }
+    ]
+  },
+  {
     "id": "over-the-top-1987",
     "title": "Over the Top",
     "originalReleaseDate": "1987-02-13",
