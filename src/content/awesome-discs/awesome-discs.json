@@ -7590,6 +7590,38 @@
     ]
   },
   {
+    "id": "kafka-1991",
+    "title": "Kafka",
+    "originalReleaseDate": "1991-12-04",
+    "urls": [
+      {
+        "type": "IMDb",
+        "url": "https://www.imdb.com/title/tt0102181/"
+      },
+      {
+        "type": "TMDB",
+        "url": "https://www.themoviedb.org/movie/2297"
+      },
+      {
+        "type": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Kafka_%28film%29"
+      }
+    ],
+    "releases": [
+      {
+        "format": "UHD",
+        "distributor": "Imprint",
+        "date": "2026-11-25",
+        "url": "https://www.blu-ray.com/movies/Directed-By-Steven-Soderbergh-Blu-ray/422072/",
+        "collection": {
+          "id": "directed-by-steven-soderbergh-2026",
+          "title": "Directed By... Steven Soderbergh",
+          "url": "https://www.blu-ray.com/movies/Directed-By-Steven-Soderbergh-Blu-ray/422072/"
+        }
+      }
+    ]
+  },
+  {
     "id": "hard-boiled-1992",
     "title": "Hard Boiled",
     "originalReleaseDate": "1992-04-16",
@@ -7899,6 +7931,38 @@
         "distributor": "Vinegar Syndrome",
         "date": "2025-06-05",
         "url": "https://www.blu-ray.com/movies/The-Dark-Half-4K-Blu-ray/388814/"
+      }
+    ]
+  },
+  {
+    "id": "king-of-the-hill-1993",
+    "title": "King of the Hill",
+    "originalReleaseDate": "1993-05-19",
+    "urls": [
+      {
+        "type": "IMDb",
+        "url": "https://www.imdb.com/title/tt0107322/"
+      },
+      {
+        "type": "TMDB",
+        "url": "https://www.themoviedb.org/movie/34024"
+      },
+      {
+        "type": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/King_of_the_Hill_%281993_film%29"
+      }
+    ],
+    "releases": [
+      {
+        "format": "Blu-ray",
+        "distributor": "Imprint",
+        "date": "2026-11-25",
+        "url": "https://www.blu-ray.com/movies/Directed-By-Steven-Soderbergh-Blu-ray/422072/",
+        "collection": {
+          "id": "directed-by-steven-soderbergh-2026",
+          "title": "Directed By... Steven Soderbergh",
+          "url": "https://www.blu-ray.com/movies/Directed-By-Steven-Soderbergh-Blu-ray/422072/"
+        }
       }
     ]
   },
@@ -8567,6 +8631,38 @@
         "distributor": "Arrow",
         "date": "2025-10-28",
         "url": "https://www.blu-ray.com/movies/In-the-Mouth-of-Madness-4K-Blu-ray/393167/"
+      }
+    ]
+  },
+  {
+    "id": "the-underneath-1995",
+    "title": "The Underneath",
+    "originalReleaseDate": "1995-04-28",
+    "urls": [
+      {
+        "type": "IMDb",
+        "url": "https://www.imdb.com/title/tt0114788/"
+      },
+      {
+        "type": "TMDB",
+        "url": "https://www.themoviedb.org/movie/36141"
+      },
+      {
+        "type": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/The_Underneath_%28film%29"
+      }
+    ],
+    "releases": [
+      {
+        "format": "Blu-ray",
+        "distributor": "Imprint",
+        "date": "2026-11-25",
+        "url": "https://www.blu-ray.com/movies/Directed-By-Steven-Soderbergh-Blu-ray/422072/",
+        "collection": {
+          "id": "directed-by-steven-soderbergh-2026",
+          "title": "Directed By... Steven Soderbergh",
+          "url": "https://www.blu-ray.com/movies/Directed-By-Steven-Soderbergh-Blu-ray/422072/"
+        }
       }
     ]
   },
