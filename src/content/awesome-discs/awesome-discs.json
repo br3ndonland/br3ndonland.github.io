@@ -2129,6 +2129,33 @@
     ]
   },
   {
+    "id": "bullitt-1968",
+    "title": "Bullitt",
+    "originalReleaseDate": "1968-10-17",
+    "urls": [
+      {
+        "type": "IMDb",
+        "url": "https://www.imdb.com/title/tt0062765/"
+      },
+      {
+        "type": "TMDB",
+        "url": "https://www.themoviedb.org/movie/916"
+      },
+      {
+        "type": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Bullitt"
+      }
+    ],
+    "releases": [
+      {
+        "format": "UHD",
+        "distributor": "Arrow",
+        "date": "2026-12-08",
+        "url": "https://www.blu-ray.com/movies/Bullitt-4K-Blu-ray/421755/"
+      }
+    ]
+  },
+  {
     "id": "a-touch-of-zen-1970",
     "title": "A Touch of Zen",
     "originalReleaseDate": "1970-07-10",
