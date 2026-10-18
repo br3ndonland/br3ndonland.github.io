@@ -11,7 +11,7 @@ const fail = (message) => {
   process.exit(1)
 }
 
-const repo = process.argv[2]
+const repo = process.argv[2] ?? "br3ndonland/br3ndonland.github.io"
 
 if (!repo || !repo.includes("/")) {
   fail("Please supply a script argument in org/repo format.")
