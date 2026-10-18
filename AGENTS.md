@@ -76,6 +76,7 @@ Run these commands from repository root before opening a PR:
 ```bash
 pnpm install --frozen-lockfile
 pnpm run check
+pnpm run check:middleware
 pnpm run build
 pnpm run test
 ```
@@ -83,6 +84,7 @@ pnpm run test
 Notes:
 
 - `pnpm run check` runs Prettier, cspell, and `astro check`.
+- `pnpm run check:middleware` type-checks the Vercel middleware (`middleware.ts`) with `tsc`.
 - Build should succeed without changing deployment configuration.
 - Do not run local server or watch commands (for example, `astro dev`, `pnpm run dev`, `pnpm run start`, `pnpm run test:watch`, `python -m http.server`, or `vitest` without arguments). Instead, run `pnpm run build` to verify successful builds after making changes. Optionally, to serve the site after building, run `pnpm run preview`. Agents may run `pnpm run preview` without prompting when needed for local browser verification. Bind the server to `127.0.0.1` and stop it before finishing the task.
 
@@ -96,6 +98,7 @@ GitHub Actions workflow: `.github/workflows/ci.yml`
   - pnpm + Node setup from repo variables
   - `pnpm install --frozen-lockfile`
   - `pnpm run check`
+  - `pnpm run check:middleware`
   - `pnpm run build --site "https://${GITHUB_REPOSITORY##*/}"`
 
 Keep contributions compatible with this sequence.

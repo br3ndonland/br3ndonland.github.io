@@ -67,5 +67,5 @@ Trouble in Paradise (1932): https://www.blu-ray.com/movies/Trouble-in-Paradise-4
 
 - Confirm that every film has exactly one IMDb, one TMDB, and one Wikipedia URL.
 - Confirm that every new release has a valid format, distributor, exact date, and Blu-ray.com URL, plus consistent collection metadata when applicable.
-- Run `pnpm run check`, `pnpm run build`, and `pnpm run test` after editing.
+- Run `pnpm run check`, `pnpm run check:middleware`, `pnpm run build`, and `pnpm run test` after editing.
 - Summarize added or updated films, source URLs, validation results, and any conflict decisions. State that changes remain local and uncommitted unless the user authorized otherwise.

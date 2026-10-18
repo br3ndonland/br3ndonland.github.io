@@ -105,6 +105,7 @@ try {
 
   log("Running repository checks...")
   run("corepack", ["pnpm", "run", "check"])
+  run("corepack", ["pnpm", "run", "check:middleware"])
   log("Checks complete.")
 
   log("Running production build...")

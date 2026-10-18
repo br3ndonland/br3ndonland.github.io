@@ -24,6 +24,7 @@ jobs:
           cache: "pnpm"
       - run: pnpm install --frozen-lockfile
       - run: pnpm run check
+      - run: pnpm run check:middleware
       - run: pnpm run test
       - name: Restore Astro image cache
         id: astro-image-cache

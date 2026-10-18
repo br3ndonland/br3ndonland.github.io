@@ -11,7 +11,7 @@
   "scripts": {
     "astro": "astro",
     "build": "astro build",
-    "check": "prettier . --check && cspell --dot --gitignore **/*.astro **/*.md* && astro check && pnpm run check:middleware",
+    "check": "prettier . --check && cspell --dot --gitignore **/*.astro **/*.md* && astro check",
     "check:middleware": "tsc --noEmit --module nodenext --moduleResolution nodenext --target es2022 --strict middleware.ts",
     "dev": "astro dev",
     "fmt": "prettier . --write",
