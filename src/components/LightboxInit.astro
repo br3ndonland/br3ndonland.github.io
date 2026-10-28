@@ -1,10 +1,28 @@
 <script>
   import "glightbox/dist/css/glightbox.min.css"
-  import "plyr/dist/plyr.css"
   import { GLIGHTBOX_OPTIONS } from "@consts"
+  import type { createLightboxVideo } from "../scripts/lightbox-video"
+
+  type VideoPlayer = ReturnType<typeof createLightboxVideo>
+  type VideoSlide = {
+    slideIndex: number
+    trigger: HTMLAnchorElement
+    slideConfig: {
+      content: HTMLElement
+      draggable: boolean
+      height: string
+      href: string
+      type: string
+    }
+  }
 
   type LightboxInstance = {
     destroy: () => void
+    getAllPlayers: () => Record<string, VideoPlayer>
+    on: {
+      (event: "slide_before_load", callback: (slide: VideoSlide) => void): void
+      (event: "close", callback: () => void): void
+    }
     reload: () => void
   }
 
@@ -13,9 +31,12 @@
   }
 
   type LightboxState = {
+    createVideo: typeof createLightboxVideo | undefined
     instance: LightboxInstance | undefined
     isListening: boolean | undefined
-    plyrPromise: Promise<void> | undefined
+    videoPromise:
+      | Promise<typeof import("../scripts/lightbox-video")>
+      | undefined
   }
 
   const videoLightboxSelector = [
@@ -27,25 +48,13 @@
   ].join(", ")
   const windowWithLightbox = window as Window & {
     bwsLightbox?: LightboxState
-    Plyr?: unknown
   }
   const state = (windowWithLightbox.bwsLightbox ??= {
+    createVideo: undefined,
     instance: undefined,
     isListening: undefined,
-    plyrPromise: undefined,
+    videoPromise: undefined,
   })
-
-  const ensurePlyr = async () => {
-    if (windowWithLightbox.Plyr) {
-      return
-    }
-
-    state.plyrPromise ??= import("plyr").then(({ default: Plyr }) => {
-      windowWithLightbox.Plyr = Plyr
-    }) as Promise<void>
-
-    await state.plyrPromise
-  }
 
   const initLightbox = async () => {
     const lightboxLinks = document.querySelectorAll(".glightbox")
@@ -57,7 +66,8 @@
     }
 
     if (document.querySelector(videoLightboxSelector)) {
-      await ensurePlyr()
+      state.videoPromise ??= import("../scripts/lightbox-video")
+      state.createVideo = (await state.videoPromise).createLightboxVideo
     }
 
     if (state.instance) {
@@ -67,9 +77,35 @@
 
     const { default: GLightbox } = (await import(
       "glightbox"
-    )) as GLightboxModule
+    )) as unknown as GLightboxModule
 
-    state.instance = GLightbox(GLIGHTBOX_OPTIONS)
+    const instance = GLightbox(GLIGHTBOX_OPTIONS)
+    state.instance = instance
+
+    instance.on("slide_before_load", ({ slideIndex, trigger, slideConfig }) => {
+      if (!trigger?.matches(videoLightboxSelector) || !state.createVideo) return
+
+      // Navigation can repeat this event before a preload finishes.
+      const player = (instance.getAllPlayers()[`gvideo${slideIndex}`] ??=
+        state.createVideo(trigger.href, slideIndex))
+
+      // Inline content bypasses GLightbox's built-in Plyr loader. Its player
+      // registry still handles pausing on gallery navigation and close.
+      Object.assign(slideConfig, {
+        content: player.elements.container,
+        draggable: false,
+        height: "auto",
+        href: "",
+        type: "inline",
+      })
+    })
+    instance.on("close", () => {
+      const players = instance.getAllPlayers()
+      for (const [id, player] of Object.entries(players)) {
+        player.destroy()
+        delete players[id]
+      }
+    })
   }
 
   if (!state.isListening) {
