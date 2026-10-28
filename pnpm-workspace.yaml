@@ -5,6 +5,9 @@ allowBuilds:
 
 autoDedupe: true
 
+lockfile:
+  includeResolutionSettings: true
+
 overrides:
   devalue: ^5.8.1
   fast-uri: ^3.1.6
