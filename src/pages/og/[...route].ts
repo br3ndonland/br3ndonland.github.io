@@ -223,7 +223,7 @@ const getTemplate = async (page: OgPage) => {
   const descriptionSize = getDescriptionSize(description)
 
   return astroOpenGraph.html`<div
-    style="background: #141925; color: #ffffff; display: flex; font-family: Recursive Sans; gap: 54px; height: 100%; padding: 58px 64px 52px 78px; position: relative; width: 100%;"
+    style="background: #141925; box-sizing: border-box; color: #ffffff; display: flex; font-family: Recursive Sans; gap: 54px; height: 100%; padding: 58px 64px 52px 78px; position: relative; width: 100%;"
   >
     <div
       style="background: #7611a6; display: flex; height: 100%; left: 0; position: absolute; top: 0; width: 16px;"
