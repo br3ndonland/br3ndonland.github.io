@@ -1,6 +1,7 @@
 allowBuilds:
   core-js: false
   esbuild: true
+  plyr: true
   sharp: true
 
 autoDedupe: true
