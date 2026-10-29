@@ -1,5 +1,6 @@
 import fs from "node:fs/promises"
 import vm from "node:vm"
+import { parse } from "node-html-parser"
 import ts from "typescript"
 import { GLIGHTBOX_OPTIONS } from "../../src/consts"
 import { describe, expect, it, vi } from "vitest"
@@ -23,7 +24,7 @@ describe("Lightbox video lifecycle", () => {
       new URL("../../src/components/LightboxInit.astro", import.meta.url),
       "utf-8",
     )
-    const script = component.match(/<script>([\s\S]*?)<\/script>/)?.[1]
+    const script = parse(component).querySelector("script")?.rawText
     if (!script) throw new Error("Missing lightbox initialization script")
     const { outputText } = ts.transpileModule(script, {
       compilerOptions: { module: ts.ModuleKind.CommonJS },
