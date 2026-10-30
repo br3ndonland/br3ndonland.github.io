@@ -161,19 +161,9 @@ export const GLIGHTBOX_OPTIONS = {
   slideEffect: "slide",
   autoplayVideos: false,
   plyr: {
-    // prevent GLightbox from loading separate plyr assets from CDN
-    // https://github.com/biati-digital/glightbox/blob/a9385e5/src/js/glightbox.js#L54-L55
+    // Video.js uses inline slides instead of GLightbox's Plyr loader.
     css: "",
     js: "",
-    config: {
-      blankVideo: "/videos/blank.mp4",
-      fullscreen: {
-        enabled: true,
-        iosNative: true,
-      },
-      iconUrl: "/images/plyr.svg",
-      ratio: "16:9",
-    },
   },
 } as const
 

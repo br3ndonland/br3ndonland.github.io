@@ -651,15 +651,19 @@ tbody tr + tr > :is(th, td) {
   border-radius: 0;
 }
 
-.glightbox-clean .gslide-video {
+.glightbox-clean .gslide-media:has(video-player) {
   background: var(--lightbox-video-background);
   border-radius: var(--lightbox-border-radius);
 }
 
-.gslide-video .gvideo-wrapper,
-.gslide-video .plyr {
+.glightbox-container .ginlined-content:has(video-player) {
+  padding: 0;
+  overflow: visible;
+}
+
+.glightbox-container .gvideo-wrapper {
   border-radius: inherit;
-  overflow: hidden;
+  width: 100%;
 }
 
 .glightbox-clean .gslide-description {
@@ -898,55 +902,21 @@ tbody tr + tr > :is(th, td) {
   text-underline-offset: 0.18em;
 }
 
-.glightbox-container .plyr {
-  --plyr-audio-control-background-hover: var(--accent-regular);
-  --plyr-audio-control-color-hover: var(--accent-text-over);
-  --plyr-audio-controls-background: var(--lightbox-surface);
-  --plyr-audio-control-color: var(--gray-100);
-  --plyr-badge-background: var(--gray-800);
-  --plyr-badge-border-radius: 0.25rem;
-  --plyr-badge-text-color: var(--gray-100);
-  --plyr-captions-background: rgba(9, 11, 17, 0.82);
-  --plyr-captions-text-color: #ffffff;
-  --plyr-color-main: var(--accent-regular);
-  --plyr-control-radius: 999rem;
-  --plyr-control-toggle-checked-background: var(--accent-regular);
-  --plyr-focus-visible-color: var(--accent-light);
-  --plyr-font-family: var(--font-body);
-  --plyr-font-size-base: var(--text-base);
-  --plyr-font-size-small: var(--text-sm);
-  --plyr-menu-background: var(--lightbox-surface);
-  --plyr-menu-border-color: var(--gray-700);
-  --plyr-menu-border-shadow-color: transparent;
-  --plyr-menu-color: var(--gray-100);
-  --plyr-menu-radius: 0.75rem;
-  --plyr-menu-shadow: var(--shadow-lg);
-  --plyr-range-fill-background: var(--accent-regular);
-  --plyr-range-thumb-background: #ffffff;
-  --plyr-range-thumb-shadow: 0 0 0 1px var(--accent-overlay), var(--shadow-sm);
-  --plyr-tooltip-background: var(--lightbox-surface);
-  --plyr-tooltip-color: var(--gray-100);
-  --plyr-tooltip-radius: 0.5rem;
-  --plyr-tooltip-shadow: var(--shadow-md);
-  --plyr-video-background: var(--lightbox-video-background);
-  --plyr-video-control-background-hover: var(--accent-regular);
-  --plyr-video-control-color: #ffffff;
-  --plyr-video-control-color-hover: var(--accent-text-over);
-  --plyr-video-controls-background: linear-gradient(
-    rgba(9, 11, 17, 0),
-    rgba(9, 11, 17, 0.86)
-  );
-  --plyr-video-progress-buffered-background: rgba(255, 255, 255, 0.33);
-  --plyr-video-range-thumb-active-shadow-color: var(--accent-overlay);
+.glightbox-container video-player {
+  --media-accent-color: var(--accent-regular);
+  --media-accent-text-color: var(--accent-text-over);
+  --media-border-color: transparent;
+  --media-border-radius: var(--lightbox-border-radius);
+  --media-font-family: var(--font-body);
+  --media-object-fit: contain;
+  display: block;
+  width: 100%;
 }
 
-.glightbox-container .plyr__control--overlaid {
-  box-shadow: var(--shadow-md);
-}
-
-.glightbox-container .plyr__menu__container,
-.glightbox-container .plyr__tooltip {
-  border: 1px solid var(--gray-700);
+.glightbox-container video-neutral-skin {
+  aspect-ratio: 16 / 9;
+  display: block;
+  width: 100%;
 }
 
 .social {
