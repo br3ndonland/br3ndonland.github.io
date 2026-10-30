@@ -23,7 +23,9 @@ export const createLightboxVideo = (src: string, index: number) => {
 
   const player = document.createElement("video-player")
   const skin = document.createElement("video-neutral-skin")
-  const video = document.createElement("video")
+  const video = document.createElement("video") as HTMLVideoElement & {
+    webkitPresentationMode?: string
+  }
   video.src = src
   video.preload = "metadata"
   video.playsInline = true
@@ -81,20 +83,63 @@ export const createLightboxVideo = (src: string, index: number) => {
   player.append(skin)
   container.append(player)
 
+  const isPictureInPicture = () =>
+    document.pictureInPictureElement === video ||
+    video.webkitPresentationMode === "picture-in-picture"
+  let retained = false
+  let destroyed = false
+
+  const destroy = () => {
+    if (destroyed) return
+    if (isPictureInPicture()) {
+      if (retained) return
+      retained = true
+      container.hidden = true
+      const playing = !video.paused
+      // Keep the player connected before GLightbox removes its modal.
+      // A state-preserving move also avoids interrupting native playback.
+      const body = document.body as HTMLElement & {
+        moveBefore?: (node: Node, child: Node | null) => void
+      }
+      if (body.moveBefore) body.moveBefore(container, null)
+      else body.append(container)
+      if (playing && video.paused) void video.play().catch(() => {})
+      return
+    }
+    destroyed = true
+    video.removeEventListener("ratechange", savePreferences)
+    video.removeEventListener("volumechange", savePreferences)
+    video.removeEventListener("leavepictureinpicture", onPresentationChange)
+    video.removeEventListener(
+      "webkitpresentationmodechanged",
+      onPresentationChange,
+    )
+    video.pause()
+    video.removeAttribute("src")
+    video.load()
+    container.remove()
+  }
+  const onPresentationChange = () => {
+    if (isPictureInPicture()) return
+    if (retained) destroy()
+    else if (!container.closest(".gslide.current")) video.pause()
+  }
+  video.addEventListener("leavepictureinpicture", onPresentationChange)
+  video.addEventListener("webkitpresentationmodechanged", onPresentationChange)
+
   // GLightbox's public player registry expects this small playback interface.
   return {
     elements: { container },
+    get pictureInPicture() {
+      return isPictureInPicture()
+    },
     get playing() {
       return !video.paused
     },
-    pause: () => video.pause(),
-    play: () => video.play(),
-    destroy: () => {
-      video.removeEventListener("ratechange", savePreferences)
-      video.removeEventListener("volumechange", savePreferences)
-      video.pause()
-      video.removeAttribute("src")
-      video.load()
+    pause: () => {
+      if (!isPictureInPicture()) video.pause()
     },
+    play: () => video.play(),
+    destroy,
   }
 }

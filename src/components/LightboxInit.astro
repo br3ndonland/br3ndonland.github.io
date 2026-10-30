@@ -17,6 +17,7 @@
   }
 
   type LightboxInstance = {
+    close: () => void
     destroy: () => void
     getAllPlayers: () => Record<string, VideoPlayer>
     on: {
@@ -82,6 +83,16 @@
     const instance = GLightbox(GLIGHTBOX_OPTIONS)
     state.instance = instance
 
+    // GLightbox emits close only after removing the modal. Retain PiP
+    // players before that removal can interrupt their native playback.
+    const close = instance.close.bind(instance)
+    instance.close = () => {
+      for (const player of Object.values(instance.getAllPlayers())) {
+        if (player.pictureInPicture) player.destroy()
+      }
+      close()
+    }
+
     instance.on("slide_before_load", ({ slideIndex, trigger, slideConfig }) => {
       if (!trigger?.matches(videoLightboxSelector) || !state.createVideo) return
 
@@ -90,7 +101,7 @@
         state.createVideo(trigger.href, slideIndex))
 
       // Inline content bypasses GLightbox's built-in Plyr loader. Its player
-      // registry still handles pausing on gallery navigation and close.
+      // registry still handles pausing non-PiP media on navigation and close.
       Object.assign(slideConfig, {
         content: player.elements.container,
         draggable: false,
