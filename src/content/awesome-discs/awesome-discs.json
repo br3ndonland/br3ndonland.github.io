@@ -720,6 +720,33 @@
     ]
   },
   {
+    "id": "ikiru-1952",
+    "title": "Ikiru",
+    "originalReleaseDate": "1952-10-09",
+    "urls": [
+      {
+        "type": "IMDb",
+        "url": "https://www.imdb.com/title/tt0044741/"
+      },
+      {
+        "type": "TMDB",
+        "url": "https://www.themoviedb.org/movie/3782"
+      },
+      {
+        "type": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Ikiru"
+      }
+    ],
+    "releases": [
+      {
+        "format": "UHD",
+        "distributor": "Carlotta",
+        "date": "2026-10-20",
+        "url": "https://www.blu-ray.com/movies/Vivre-4K-Blu-ray/420999/"
+      }
+    ]
+  },
+  {
     "id": "the-wages-of-fear-1953",
     "title": "The Wages of Fear",
     "originalReleaseDate": "1953-04-15",
