@@ -11,17 +11,24 @@ const fail = (message) => {
   process.exit(1)
 }
 
-const repo = process.argv[2] ?? "br3ndonland/br3ndonland.github.io"
+const args = process.argv.slice(2)
+const validate = args[0] === "--validate"
+if (validate) args.shift()
+const repo = args[0] ?? "br3ndonland/br3ndonland.github.io"
 
 if (!repo || !repo.includes("/")) {
   fail("Please supply a script argument in org/repo format.")
 }
 
 const run = (command, args, options = {}) => {
+  const label = [command, ...args].join(" ")
+  log(`Running ${label}`)
+  const start = performance.now()
   const result = spawnSync(command, args, {
     stdio: "inherit",
     ...options,
   })
+  log(`${label} took ${((performance.now() - start) / 1000).toFixed(2)}s`)
 
   if (result.error) {
     throw result.error
@@ -103,14 +110,11 @@ try {
   run("corepack", ["pnpm", "run", "astro", "telemetry", "disable"])
   log("Dependencies installed.")
 
-  log("Running repository checks...")
-  run("corepack", ["pnpm", "run", "check"])
-  run("corepack", ["pnpm", "run", "check:middleware"])
-  log("Checks complete.")
-
-  log("Running production build...")
-  run("corepack", ["pnpm", "run", "build"])
-  log("Build complete.")
+  if (validate) {
+    run("corepack", ["pnpm", "run", "check"])
+    run("corepack", ["pnpm", "run", "check:middleware"])
+    run("corepack", ["pnpm", "run", "build"])
+  }
 
   log("Done.")
 } catch (error) {
