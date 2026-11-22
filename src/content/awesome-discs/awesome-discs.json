@@ -10732,6 +10732,33 @@
     ]
   },
   {
+    "id": "caligula-the-ultimate-cut-2023",
+    "title": "Caligula: The Ultimate Cut",
+    "originalReleaseDate": "2023-05-17",
+    "urls": [
+      {
+        "type": "IMDb",
+        "url": "https://www.imdb.com/title/tt29703523/"
+      },
+      {
+        "type": "TMDB",
+        "url": "https://www.themoviedb.org/movie/9453-caligola/releases"
+      },
+      {
+        "type": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Caligula_%28film%29#2023_Ultimate_Cut_reconstruction"
+      }
+    ],
+    "releases": [
+      {
+        "format": "UHD",
+        "distributor": "Umbrella",
+        "date": "2026-12-09",
+        "url": "https://www.blu-ray.com/movies/Caligula-The-Ultimate-Cut-4K-Blu-ray/419779/"
+      }
+    ]
+  },
+  {
     "id": "the-zone-of-interest-2023",
     "title": "The Zone of Interest",
     "originalReleaseDate": "2023-05-19",
