@@ -1779,6 +1779,33 @@
     ]
   },
   {
+    "id": "shadows-of-forgotten-ancestors-1965",
+    "title": "Shadows of Forgotten Ancestors",
+    "originalReleaseDate": "1965-03-22",
+    "urls": [
+      {
+        "type": "IMDb",
+        "url": "https://www.imdb.com/title/tt0058642/"
+      },
+      {
+        "type": "TMDB",
+        "url": "https://www.themoviedb.org/movie/26782"
+      },
+      {
+        "type": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Shadows_of_Forgotten_Ancestors"
+      }
+    ],
+    "releases": [
+      {
+        "format": "UHD",
+        "distributor": "Criterion Collection",
+        "date": "2026-11-17",
+        "url": "https://www.blu-ray.com/movies/Shadows-of-Forgotten-Ancestors-4K-Blu-ray/418901/"
+      }
+    ]
+  },
+  {
     "id": "thunderball-1965",
     "title": "Thunderball",
     "originalReleaseDate": "1965-12-09",
