@@ -9149,6 +9149,33 @@
     ]
   },
   {
+    "id": "fargo-1996",
+    "title": "Fargo",
+    "originalReleaseDate": "1996-03-08",
+    "urls": [
+      {
+        "type": "IMDb",
+        "url": "https://www.imdb.com/title/tt0116282/"
+      },
+      {
+        "type": "TMDB",
+        "url": "https://www.themoviedb.org/movie/275"
+      },
+      {
+        "type": "Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Fargo_%281996_film%29"
+      }
+    ],
+    "releases": [
+      {
+        "format": "UHD",
+        "distributor": "Arrow",
+        "date": "2026-11-09",
+        "url": "https://www.blu-ray.com/movies/Fargo-4K-Blu-ray/419852/"
+      }
+    ]
+  },
+  {
     "id": "hellraiser-4-bloodline-1996",
     "title": "Hellraiser 4: Bloodline",
     "originalReleaseDate": "1996-03-08",
